@@ -1,0 +1,79 @@
+
+#include <omp.h>
+
+
+#include "../../mpi/hw/serial/random.hpp"
+#include "../../mpi/hw/serial/matrix.hpp"
+#include <iostream>
+
+namespace advscicomp{
+
+template<SizeT N, typename T>
+T Dot(Vector<N,T> const& v, Vector<N,T> const& w)
+{
+T result{0};
+
+#pragma omp parallel
+{ 
+
+T my_result{0};
+#pragma omp for
+for (SizeT ii = 0; ii<N; ++ii)
+{
+my_result += v[ii] * w[ii];
+}
+#pragma omp atomic
+result += my_result;
+} 
+
+return result;
+}
+
+}
+
+
+
+namespace test
+{
+using namespace advscicomp;
+void InnerProduct()
+{
+constexpr SizeT tested_size = 10000;
+
+auto a = Vector<tested_size>{};
+auto b = Vector<tested_size>{};
+for (SizeT ii=0; ii<tested_size; ++ii)
+{
+a[ii] = 1;
+b[ii] = 1;
+}
+
+auto d = Dot(a,b);
+using std::abs;
+if (abs(d-tested_size) >= 1e-7)
+std::cout << "fail in InnerProduct\n";
+}
+
+
+void RunSuite()
+{
+#pragma omp parallel
+#pragma omp single
+std::cout << "running test suite on " << omp_get_num_threads() << " threads\n\n";
+
+InnerProduct();
+
+std::cout << "all tests passed\n\n";
+}
+
+
+}
+
+int main(int argc, char** argv)
+{
+using namespace advscicomp;
+
+test::RunSuite();
+
+return 0;
+}

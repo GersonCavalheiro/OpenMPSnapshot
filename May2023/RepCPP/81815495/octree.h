@@ -1,0 +1,309 @@
+
+#pragma once
+
+#include <cstddef>
+
+
+#include "tree.h"
+
+namespace Kratos
+{
+
+
+
+
+
+template< std::size_t Dimension, class PointType, class IteratorType, class CoordinateType >
+class OcTreeAverageSplit
+{
+public:
+void operator()( PointType& Position, PointType const& MinPoint, PointType const& MaxPoint, IteratorType const& PointsBegin, IteratorType const& PointsEnd )
+{
+for(std::size_t i = 0 ; i < Dimension ; i++)
+Position[i] = 0.0;
+for(IteratorType i_point = PointsBegin ; i_point < PointsEnd ; i_point++)
+for(std::size_t i = 0 ; i < Dimension ; i++)
+Position[i] += (**i_point)[i];
+for(std::size_t i = 0 ; i < Dimension ; i++)
+Position[i] /= static_cast<CoordinateType>(SearchUtils::PointerDistance(PointsBegin,PointsEnd));
+}
+};
+
+
+template< std::size_t Dimension, class PointType, class IteratorType, class CoordinateType >
+class OcTreeMidPointSplit
+{
+public:
+void operator()( PointType& Position, PointType const& MinPoint, PointType const& MaxPoint, IteratorType const& PointsBegin, IteratorType const& PointsEnd )
+{
+for(std::size_t i = 0 ; i < Dimension ; i++)
+Position[i] = (MaxPoint[i] + MinPoint[i]) * 0.500;
+}
+};
+
+
+
+
+template< class TLeafType >
+class OCTreePartition : public TreeNode< TLeafType::Dimension,
+typename TLeafType::PointType,
+typename TLeafType::PointerType,
+typename TLeafType::IteratorType,
+typename TLeafType::DistanceIteratorType >
+{
+public:
+
+KRATOS_CLASS_POINTER_DEFINITION(OCTreePartition);
+
+typedef TLeafType LeafType;
+
+typedef typename LeafType::PointType PointType;
+
+typedef typename LeafType::ContainerType ContainerType;
+
+typedef typename LeafType::IteratorType IteratorType;
+
+typedef typename LeafType::DistanceIteratorType DistanceIteratorType;
+
+typedef typename LeafType::PointerType PointerType;
+
+typedef typename LeafType::DistanceFunction DistanceFunction;
+
+enum { Dimension = LeafType::Dimension };
+
+typedef TreeNode<Dimension, PointType, PointerType, IteratorType, DistanceIteratorType> TreeNodeType;
+
+typedef typename TreeNodeType::CoordinateType CoordinateType;
+
+typedef typename TreeNodeType::SizeType SizeType;
+
+typedef typename TreeNodeType::IndexType IndexType;
+
+typedef OcTreeAverageSplit<Dimension,PointType,IteratorType,CoordinateType>  AverageSplit;
+typedef OcTreeMidPointSplit<Dimension,PointType,IteratorType,CoordinateType> MidPointSplit;
+
+typedef typename LeafType::SearchStructureType SearchStructureType;
+
+static const SizeType number_of_childs = 1 << Dimension;
+
+
+
+
+OCTreePartition(IteratorType PointsBegin, IteratorType PointsEnd,
+PointType const& MinPoint, PointType const& MaxPoint,  SizeType BucketSize = 1)
+{
+
+PointType mid_cell_lenght;
+
+SizeType TempSize = SearchUtils::PointerDistance(PointsBegin,PointsEnd);
+PointerType* Temp = new PointerType[ TempSize ];
+
+AverageSplit()(mPosition,MinPoint,MaxPoint,PointsBegin,PointsEnd);
+
+SizeType cell_sizes[number_of_childs];
+
+IteratorType cell_position[number_of_childs];
+
+for(IndexType i = 0 ; i < number_of_childs ; i++)
+cell_sizes[i] = 0;
+
+PointerType* i_temp = Temp;
+for(IteratorType i_point = PointsBegin ; i_point < PointsEnd ; i_point++, i_temp++)
+{
+*i_temp = *i_point;
+IndexType child_index = GetChildIndex(**i_point);
+cell_sizes[child_index]++;
+}
+
+cell_position[0] = PointsBegin;
+for(IndexType i = 1 ; i < number_of_childs ; i++)
+{
+cell_position[i] = cell_position[i-1];
+std::advance(cell_position[i], cell_sizes[i-1]);
+}
+
+for(PointerType* i_point = Temp ; i_point < Temp+TempSize ; i_point++)
+{
+IndexType child_index = GetChildIndex(**i_point);
+*(cell_position[child_index]++) = *i_point;
+}
+
+if(cell_sizes[0] > BucketSize)
+mpChilds[0]= new OCTreePartition(PointsBegin, cell_position[0], MinPoint, mPosition, BucketSize);
+else
+mpChilds[0]= new LeafType(PointsBegin, cell_position[0]);
+
+PointType new_min_point;
+PointType new_max_point;
+
+for(IndexType i = 1 ; i < number_of_childs ; i++)
+{
+if(cell_sizes[i] > BucketSize)
+{
+IndexType factor = 1;
+for(IndexType j = 0 ; j < Dimension ; j++)
+{
+if(i & factor)
+{
+new_min_point[j] = mPosition[j];
+new_max_point[j] = MaxPoint[j];
+}
+else
+{
+new_min_point[j] = MinPoint[j];
+new_max_point[j] = mPosition[j];
+}
+factor <<= 1;
+}
+
+mpChilds[i]= new OCTreePartition(cell_position[i-1], cell_position[i],
+new_min_point , new_max_point,  BucketSize);
+}
+else
+mpChilds[i]= new LeafType(cell_position[i-1], cell_position[i]);
+
+}
+
+}
+
+void PrintData(std::ostream& rOStream, std::string const& Perfix = std::string()) const override
+{
+rOStream << Perfix << "Partition at point (" << mPosition[0];
+for(IndexType j = 0 ; j < Dimension - 1 ; j++)
+rOStream << "," << mPosition[j];
+rOStream << std::endl;
+
+for(SizeType j = 0 ; j < number_of_childs ; j++)
+mpChilds[j]->PrintData(rOStream, Perfix + "  ");
+
+}
+
+virtual ~OCTreePartition()
+{
+
+for(SizeType i = 0 ; i < number_of_childs ; i++)
+delete mpChilds[i];
+}
+
+
+void SearchNearestPoint(PointType const& ThisPoint, PointerType& Result, CoordinateType& rResultDistance) override
+{
+CoordinateType distances_to_partitions[number_of_childs];
+
+SizeType child_index = GetChildIndex(ThisPoint);
+
+mpChilds[child_index]->SearchNearestPoint(ThisPoint, Result, rResultDistance);
+
+DistanceToPartitions(child_index, ThisPoint, distances_to_partitions);
+
+for(SizeType i = 0 ; i < number_of_childs ; i++)
+if((i != child_index) && (distances_to_partitions[i] < rResultDistance))
+mpChilds[i]->SearchNearestPoint(ThisPoint, Result, rResultDistance);
+
+}
+
+void SearchInRadius(PointType const& ThisPoint, CoordinateType const& Radius, CoordinateType const& Radius2, IteratorType& Results,
+DistanceIteratorType& ResultsDistances, SizeType& NumberOfResults, SizeType const& MaxNumberOfResults) override
+{
+SizeType child_index = GetChildIndex(ThisPoint);
+
+mpChilds[child_index]->SearchInRadius(ThisPoint, Radius, Radius2, Results, ResultsDistances, NumberOfResults, MaxNumberOfResults);
+
+CoordinateType distances_to_partitions[number_of_childs];
+
+DistanceToPartitions(child_index, ThisPoint, distances_to_partitions);
+
+for(IndexType i = 0 ; i < number_of_childs ; i++)
+if((i != child_index) && (distances_to_partitions[i] < Radius2))
+mpChilds[i]->SearchInRadius(ThisPoint, Radius, Radius2, Results, ResultsDistances, NumberOfResults, MaxNumberOfResults);
+}
+
+void SearchInRadius(PointType const& ThisPoint, CoordinateType const& Radius, CoordinateType const& Radius2, IteratorType& Results,
+SizeType& NumberOfResults, SizeType const& MaxNumberOfResults) override
+{
+SizeType child_index = GetChildIndex(ThisPoint);
+
+mpChilds[child_index]->SearchInRadius(ThisPoint, Radius, Radius2, Results, NumberOfResults, MaxNumberOfResults);
+
+CoordinateType distances_to_partitions[number_of_childs];
+
+DistanceToPartitions(child_index, ThisPoint, distances_to_partitions);
+
+for(IndexType i = 0 ; i < number_of_childs ; i++)
+if((i != child_index) && (distances_to_partitions[i] < Radius2))
+mpChilds[i]->SearchInRadius(ThisPoint, Radius, Radius2, Results, NumberOfResults, MaxNumberOfResults);
+}
+
+
+private:
+
+IndexType GetChildIndex(PointType const& rThisPoint) const
+{
+IndexType child_index = 0;
+const IndexType dim_mask[] = { 1, 2, 4 };
+
+for( IndexType i = 0 ; i < Dimension ; i++)
+if( rThisPoint[i] >= mPosition[i] ) child_index += dim_mask[i];
+
+return child_index;
+}
+
+void DistanceToPartitions(IndexType ContainingChildIndex, PointType const& rThisPoint, CoordinateType rDistances[]) const
+{
+const IndexType coordinate_mask[] = { 1, 2, 4 };
+
+CoordinateType offset_from_postition[Dimension];
+
+for(IndexType j = 0 ; j < Dimension ; j++)
+{
+CoordinateType temp = rThisPoint[j] - mPosition[j];
+offset_from_postition[j] = temp*temp;
+}
+
+for(IndexType i = 0 ; i < number_of_childs ; i++)
+{
+rDistances[i] = 0.00; 
+
+IndexType partitions = ContainingChildIndex^i;
+
+for(IndexType j = 0 ; j < Dimension ; j++)
+if(coordinate_mask[j] & partitions) rDistances[i] += offset_from_postition[j];
+}
+
+}
+
+private:
+
+IndexType mCutingDimension;
+PointType mPosition; 
+
+TreeNodeType* mpChilds[8];  
+
+
+
+public:
+static TreeNodeType* Construct(IteratorType PointsBegin,
+IteratorType PointsEnd,
+PointType HighPoint,
+PointType LowPoint,
+SizeType BucketSize)
+{
+SizeType number_of_points = SearchUtils::PointerDistance(PointsBegin,PointsEnd);
+if (number_of_points == 0)
+return NULL;
+else if (number_of_points <= BucketSize)
+{
+return new LeafType(PointsBegin, PointsEnd);
+}
+else
+{
+return new OCTreePartition(PointsBegin, PointsEnd, LowPoint, HighPoint, BucketSize);
+}
+}
+
+};
+
+
+}  
+
+

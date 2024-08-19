@@ -1,0 +1,1 @@
+#pragma weak int = foo

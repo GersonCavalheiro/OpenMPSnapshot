@@ -1,0 +1,23 @@
+#pragma once
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "weight_defs_DOUBLE.h"
+typedef struct cellarray_DOUBLE cellarray_DOUBLE;
+struct cellarray_DOUBLE{
+int64_t nelements;
+DOUBLE *x;
+DOUBLE *y;
+DOUBLE *z;
+weight_struct_DOUBLE weights;
+DOUBLE xbounds[2];
+DOUBLE ybounds[2];
+DOUBLE zbounds[2];
+int64_t *original_index;
+uint8_t owns_memory;
+uint8_t unused[7];
+};
+#ifdef __cplusplus
+}
+#endif

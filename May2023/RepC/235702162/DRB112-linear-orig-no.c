@@ -1,0 +1,22 @@
+#include <stdio.h>
+int main()
+{
+int len=100;
+double a[len], b[len], c[len];
+int i,j=0;
+#pragma omp parallel for private(i ) 
+for (i=0;i<len;i++)
+{
+a[i]=((double)i)/2.0; 
+b[i]=((double)i)/3.0; 
+c[i]=((double)i)/7.0; 
+}
+#pragma omp parallel for private(i ) linear(j ) 
+for (i=0;i<len;i++)
+{
+c[j]+=a[i]*b[i];
+j++;
+}
+printf ("c[50]=%f\n",c[50]);
+return 0;
+}

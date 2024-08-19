@@ -1,0 +1,38 @@
+#ifndef BOOST_SMART_PTR_DETAIL_SP_NOEXCEPT_HPP_INCLUDED
+#define BOOST_SMART_PTR_DETAIL_SP_NOEXCEPT_HPP_INCLUDED
+
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+# pragma once
+#endif
+
+
+#include <boost/config.hpp>
+
+
+#if defined( BOOST_MSVC ) && BOOST_MSVC >= 1700 && BOOST_MSVC < 1900
+
+#  define BOOST_SP_NOEXCEPT BOOST_NOEXCEPT_OR_NOTHROW
+
+#else
+
+#  define BOOST_SP_NOEXCEPT BOOST_NOEXCEPT
+
+#endif
+
+
+#if defined(BOOST_DISABLE_ASSERTS) || ( defined(BOOST_ENABLE_ASSERT_DEBUG_HANDLER) && defined(NDEBUG) )
+
+#  define BOOST_SP_NOEXCEPT_WITH_ASSERT BOOST_SP_NOEXCEPT
+
+#elif defined(BOOST_ENABLE_ASSERT_HANDLER) || ( defined(BOOST_ENABLE_ASSERT_DEBUG_HANDLER) && !defined(NDEBUG) )
+
+#  define BOOST_SP_NOEXCEPT_WITH_ASSERT
+
+#else
+
+#  define BOOST_SP_NOEXCEPT_WITH_ASSERT BOOST_SP_NOEXCEPT
+
+#endif
+
+#endif  

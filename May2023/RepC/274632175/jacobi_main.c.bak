@@ -1,0 +1,84 @@
+#include "jacobi_main.h"
+#include "hbext.h"
+#include "jacobi_kernels.h"
+#define MAX_ITER 1000
+extern long iter;
+extern int dim0;
+extern int dim;
+int jacobi_main_csr(hbmat_t *Acsr, double *x, double *b, int bs){
+int M = Acsr->m; int N = Acsr->n;
+int *vdiag = Acsr->vdiag;
+int *vptr = Acsr->vptr; int *vpos = Acsr->vpos; hbmat_t **vval = Acsr->vval;
+int converge = 0;
+hbmat_t *Adiag, *Adiag0, *Acurrent;
+hbmat_t **diagL = malloc(N * sizeof(hbmat_t*) );
+double *vtmp = malloc(dim * sizeof(double));
+double *ltmp = malloc(N * N * bs * sizeof(double));
+double *x0 = malloc(N * bs* sizeof(double*));
+double *x1 = malloc(dim * sizeof(double));
+hbmat_t **A0 = malloc(dim *sizeof(hbmat_t*));
+int **etree0 = malloc(dim * sizeof(int*));
+int k;
+for(k =0; k < N * N * bs; ++k)
+ltmp[k] = 0.0;
+for(k = 0; k < dim; ++k){
+vtmp[k] = 0.0;
+}
+int *work = malloc(N * N * sizeof(int));
+int I;
+for ( I = 0; I < N; ++I ) {
+etree0[I] = etree(vval[vdiag[I]]);
+A0[I] = hb2hbh_hyper_sym_csr(vval[vdiag[I]], bs, etree0[I]);
+diagL[I] = ((hbmat_t**)A0[I]->vval)[0];
+diagL[I]->CHOL_L = 0;
+diagL[I]->str_chol_l = hb_malloc_copy(diagL[I]);
+}
+for ( I = 0; I < N; ++I ) {
+for ( int J = vptr[I]; J < vptr[I+1]; ++J ) {
+if ( vpos[J] != I ){
+Acurrent = vval[J];
+jacobi_dgemv_csr( Acurrent, &(x[vpos[J] * bs]), &(vtmp[I * bs]) );
+}
+}
+jacobi_dsubvv1( b, vtmp, I, bs );
+jacobi_dtrsm_csr( "N", diagL[I], &(vtmp[I * bs]), &(x0[I*bs]));
+jacobi_dtrsm_csr( "T", diagL[I], &(x0[I*bs]), &(x1[I*bs]) );
+}
+#pragma omp taskwait
+for ( int k = 0; k < dim; ++k) {
+x[k] = x1[k];
+}
+iter = 0;
+while(!converge && iter < MAX_ITER) {
+++iter;
+for(int k = 0; k < dim; ++k){
+vtmp[k] = 0.0;
+}
+for ( int I = 0; I < N; ++I ) {
+for ( int J = vptr[I]; J < vptr[I+1]; ++J ) {
+if ( vpos[J] != I ){
+Acurrent = vval[J];
+jacobi_dgemv_csr( Acurrent, &(x[vpos[J] * bs]), &(vtmp[I * bs]) );
+}
+}
+jacobi_dsubvv1( b, vtmp, I, bs );
+jacobi_dtrsm_csr( "N", diagL[I], &(vtmp[I * bs]), &(x0[I*bs]) );
+jacobi_dtrsm_csr( "T", diagL[I], &(x0[I*bs]), &(x1[I*bs]) );
+}
+#pragma omp taskwait
+for ( int k = 0; k < dim; ++k) {
+vtmp[k] = x1[k];
+}
+converge = 1;
+for ( int k = 0; k < dim0 && converge; ++k) {
+if ( x[k] - vtmp[k] ) 
+converge = 0;
+}
+for ( int k = 0; k < dim; ++k) {
+x[k] = vtmp[k];
+}
+converge = 0;
+}
+free(x0); free(x1);
+return 0;
+}

@@ -1,0 +1,35 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+#error Please change the author fullname and if your license is different please state it above
+#error Please remove these error pragmas
+
+
+
+
+
+
+
+
+#include "testing/testing.h"
+
+
+namespace Kratos::Testing {
+
+#error Please change the TestCaseName to the name of your test case
+KRATOS_TEST_CASE(TestCaseName)
+{
+
+}
+
+} 

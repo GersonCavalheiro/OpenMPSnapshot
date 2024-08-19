@@ -1,0 +1,90 @@
+void onMultLineBlockProd(int m_ar, int m_br, int b, int t, int tn, double *pha, double *phb, double *phc)
+{
+
+	int blockNo;
+	int limBlocks = m_ar * m_br / b;
+
+	for (blockNo = tn; blockNo < limBlocks; blockNo += t)
+	{
+		int iIni = blockNo * b / m_ar;
+		int jIni = blockNo * b % m_ar;
+		int start = iIni * m_ar + jIni;
+
+		int lim = start + b;
+		if (lim >= sizeof(pha))
+			lim = sizeof(pha);
+
+		
+		for (int index = start; index < lim; index++)
+		{
+			int i = index / m_ar;
+			int j = index % m_ar;
+			for (int k = 0; k < m_ar; k++)
+			{
+				phc[i * m_ar + k] += pha[i * m_ar + j] * phb[j * m_br + k];
+			}
+		}
+	}
+}
+
+void onMultLineBlock(int m_ar, int m_br, int block)
+{
+
+	double Time1, Time2;
+
+	char st[100];
+	double temp;
+	int i, j, k;
+
+	double *pha, *phb, *phc;
+
+	pha = (double *)malloc((m_ar * m_ar) * sizeof(double));
+	phb = (double *)malloc((m_ar * m_ar) * sizeof(double));
+	phc = (double *)malloc((m_ar * m_ar) * sizeof(double));
+
+	for (i = 0; i < m_ar; i++)
+	{
+		for (j = 0; j < min(10, m_br); j++)
+			phc[j] = 0;
+	}
+
+	for (i = 0; i < m_ar; i++)
+		for (j = 0; j < m_ar; j++)
+			pha[i * m_ar + j] = (double)1.0;
+
+	for (i = 0; i < m_br; i++)
+		for (j = 0; j < m_br; j++)
+			phb[i * m_br + j] = (double)(i + 1);
+
+	Time1 = omp_get_wtime();
+
+#pragma omp parallel for
+	for (i = 0; i < t; i++)
+	{
+		onMultLineBlockProd(m_ar, m_br, b, t, i, pha, phb, phc);
+	}
+
+	Time2 = omp_get_wtime();
+
+	
+	
+	
+	
+	
+
+	
+	
+	
+
+	sprintf(st, "Time: %3.6f seconds\n", Time2 - Time1);
+	cout << st;
+
+	myfile << "\t" << st;
+
+	free(pha);
+	free(phb);
+	free(phc);
+}
+
+onMultLineBlock(line_start + i * increment, col_start + i * increment, block_no, thread_no);
+

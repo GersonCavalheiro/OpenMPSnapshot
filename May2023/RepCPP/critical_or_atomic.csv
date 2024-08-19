@@ -1,0 +1,922 @@
+Arquivo@Número da Linha@Caso@Diretiva OpenMP@Linha Seguinte
+./162153281/kMeans1.cpp@67@ATOMIC@#pragma omp atomic@l++;
+./107320494/host_matrix_csr.cpp@4488@ATOMIC@#pragma omp atomic@"#endif
+cast_w->vec_[col] += 1.0f;
+}
+}
+
+if(global == true)
+{
+PtrType gst_row_begin = cast_gst->mat_.row_offset[i];
+PtrType gst_row_end   = cast_gst->mat_.row_offset[i + 1];
+"
+./107320494/host_matrix_csr.cpp@4509@ATOMIC@#pragma omp atomic@"#endif
+cast_w->vec_[col + this->nrow_] += 1.0f;
+}
+}
+}
+}
+
+return true;
+}
+"
+./438564376/OMP_Counting_words.cpp@11@ATOMIC@#pragma omp atomic update@"if ((isspace(argv[1][i])) && !(isspace(argv[1][i+1])))
+num_words ++;
+}
+printf(""Num words = %d\n"", num_words+1);
+}"
+./142172127/producer-consumer.cpp@73@ATOMIC@#pragma omp atomic read@flag_tmp = flag;
+./115144968/bare_concurrent_container.h@162@ATOMIC@#pragma omp atomic@total_size += ostrs[i].size();
+./115144968/bare_concurrent_map.h@237@ATOMIC@#pragma omp atomic@total_size += ostrs[i].size();
+./546806621/omp_atomic.c@60@ATOMIC@#pragma omp atomic write@maxval = numbers[i];
+./546806621/omp_atomic.c@70@ATOMIC@#pragma omp atomic@num_n0++;
+./546806621/parallel.c@65@ATOMIC@#pragma omp atomic@num_n0++;
+./538481564/omp10.cpp@29@ATOMIC@#pragma omp atomic@count++;
+./439117495/tree_mesh_builder.cpp@54@ATOMIC@#pragma omp atomic update@totalTriangles += generateOctree(field, mGridSizeMid, nextPosition);
+./632610376/main.cpp@66@ATOMIC@#pragma omp atomic@sum++;
+./632610376/main.cpp@73@ATOMIC@#pragma omp atomic@sum--;
+./632610376/main.cpp@131@ATOMIC@#pragma omp atomic@sum += tmpSum;
+./632610376/main.cpp@141@ATOMIC@#pragma omp atomic@sum += tmpSum;
+./79154277/dot_product.cpp@25@ATOMIC@#pragma omp atomic@result += my_result;
+./79154277/false_sharing3.cpp@37@ATOMIC@#pragma omp atomic@odds += result[p];
+./79154277/false_sharing1.cpp@31@ATOMIC@#pragma omp atomic@odds += result[p];
+./79154277/false_sharing2.cpp@29@ATOMIC@#pragma omp atomic@odds += odds_mine;
+./201914841/spatial_index.h@416@ATOMIC@#pragma omp atomic@++buckets[j][digit];
+./330808759/min_examples.cpp@287@ATOMIC@#pragma omp atomic@x += 1;
+./544987708/JobsQueue.h@81@ATOMIC@#pragma omp atomic@numProducers--;
+./127241896/main.cpp@58@ATOMIC@#pragma omp atomic@histogramArray[getColor(i).getValue()]++;
+./127241896/main.cpp@76@ATOMIC@#pragma omp atomic@histogramArray[getColor(getPixel(b_size, _block, i, j)).getValue()]++;
+./311134324/MultiplyMatrixParallel.h@25@ATOMIC@#pragma omp atomic@*value += increment;
+./61810048/Histogram.cpp@96@ATOMIC@#pragma omp atomic@output_array[ind] += double_buffer[ipart];
+./61810048/DiagnosticScalar.h@50@ATOMIC@#pragma omp atomic@( *values_ )[index]+=v;
+./61810048/DiagnosticRadiationSpectrum.cpp@161@ATOMIC@#pragma omp atomic@data_sum[ind+i] += increment;
+./133093266/main_q1.cpp@39@ATOMIC@#pragma omp atomic@sums[0] +=sums_th[0];
+./133093266/main_q1.cpp@41@ATOMIC@#pragma omp atomic@sums[1] += sums_th[1];
+./46390503/stream.c@167@ATOMIC@#pragma omp atomic@k++;
+./227389214/tree_mesh_builder.cpp@37@ATOMIC@#pragma omp atomic update@sum += res_sum;
+./354394776/main.cpp@35@ATOMIC@#pragma omp atomic@resultado = resultado + vetor[i];
+./318024551/papiwrapperutil.h@606@ATOMIC@#pragma omp atomic@values[i] += localVal;
+./164461391/neuron.h@78@ATOMIC@#pragma omp atomic@optimization[i]->derivative += enter[i] * d_res_function_multiplied_error;
+./164461391/neuron.h@82@ATOMIC@#pragma omp atomic@optimization.back()->derivative -= d_res_function_multiplied_error;
+./154528299/cpp_omp_sample.cpp@103@ATOMIC@#pragma omp atomic@total = total + myid ;
+./332196772/Cluster.h@48@ATOMIC@#pragma omp atomic update@N_points++;
+./332196772/Cluster.h@52@ATOMIC@#pragma omp atomic update@tot_coord_y += pt.get_y();
+./113714836/adaptive_maxpool_2d.h@92@ATOMIC@#pragma omp atomic@grad_input[inp_offset + idx] += pixv(g_out_nc, out_W, y, x);
+./113714836/adaptive_avgpool_2d.h@98@ATOMIC@#pragma omp atomic@pixv(grad_input_nc, inp_W, i, j) += val;
+./298775055/MeshGenerator.cpp@161@ATOMIC@#pragma omp atomic capture@indexOffset = _counter++;
+./298775055/MeshGenerator.cpp@196@ATOMIC@#pragma omp atomic capture@indexOffset = _counter++;
+./298775055/MeshGenerator.cpp@231@ATOMIC@#pragma omp atomic capture@indexOffset = _counter++;
+./131303714/fixed_pagerank.cpp@41@ATOMIC@#pragma omp atomic@g[*neighbors.first].fixed_value += update;
+./131303714/pagerank.cpp@39@ATOMIC@#pragma omp atomic@g[*neighbors.first].value += update;
+./172961883/main.cpp@124@ATOMIC@#pragma omp atomic@sum += _temp_sum;
+./172961883/main.cpp@166@ATOMIC@#pragma omp atomic@sum += _temp_sum;
+./576609870/modularity.hxx@75@ATOMIC@#pragma omp atomic@cin[c] += w;
+./576609870/modularity.hxx@78@ATOMIC@#pragma omp atomic@ctot[c] += w;
+./142054383/5.c@59@ATOMIC@#pragma omp atomic@Sum = Sum + partial_sum;
+./142054383/5v1.c@38@ATOMIC@#pragma omp atomic@
+./268889840/omp_atomic.cpp@29@ATOMIC@#pragma omp atomic@dot_prod += a[i]*b[i];
+./440081601/util.cpp@8@ATOMIC@#pragma omp atomic@a += b;
+./218161285/CT_OMP_TARGET_IMPL.c@22@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[IDX[i]];
+ARRAY[IDX[i]] += 1;
+}
+}
+}
+}
+}
+
+void STRIDE1_ADD( uint64_t *restrict ARRAY,"
+./218161285/CT_OMP_TARGET_IMPL.c@46@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[i];
+ARRAY[i] += 1;
+}
+}
+}
+}
+}
+
+void STRIDEN_ADD( uint64_t *restrict ARRAY,"
+./218161285/CT_OMP_TARGET_IMPL.c@71@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[i];
+ARRAY[i] += 1;
+}
+}
+}
+}
+}
+
+"
+./218161285/CT_OMP_TARGET_IMPL.c@96@ATOMIC@#pragma omp atomic capture@"{
+start = IDX[start];
+IDX[start] += zero;
+}
+}
+}
+}
+
+void SG_ADD( uint64_t *restrict ARRAY,
+uint64_t *restrict IDX,"
+./218161285/CT_OMP_TARGET_IMPL.c@126@ATOMIC@#pragma omp atomic capture@"{
+src = IDX[i];
+IDX[i] += zero;
+}
+
+#pragma omp atomic capture
+{
+dest = IDX[i+1];
+IDX[i+1] += zero;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@132@ATOMIC@#pragma omp atomic capture@"{
+dest = IDX[i+1];
+IDX[i+1] += zero;
+}
+
+#pragma omp atomic capture
+{
+val = ARRAY[src];
+ARRAY[src] += 1;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@138@ATOMIC@#pragma omp atomic capture@"{
+val = ARRAY[src];
+ARRAY[src] += 1;
+}
+
+#pragma omp atomic capture
+{
+ret = ARRAY[dest];
+ARRAY[dest] += val;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@144@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[dest];
+ARRAY[dest] += val;
+}
+}
+}
+}
+}
+
+void CENTRAL_ADD( uint64_t *restrict ARRAY,"
+./218161285/CT_OMP_TARGET_IMPL.c@167@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[0];
+ARRAY[0] += 1;
+}
+}
+}
+}
+}
+
+void SCATTER_ADD( uint64_t *restrict ARRAY,"
+./218161285/CT_OMP_TARGET_IMPL.c@197@ATOMIC@#pragma omp atomic capture@"{
+dest = IDX[i+1];
+IDX[i+1] += zero;
+}
+
+#pragma omp atomic capture
+{
+val = ARRAY[i];
+ARRAY[i] += 1;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@203@ATOMIC@#pragma omp atomic capture@"{
+val = ARRAY[i];
+ARRAY[i] += 1;
+}
+
+#pragma omp atomic capture
+{
+ret = ARRAY[dest];
+ARRAY[dest] += val;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@209@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[dest];
+ARRAY[dest] += val;
+}
+}
+}
+}
+}
+
+void GATHER_ADD( uint64_t *restrict ARRAY,"
+./218161285/CT_OMP_TARGET_IMPL.c@239@ATOMIC@#pragma omp atomic capture@"{
+dest = IDX[i+1];
+IDX[i+1] += zero;
+}
+
+#pragma omp atomic capture
+{
+val = ARRAY[dest];
+ARRAY[dest] += 1;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@245@ATOMIC@#pragma omp atomic capture@"{
+val = ARRAY[dest];
+ARRAY[dest] += 1;
+}
+
+#pragma omp atomic capture
+{
+ret = ARRAY[i];
+ARRAY[i] += val;
+}"
+./218161285/CT_OMP_TARGET_IMPL.c@251@ATOMIC@#pragma omp atomic capture@"{
+ret = ARRAY[i];
+ARRAY[i] += val;
+}
+}
+}
+}
+}
+
+"
+./434037739/Day19.cpp@191@ATOMIC@#pragma omp atomic update@++all_done;
+./79063435/GeneralMatrixMatrix.h@120@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./510426841/main.cpp@57@ATOMIC@#pragma omp atomic@attempts++;
+./212375578/10.cpp@14@ATOMIC@#pragma omp atomic@count += 1;
+./548297608/task03.cpp@26@ATOMIC@#pragma omp atomic@a -= omp_get_thread_num();
+./548297608/task10.cpp@20@ATOMIC@#pragma omp atomic@counter++;
+./419120644/test.cpp@55@ATOMIC@#pragma omp atomic@result += tmp;
+./269819313/main_threads.cpp@131@ATOMIC@#pragma omp atomic@k++;
+./368544377/advanced_synchronisation.cpp@27@ATOMIC@#pragma omp atomic update@++total ;
+./210781113/phasechanges.cxx@214@ATOMIC@#pragma omp atomic@--elemmarkers[e][current_mt];
+./210781113/phasechanges.cxx@216@ATOMIC@#pragma omp atomic@++elemmarkers[e][new_mt];
+./245904983/Matrix.h@547@ATOMIC@#pragma omp atomic@shared_buff[j] += _matrix[k+i*_cols] * other(k, j);
+./245904983/Matrix.h@606@ATOMIC@#pragma omp atomic@res(0, j) += _matrix[j+i*_cols];
+./245904983/Matrix.h@1026@ATOMIC@#pragma omp atomic write@res = false;
+./249790277/reorient_facets_raycast.cpp@158@ATOMIC@#pragma omp atomic@C_vote_parity[c].first  += hits_front.size() % 2;
+./249790277/reorient_facets_raycast.cpp@160@ATOMIC@#pragma omp atomic@C_vote_parity[c].second += hits_back .size() % 2;
+./249790277/reorient_facets_raycast.cpp@166@ATOMIC@#pragma omp atomic@C_vote_infinity[c].first++;
+./249790277/reorient_facets_raycast.cpp@169@ATOMIC@#pragma omp atomic@C_vote_distance[c].first += hits_front[0].t;
+./249790277/reorient_facets_raycast.cpp@175@ATOMIC@#pragma omp atomic@C_vote_infinity[c].second++;
+./249790277/reorient_facets_raycast.cpp@178@ATOMIC@#pragma omp atomic@C_vote_distance[c].second += hits_back[0].t;
+./249790277/histc.cpp@23@ATOMIC@#pragma omp atomic@N(B(j))++;
+./399664768/graph.hpp@296@ATOMIC@#pragma omp atomic read@m_c = mate_[edge.edge_->tail_];
+./399664768/graph.hpp@298@ATOMIC@#pragma omp atomic read@m_m_c = mate_[mate_[edge.edge_->tail_]];
+./399664768/graph.hpp@330@ATOMIC@#pragma omp atomic read@match_x = matched_[x];
+./399664768/graph.hpp@333@ATOMIC@#pragma omp atomic read@mate_x = mate_[x];
+./399664768/graph.hpp@344@ATOMIC@#pragma omp atomic write@mate_[x] = x_max_edge.tail_;
+./399664768/graph.hpp@347@ATOMIC@#pragma omp atomic read@y = mate_[x];
+./399664768/graph.hpp@354@ATOMIC@#pragma omp atomic read@mate_y = mate_[y];
+./399664768/graph.hpp@362@ATOMIC@#pragma omp atomic capture@idx = seq++;
+./399664768/graph.hpp@368@ATOMIC@#pragma omp atomic capture@idx = seq++;
+./399664768/graph.hpp@374@ATOMIC@#pragma omp atomic write@matched_[x] = '1';
+./399664768/graph.hpp@377@ATOMIC@#pragma omp atomic write@matched_[y] = '1';
+./399664768/graph.hpp@421@ATOMIC@#pragma omp atomic write@mate_[v] = max_edge.tail_;
+./399664768/graph.hpp@424@ATOMIC@#pragma omp atomic read@u = mate_[v];
+./399664768/graph.hpp@431@ATOMIC@#pragma omp atomic read@mate_u = mate_[u];
+./399664768/graph.hpp@440@ATOMIC@#pragma omp atomic capture@idx = seq++;
+./399664768/graph.hpp@446@ATOMIC@#pragma omp atomic capture@idx = seq++;
+./399664768/graph.hpp@451@ATOMIC@#pragma omp atomic write@matched_[u] = '1';
+./399664768/graph.hpp@454@ATOMIC@#pragma omp atomic write@matched_[v] = '1';
+./479203996/louvain.hpp@300@ATOMIC@#pragma omp atomic update@localCupdate[localTarget].degree += vDegree[i];
+./479203996/louvain.hpp@302@ATOMIC@#pragma omp atomic update@localCupdate[localTarget].size++;
+./479203996/louvain.hpp@304@ATOMIC@#pragma omp atomic update@localCupdate[cc].degree -= vDegree[i];
+./479203996/louvain.hpp@306@ATOMIC@#pragma omp atomic update@localCupdate[cc].size--;
+./216350647/Program.cpp@51@ATOMIC@#pragma omp atomic@"result += Integrate(a, a + difference, n, f);
+}
+
+#pragma omp section
+{
+#pragma omp atomic
+result += Integrate(a + difference, a + 2 * difference, n, f);
+}
+
+#pragma omp section"
+./216350647/Program.cpp@57@ATOMIC@#pragma omp atomic@"result += Integrate(a + difference, a + 2 * difference, n, f);
+}
+
+#pragma omp section
+{
+#pragma omp atomic
+result += Integrate(a + 2 * difference, a + 3 * difference, n, f);
+}
+
+#pragma omp section"
+./216350647/Program.cpp@63@ATOMIC@#pragma omp atomic@"result += Integrate(a + 2 * difference, a + 3 * difference, n, f);
+}
+
+#pragma omp section
+{
+#pragma omp atomic
+result += Integrate(a + 3 * difference, b, n, f);
+}
+}
+return result;"
+./216350647/Program.cpp@69@ATOMIC@#pragma omp atomic@"result += Integrate(a + 3 * difference, b, n, f);
+}
+}
+return result;
+}
+static void PreSet(int n) {
+std::cout << std::setprecision(12);
+omp_set_num_threads(n);
+omp_set_nested(true);
+}"
+./209143275/omptest.cpp@40@ATOMIC@#pragma omp atomic@fp_ops+=4;
+./209143275/omptest.cpp@53@ATOMIC@#pragma omp atomic@fp_ops+=1;
+./209143275/unparser.cpp@359@ATOMIC@"unparser->ofs << ""#pragma omp atomic\n"";"@MAKE_INDENT;
+./209143275/main.cpp@39@ATOMIC@#pragma omp atomic@x[0]+=x[0];
+./209143275/main.cpp@58@ATOMIC@#pragma omp atomic@x[0]+=x[0];
+./209143275/main.cpp@66@ATOMIC@#pragma omp atomic@x[0]+=-a1_STACKf.top();
+./209143275/main.cpp@92@ATOMIC@#pragma omp atomic@x[0]+=x[0];
+./81815495/reduction_builder_and_solver.hpp@907@ATOMIC@#pragma omp atomic@b_value += rhs_value;
+./81815495/reduction_builder_and_solver.hpp@924@ATOMIC@#pragma omp atomic@b_value += rhs_value;
+./81815495/reduction_builder_and_solver.hpp@932@ATOMIC@#pragma omp atomic@b_value += rhs_value;
+./81815495/qs_convection_diffusion_explicit_cpp_template.cpp@142@ATOMIC@#pragma omp atomic@r_geometry[i_node].FastGetSolutionStepValue(reaction_variable) += rhs[i_node];
+./81815495/qs_convection_diffusion_explicit_cpp_template.cpp@232@ATOMIC@#pragma omp atomic@r_geometry[i_node].GetValue(rVariable) += rhs_oss[i_node];
+./81815495/d_convection_diffusion_explicit.cpp@96@ATOMIC@#pragma omp atomic@r_geometry[i_node].FastGetSolutionStepValue(reaction_variable) += rhs[i_node];
+./81815495/d_convection_diffusion_explicit.cpp@162@ATOMIC@#pragma omp atomic@r_geometry[i_node].GetValue(rVariable) += rhs_oss[i_node];
+./81815495/helmholtz_thickness.h@559@ATOMIC@#pragma omp atomic@rgeom[i_node].FastGetSolutionStepValue(rVariable) += (rWeight * rValues[i_node]);
+./81815495/U_Pw_condition.cpp@326@ATOMIC@#pragma omp atomic@"r_external_force[j] += rRHSVector[index + j];
+}
+}
+} else if(rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == REACTION ) {
+
+for(SizeType i=0; i< TNumNodes; ++i) {
+SizeType index = (TDim + 1) * i;
+array_1d<double, 3 >& r_force_residual = rGeom[i].FastGetSolutionStepValue(FORCE_RESIDUAL);
+double& r_flux_residual = rGeom[i].FastGetSolutionStepValue(FLUX_RESIDUAL);
+"
+./81815495/U_Pw_condition.cpp@338@ATOMIC@#pragma omp atomic@"r_force_residual[j] += rRHSVector[index + j];
+}
+
+#pragma omp atomic
+r_flux_residual += rRHSVector[index + TDim];
+}
+}
+
+KRATOS_CATCH( """" )
+}"
+./81815495/U_Pw_condition.cpp@342@ATOMIC@#pragma omp atomic@r_flux_residual += rRHSVector[index + TDim];
+./81815495/linear_strain_energy_opt_response.h@195@ATOMIC@#pragma omp atomic@r_nodal_variable[0] += gradient_contribution[0];
+./81815495/linear_strain_energy_opt_response.h@197@ATOMIC@#pragma omp atomic@r_nodal_variable[1] += gradient_contribution[1];
+./81815495/linear_strain_energy_opt_response.h@199@ATOMIC@#pragma omp atomic@r_nodal_variable[2] += gradient_contribution[2];
+./81815495/linear_strain_energy_opt_response.h@261@ATOMIC@#pragma omp atomic@r_nodal_variable[0] += gradient_contribution[0];
+./81815495/linear_strain_energy_opt_response.h@263@ATOMIC@#pragma omp atomic@r_nodal_variable[1] += gradient_contribution[1];
+./81815495/linear_strain_energy_opt_response.h@265@ATOMIC@#pragma omp atomic@r_nodal_variable[2] += gradient_contribution[2];
+./81815495/linear_strain_energy_opt_response.h@294@ATOMIC@#pragma omp atomic@r_this_geometry[i_node].FastGetSolutionStepValue(KratosComponents<Variable<double>>::Get(material_gradien_name)) += d_pe_d_fd * inner_prod(d_RHS_d_E,lambda) / number_of_nodes;
+./81815495/linear_strain_energy_opt_response.h@322@ATOMIC@#pragma omp atomic@r_this_geometry[i_node].FastGetSolutionStepValue(KratosComponents<Variable<double>>::Get(thickness_gradien_name)) += d_ppt_d_ft * inner_prod(d_RHS_d_T,lambda) / number_of_nodes;
+./81815495/compute_nodal_value_process.cpp@142@ATOMIC@#pragma omp atomic@r_gradient[k] += rN * rGaussPointVolume * rGaussPointValue[k];
+./81815495/compute_nodal_value_process.cpp@154@ATOMIC@#pragma omp atomic@value += rN * rGaussPointVolume * rGaussPointValue;
+./81815495/helmholtz_material.h@546@ATOMIC@#pragma omp atomic@rgeom[i_node].FastGetSolutionStepValue(rVariable) += (rWeight * rValues[i_node]);
+./81815495/qs_convection_diffusion_explicit.cpp@142@ATOMIC@#pragma omp atomic@r_geometry[i_node].FastGetSolutionStepValue(reaction_variable) += rhs[i_node];
+./81815495/qs_convection_diffusion_explicit.cpp@232@ATOMIC@#pragma omp atomic@r_geometry[i_node].GetValue(rVariable) += rhs_oss[i_node];
+./81815495/truss_element.cpp@381@ATOMIC@#pragma omp atomic@r_nodal_mass += element_mass_vector(index);
+./81815495/truss_element.cpp@412@ATOMIC@#pragma omp atomic@"r_force_residual[j] += rRHSVector[index + j] - damping_residual_contribution[index + j];
+}
+}
+}
+else if (rDestinationVariable == NODAL_INERTIA) {
+
+VectorType mass_vector(nb_dofs);
+CalculateLumpedMassVector(mass_vector, rCurrentProcessInfo);
+
+for (IndexType i = 0; i < nb_nodes; ++i) {"
+./81815495/truss_element.cpp@427@ATOMIC@#pragma omp atomic@r_nodal_mass += mass_vector[index];
+./81815495/truss_element.cpp@431@ATOMIC@#pragma omp atomic@r_nodal_inertia[k] += 0.0;
+./81815495/mass_opt_response.h@201@ATOMIC@#pragma omp atomic@r_this_geometry[i_node].FastGetSolutionStepValue(D_MASS_D_FD) += d_pd_d_fd * elem_dens_grad / number_of_nodes;
+./81815495/mass_opt_response.h@218@ATOMIC@#pragma omp atomic@r_this_geometry[i_node].FastGetSolutionStepValue(D_MASS_D_FT) += d_pt_d_ft * elem_thick_grad / number_of_nodes;
+./81815495/U_Pw_element.cpp@814@ATOMIC@#pragma omp atomic@rGeom[i].GetValue(NODAL_MASS) += lumped_mass_matrix(index,index);
+./81815495/U_Pw_element.cpp@852@ATOMIC@#pragma omp atomic@"r_external_force[j] += body_force[index + j];
+
+#pragma omp atomic
+r_internal_force[j] += -neg_internal_force[index + j];
+}
+}
+} else if( rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == DAMPING_FORCE ) {
+
+Vector flux_residual = ZeroVector(element_size);
+Vector body_force = ZeroVector(element_size);"
+./81815495/U_Pw_element.cpp@855@ATOMIC@#pragma omp atomic@"r_internal_force[j] += -neg_internal_force[index + j];
+}
+}
+} else if( rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == DAMPING_FORCE ) {
+
+Vector flux_residual = ZeroVector(element_size);
+Vector body_force = ZeroVector(element_size);
+Vector neg_internal_force = ZeroVector(element_size);
+this->CalculateExplicitContributions(flux_residual,body_force,neg_internal_force,rCurrentProcessInfo);
+Vector damping_force = ZeroVector(element_size);"
+./81815495/U_Pw_element.cpp@877@ATOMIC@#pragma omp atomic@"r_external_force[j] += body_force[index + j];
+
+#pragma omp atomic
+r_internal_force[j] += -neg_internal_force[index + j];
+
+#pragma omp atomic
+r_damping_force[j] += damping_force[index + j];
+}
+}
+} else if(rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == REACTION ) {"
+./81815495/U_Pw_element.cpp@880@ATOMIC@#pragma omp atomic@"r_internal_force[j] += -neg_internal_force[index + j];
+
+#pragma omp atomic
+r_damping_force[j] += damping_force[index + j];
+}
+}
+} else if(rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == REACTION ) {
+
+Vector flux_residual = ZeroVector(element_size);
+Vector body_force = ZeroVector(element_size);"
+./81815495/U_Pw_element.cpp@883@ATOMIC@#pragma omp atomic@"r_damping_force[j] += damping_force[index + j];
+}
+}
+} else if(rRHSVariable == RESIDUAL_VECTOR && rDestinationVariable == REACTION ) {
+
+Vector flux_residual = ZeroVector(element_size);
+Vector body_force = ZeroVector(element_size);
+Vector neg_internal_force = ZeroVector(element_size);
+this->CalculateExplicitContributions(flux_residual,body_force,neg_internal_force,rCurrentProcessInfo);
+"
+./81815495/U_Pw_element.cpp@902@ATOMIC@#pragma omp atomic@"r_force_residual[j] += body_force[index + j] + neg_internal_force[index + j];
+}
+
+#pragma omp atomic
+r_flux_residual += flux_residual[index + TDim];
+}
+}
+
+KRATOS_CATCH( """" )
+}"
+./81815495/U_Pw_element.cpp@906@ATOMIC@#pragma omp atomic@r_flux_residual += flux_residual[index + TDim];
+./81815495/mpm_grid_base_load_condition.cpp@266@ATOMIC@#pragma omp atomic@"r_force_residual[j] += rRHS[index + j];
+}
+}
+}
+}
+
+KRATOS_CATCH( """" )
+}
+
+}"
+./81815495/nodal_residualbased_elimination_builder_and_solver_for_FSI.h@821@ATOMIC@#pragma omp atomic@r_a += v_a;
+./81815495/remove_alone_DEM_elements_process.cpp@36@ATOMIC@#pragma omp atomic@r_number_of_active_elements++;
+./81815495/d_convection_diffusion_explicit_cpp_template.cpp@96@ATOMIC@#pragma omp atomic@r_geometry[i_node].FastGetSolutionStepValue(reaction_variable) += rhs[i_node];
+./81815495/d_convection_diffusion_explicit_cpp_template.cpp@162@ATOMIC@#pragma omp atomic@r_geometry[i_node].GetValue(rVariable) += rhs_oss[i_node];
+./81815495/distance_modification_process.cpp@463@ATOMIC@#pragma omp atomic@activation_index += 1;
+./81815495/base_solid_element.cpp@370@ATOMIC@#pragma omp atomic@r_geom[i].GetValue(NODAL_MASS) += element_mass_vector[index];
+./81815495/base_solid_element.cpp@415@ATOMIC@#pragma omp atomic@"r_force_residual[j] += rRHSVector[index + j] - damping_residual_contribution[index + j];
+}
+}
+}
+
+KRATOS_CATCH("""")
+}
+
+
+"
+./81815495/atomic_utilities.h@36@ATOMIC@#pragma omp atomic@target += value;
+./81815495/atomic_utilities.h@83@ATOMIC@#pragma omp atomic@target -= value;
+./81815495/atomic_utilities.h@129@ATOMIC@#pragma omp atomic@target *= value;
+./81815495/mapper_vertex_morphing_matrix_free.cpp@76@ATOMIC@#pragma omp atomic@mValuesDestination[0][node_i_mapping_id] += weight*nodal_variable[0];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@78@ATOMIC@#pragma omp atomic@mValuesDestination[1][node_i_mapping_id] += weight*nodal_variable[1];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@80@ATOMIC@#pragma omp atomic@mValuesDestination[2][node_i_mapping_id] += weight*nodal_variable[2];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@139@ATOMIC@#pragma omp atomic@mValuesDestination[0][node_i_mapping_id] += weight*node_j.FastGetSolutionStepValue(rOriginVariable);
+./81815495/mapper_vertex_morphing_matrix_free.cpp@198@ATOMIC@#pragma omp atomic@mValuesOrigin[0][neighbor_node_mapping_id] += weight*nodal_variable[0];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@200@ATOMIC@#pragma omp atomic@mValuesOrigin[1][neighbor_node_mapping_id] += weight*nodal_variable[1];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@202@ATOMIC@#pragma omp atomic@mValuesOrigin[2][neighbor_node_mapping_id] += weight*nodal_variable[2];
+./81815495/mapper_vertex_morphing_matrix_free.cpp@264@ATOMIC@#pragma omp atomic@mValuesOrigin[0][neighbor_node_mapping_id] += weight*variable_value;
+./81815495/spatial_methods.h@118@ATOMIC@#pragma omp atomic@global_sum += sum;
+./81815495/spatial_methods.h@205@ATOMIC@#pragma omp atomic@global_sum += sum;
+./81815495/spatial_methods.h@340@ATOMIC@#pragma omp atomic@global_variance += variance;
+./81815495/qfluid_3d.cpp@294@ATOMIC@#pragma omp atomic@m0 += nodal_contrib;
+./81815495/qfluid_3d.cpp@298@ATOMIC@#pragma omp atomic@m1 += nodal_contrib;
+./81815495/qfluid_3d.cpp@302@ATOMIC@#pragma omp atomic@m2 += nodal_contrib;
+./81815495/qfluid_3d.cpp@306@ATOMIC@#pragma omp atomic@m3 += nodal_contrib;
+./81815495/implicit_vertex_morphing.h@679@ATOMIC@#pragma omp atomic@r_nodal_variable[0] += rWeight * rValues[dofs_per_node*i_node+0];
+./81815495/implicit_vertex_morphing.h@681@ATOMIC@#pragma omp atomic@r_nodal_variable[1] += rWeight * rValues[dofs_per_node*i_node+1];
+./81815495/implicit_vertex_morphing.h@683@ATOMIC@#pragma omp atomic@r_nodal_variable[2] += rWeight * rValues[dofs_per_node*i_node+2];
+./81815495/implicit_vertex_morphing.h@702@ATOMIC@#pragma omp atomic@r_nodal_variable[0] += rWeight * rValues[index++];
+./81815495/implicit_vertex_morphing.h@704@ATOMIC@#pragma omp atomic@r_nodal_variable[1] += rWeight * rValues[index++];
+./81815495/implicit_vertex_morphing.h@711@ATOMIC@#pragma omp atomic@r_nodal_variable[0] += rWeight * rValues[index++];
+./81815495/implicit_vertex_morphing.h@713@ATOMIC@#pragma omp atomic@r_nodal_variable[1] += rWeight * rValues[index++];
+./81815495/implicit_vertex_morphing.h@715@ATOMIC@#pragma omp atomic@r_nodal_variable[2] += rWeight * rValues[index++];
+./81815495/partition_interface_stress_opt_response.h@81@ATOMIC@#pragma omp atomic@intg_stress += CalculateElementStress(elem_i,CurrentProcessInfo);
+./81815495/partition_interface_stress_opt_response.h@119@ATOMIC@#pragma omp atomic@r_this_geometry[i_node].FastGetSolutionStepValue(D_STRESS_D_FD) += d_pd_d_fd * elem_sens / number_of_nodes;
+./81815495/GeneralMatrixMatrix.h@122@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./81815495/block_builder_and_solver.hpp@881@ATOMIC@#pragma omp atomic@b_value += rhs_value;
+./81815495/block_builder_and_solver.hpp@908@ATOMIC@#pragma omp atomic@r_a += v_a;
+./81815495/block_builder_and_solver.hpp@1036@ATOMIC@#pragma omp atomic@r_a +=  v_a;
+./81815495/block_builder_and_solver.hpp@1054@ATOMIC@#pragma omp atomic@r +=  v;
+./74558351/gBAOABLangevinIntegrator.hpp@326@ATOMIC@#pragma omp atomic write@corrected = true;
+./74558351/gBAOABLangevinIntegrator.hpp@398@ATOMIC@#pragma omp atomic write@corrected = true;
+./324342122/openmp_multithreaded.cpp@38@ATOMIC@#pragma omp atomic@result *= prod;
+./124574336/nvector_openmpdev.c@1117@ATOMIC@#pragma omp atomic@zd_dev[j] += to_add;
+./124574336/nvector_openmpdev.c@1145@ATOMIC@#pragma omp atomic@zd_dev[j] += to_add;
+./124574336/nvector_openmpdev.c@1174@ATOMIC@#pragma omp atomic@zd_dev[j] += to_add;
+./124574336/GeneralMatrixMatrix.h@122@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./330267007/matrix_operations.h@106@ATOMIC@#pragma omp atomic@x[x_idx] -= tmp;
+./345031193/main1.cpp@137@ATOMIC@#pragma omp atomic write@norm = 0;
+./345031193/main1.cpp@145@ATOMIC@#pragma omp atomic write@norm = sqrt(norm);
+./257701336/GeneralMatrixMatrix.h@121@ATOMIC@#pragma omp atomic@"#endif
+info[i].users -= 1;
+}
+}
+else
+#endif
+{
+EIGEN_UNUSED_VARIABLE(info);
+
+std::size_t sizeA = kc*mc;"
+./265291887/Matrix.h@536@ATOMIC@#pragma omp atomic@shared_buff[j] += _matrix[k+i*_cols] * other(k, j);
+./265291887/Matrix.h@608@ATOMIC@#pragma omp atomic@res(0, j) += _matrix[j+i*_cols];
+./265291887/Matrix.h@1045@ATOMIC@#pragma omp atomic write@res = false;
+./202712923/atomic_detail.h@75@ATOMIC@#pragma omp atomic capture@#else
+./202712923/atomic_detail.h@92@ATOMIC@#pragma omp atomic capture@#else
+./202712923/atomic_detail.h@109@ATOMIC@#pragma omp atomic capture@#else
+./202712923/atomic_detail.h@126@ATOMIC@#pragma omp atomic capture@#else
+./202712923/atomic_detail.h@143@ATOMIC@#pragma omp atomic capture@#else
+./472427720/parallel_openmp_Final.hpp@210@ATOMIC@#pragma omp atomic@vec_b[mat_A.mat_elements[nz_idx].row_idx] += temp_val;
+./472427720/parallel_openmp_Final.hpp@239@ATOMIC@#pragma omp atomic@vec_b[mat_A.row_and_val[idx_nz].idx] += temp_Val;
+./472427720/openmp_coo.cpp@94@ATOMIC@#pragma omp atomic@vec_b[mat_A.mat_elements[nz_idx].row_idx] += temp_val;
+./348668930/Code.cpp@28@ATOMIC@#pragma omp atomic@solutions++;
+./84927230/summation.cpp@36@ATOMIC@#pragma omp atomic@sum += i;
+./73482458/variables.c@12@ATOMIC@#pragma omp atomic@var2++;
+./355329433/Tracer.cpp@76@ATOMIC@#pragma omp atomic@T->CommunicationMatrix[F_Requestor][F_Holder].SenseAndPlan.Reads++;
+./355329433/Tracer.cpp@79@ATOMIC@#pragma omp atomic@T->CommunicationMatrix[F_Requestor][F_Holder].Delegate.Reads++;
+./355329433/Tracer.cpp@82@ATOMIC@#pragma omp atomic@T->CommunicationMatrix[F_Requestor][F_Holder].AssignToFlock.Reads++;
+./498758905/omp_counting.h@27@ATOMIC@#pragma omp atomic@++count[input[i] - min];
+./104462787/RawProcessor.cpp@411@ATOMIC@#pragma omp atomic update@scaleTotal += matchScale;
+./3769753/PopBubbles.cpp@307@ATOMIC@#pragma omp atomic@g_count.notSimple++;
+./3769753/PopBubbles.cpp@314@ATOMIC@#pragma omp atomic@g_count.notSimple++;
+./3769753/PopBubbles.cpp@322@ATOMIC@#pragma omp atomic@g_count.notSimple++;
+./3769753/PopBubbles.cpp@327@ATOMIC@#pragma omp atomic@g_count.notSimple++;
+./3769753/PopBubbles.cpp@343@ATOMIC@#pragma omp atomic@g_count.tooMany++;
+./3769753/PopBubbles.cpp@358@ATOMIC@#pragma omp atomic@g_count.tooLong++;
+./3769753/PopBubbles.cpp@374@ATOMIC@#pragma omp atomic@g_count.dissimilar++;
+./3769753/PopBubbles.cpp@379@ATOMIC@#pragma omp atomic@g_count.popped++;
+./3769753/PopBubbles.cpp@459@ATOMIC@#pragma omp atomic@g_count.bubbles++;
+./3769753/PopBubbles.cpp@462@ATOMIC@#pragma omp atomic@g_count.scaffold++;
+./3769753/bloom-dbg.h@730@ATOMIC@#pragma omp atomic@counters.solidReads++;
+./3769753/bloom-dbg.h@735@ATOMIC@#pragma omp atomic@counters.visitedReads++;
+./3769753/bloom-dbg.h@889@ATOMIC@#pragma omp atomic@readsUntilCheckpoint--;
+./3769753/nttest.cpp@248@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+for (size_t i = 1; i < seq.size() - opt::kmerLen + 1; i++) {
+if(myFilter.contains(fhVal, rhVal, seq[i-1], seq[i+opt::kmerLen-1])) {
+#ifdef _OPENMP
+#pragma omp atomic
+#endif
+++fHit;
+}"
+./3769753/nttest.cpp@255@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+}
+}
+
+void querySeq(BloomFilter & myFilter, const string & seq, size_t & fHit) {
+if (seq.size() < opt::kmerLen) return;
+for (size_t i = 0; i < seq.size() - opt::kmerLen + 1; i++) {
+if(myFilter.contains(seq.c_str()+i)) {"
+./3769753/nttest.cpp@267@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+}
+}
+
+void querySeqm(BloomFilter & myFilter, const string & seq, size_t & fHit) {
+if (seq.size() < opt::kmerLen) return;
+for (size_t i = 0; i < seq.size() - opt::kmerLen + 1; i++) {
+string kmer = seq.substr(i, opt::kmerLen);"
+./3769753/nttest.cpp@281@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+}
+}
+
+void querySeqc(BloomFilter & myFilter, const string & seq, size_t & fHit) {
+if (seq.size() < opt::kmerLen) return;
+for (size_t i = 0; i < seq.size() - opt::kmerLen + 1; i++) {
+string kmer = seq.substr(i, opt::kmerLen);"
+./3769753/nttest.cpp@295@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+}
+}
+
+void querySeqx(BloomFilter & myFilter, const string & seq, size_t & fHit) {
+if (seq.size() < opt::kmerLen) return;
+for (size_t i = 0; i < seq.size() - opt::kmerLen + 1; i++) {
+string kmer = seq.substr(i, opt::kmerLen);"
+./3769753/nttest.cpp@309@ATOMIC@#pragma omp atomic@"#endif
+++fHit;
+}
+}
+}
+
+void queryBf(BloomFilter &myFilter, const char* faqFile) {
+getFtype(faqFile);
+ifstream uFile(faqFile);
+size_t fHit=0,totKmer=0;"
+./3769753/nttest.cpp@341@ATOMIC@#pragma omp atomic@"#endif
+totKmer+=opt::squery-opt::kmerLen+1;
+}
+}
+uFile.close();
+cerr << ""tkmer="" << totKmer << "" "";
+cerr << ""fhits="" << fHit << "" %"" << setprecision(4) << fixed << (double)fHit/(double)totKmer << "" "";
+}
+
+void hashSeqb(const string & seq) {"
+./58775556/Omega_h_atomics.hpp@21@ATOMIC@#pragma omp atomic capture@"{
+oldval = *dest;
+*dest += val;
+}
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+return oldval;
+#elif defined(OMEGA_H_USE_CUDA) && defined(__CUDA_ARCH__)
+return atomicAdd(dest, val);"
+./67013333/common.h@24@ATOMIC@#pragma omp atomic capture@"{old = *ptr; *ptr += val;}
+return old;
+#endif
+#else
+T old; old = *ptr; *ptr += val;
+return old;
+#endif
+}
+
+template <class T>"
+./67013333/common.h@42@ATOMIC@#pragma omp atomic capture@"{old = *ptr; *ptr -= val;}
+return old;
+#endif
+#else
+T old; old = *ptr; *ptr -= val;
+return old;
+#endif
+}
+;
+"
+./23245147/DfCD_Parallel.cpp@530@ATOMIC@#pragma omp atomic@L_xm[i] += l_m_pi;
+./23245147/DfCD_Parallel.cpp@533@ATOMIC@#pragma omp atomic@update_diagonals[pivot_i] -= l_m_pi * l_m_pi;
+./23245147/DfCD_Parallel.cpp@679@ATOMIC@#pragma omp atomic@out_L_rows[pivot_i] += l_m_pi;
+./23245147/DfCD_Parallel.cpp@682@ATOMIC@#pragma omp atomic@update_diagonals[pivot_i] -= l_m_pi * l_m_pi;
+./23245147/DfCD.cpp@1434@ATOMIC@#pragma omp atomic@L_xm[i] += l_m_pi;
+./23245147/DfCD.cpp@1436@ATOMIC@#pragma omp atomic@diagonals[pivot_i] -= l_m_pi * l_m_pi;
+./23245147/DfCD.cpp@2503@ATOMIC@#pragma omp atomic@++(this->cutoffAlive_schwartz_[shellQuartetType]);
+./23245147/DfCD.cpp@2507@ATOMIC@#pragma omp atomic@++(this->cutoffAll_schwartz_[shellQuartetType]);
+./23245147/TlMoField.cpp@55@ATOMIC@#pragma omp atomic@gridValue += tmp;
+./116842157/sqs.cpp@326@ATOMIC@#pragma omp atomic write@best_objective = global_best_objective;
+./116842157/sqs.cpp@336@ATOMIC@#pragma omp atomic read@best_objective_local = best_objective;
+./116842157/sqs.cpp@348@ATOMIC@#pragma omp atomic write@best_objective = objective_local;
+./139720828/GeneralMatrixMatrix.h@120@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./212973439/test-openmp.cpp@21@ATOMIC@#pragma omp atomic@counter++;
+./384461901/GeneralMatrixMatrix.h@120@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./77227085/VC5Decompressor.cpp@65@ATOMIC@#pragma omp atomic read@"#endif
+value = storage;
+
+return value;
+}
+
+constexpr int PRECISION_MIN = 8;
+constexpr int PRECISION_MAX = 16;
+constexpr int MARKER_BAND_END = 1;
+"
+./77227085/VC5Decompressor.cpp@563@ATOMIC@#pragma omp atomic write@"#endif
+exceptionThrown = true;
+}
+}
+}
+}
+
+VC5Decompressor::Wavelet::LowPassBand::LowPassBand(Wavelet& wavelet_,
+ByteStream bs_,
+uint16_t lowpassPrecision_)"
+./266121574/LinearRegression.cpp@31@ATOMIC@#pragma omp atomic@result += intermediate;
+./266121574/Regression.h@92@ATOMIC@#pragma omp atomic@output += intermediate;
+./266121574/Regression.h@212@ATOMIC@#pragma omp atomic@output += intermediate;
+./85618549/KalmanFilter.cpp@88@ATOMIC@#pragma omp atomic@++invalidSamples;
+./85618549/ObservationEquation.cpp@18@ATOMIC@#pragma omp atomic@++nop;
+./69469951/vectorblocks.cpp@395@ATOMIC@#pragma omp atomic@++progressCounter;
+./69469951/vectorblocks.cpp@470@ATOMIC@#pragma omp atomic@++progressCounter;
+./69469951/window.cpp@552@ATOMIC@#pragma omp atomic@++currentObject;
+./69469951/khistogram.cpp@1269@ATOMIC@#pragma omp atomic@++currentRow;
+./244902238/updateLR.cpp@39@ATOMIC@#pragma omp atomic@L[nonZeroUserIndexes[l] * numberOfFeatures + k] += convergenceCoefficient * (2 * delta[l] * StoreR[k * numberOfItems + nonZeroItemIndexes[l]]);
+./244902238/updateLR.cpp@41@ATOMIC@#pragma omp atomic@R[k * numberOfItems + nonZeroItemIndexes[l]] += convergenceCoefficient * (2 * delta[l] * StoreL[nonZeroUserIndexes[l] * numberOfFeatures + k]);
+./244902238/computeB.cpp@12@ATOMIC@#pragma omp atomic@B[i * numberOfItems + j] += L[i * numberOfFeatures + k] * R[k * numberOfItems + j];
+./98416076/som.cpp@187@ATOMIC@#pragma omp atomic@++NBSTABLES;
+./82070754/task11.cpp@25@ATOMIC@#pragma omp atomic@n++;
+./447856665/omp.h@132@ATOMIC@#pragma omp atomic@res += val;
+./447856665/omp.h@147@ATOMIC@#pragma omp atomic@res += val;
+./135134258/GeneralMatrixMatrix.h@120@ATOMIC@#pragma omp atomic@info[i].users -= 1;
+./401825407/db_construction.cpp@182@ATOMIC@#pragma omp atomic capture@i = k++;
+./401825407/rna_interaction_search.cpp@137@ATOMIC@#pragma omp atomic capture@i = k++;
+./144825443/openMP_Points2Tiles.cpp@249@ATOMIC@#pragma omp atomic@nPointCount[nR * nResolution + nC] += 1;
+./349078607/paralel_atomic_pi_PI3.cpp@22@ATOMIC@#pragma omp atomic@sum = sum + 4.0/(1.+ x*x);
+./349078607/paralel_atomic_pi.cpp@22@ATOMIC@#pragma omp atomic@sum = sum + 4.0/(1.+ x*x);
+./349078607/parallel_tab_pi.cpp@28@ATOMIC@#pragma omp atomic@sum += tab[10 * id];
+./349078607/parallel_local_pi_PI4.cpp@23@ATOMIC@#pragma omp atomic@suml = suml + 4.0 / (1. + x * x);
+./349078607/parallel_local_pi_PI4.cpp@26@ATOMIC@#pragma omp atomic@sum += suml;
+./349078607/parallel_tab_exp_pi_PI7.cpp@32@ATOMIC@#pragma omp atomic@sum += tab[data_spacer + id];
+./349078607/parallel_local_pi.cpp@23@ATOMIC@#pragma omp atomic@suml = suml + 4.0 / (1. + x * x);
+./349078607/parallel_local_pi.cpp@26@ATOMIC@#pragma omp atomic@sum += suml;
+./349078607/parallel_tab_pi_PI6.cpp@30@ATOMIC@#pragma omp atomic@sum += tab[data_spacer * id];
+./36948145/buddhabrot_omp4.cpp@432@ATOMIC@#pragma omp atomic@iCel++;
+./36948145/buddhabrot_omp3float.cpp@434@ATOMIC@#pragma omp atomic@iCel++;
+./36948145/buddhabrot_omp1.cpp@445@ATOMIC@#pragma omp atomic@iCel++;
+./36948145/buddhabrot_omp3.cpp@434@ATOMIC@#pragma omp atomic@iCel++;
+./285634219/kernel.cpp@25@ATOMIC@#pragma omp atomic capture@*next = (*consumed)++;
+./285634219/kernel.cpp@49@ATOMIC@#pragma omp atomic capture@*next = (*consumed)++;
+./285634219/kernel_histogram.h@24@ATOMIC@#pragma omp atomic update@s_Hist[warpBase+(data4 & 0x3FFU)]++;
+./285634219/kernel_histogram.h@35@ATOMIC@#pragma omp atomic update@h_offsets[pos] += sum;
+./285634219/model_eval.cpp@49@ATOMIC@#pragma omp atomic update@outlier_block_count += outlier_local_count;
+./285634219/model_eval.cpp@57@ATOMIC@#pragma omp atomic capture@index = g_out_id[0]++;
+./285634219/numeric.cpp@83@ATOMIC@#pragma omp atomic update@val_dev[subColElem] += -tmpMem[ridx+n*bid]*s[wid];
+./285634219/numeric.cpp@183@ATOMIC@#pragma omp atomic update@val_dev[subColElem] += -tmpMem[ridx+n*bid]*s[wid];
+./285634219/numeric.cpp@334@ATOMIC@#pragma omp atomic update@val_dev[subColElem] += -tmpMem[stream * n + ridx] * s;
+./285634219/ccsd_tengy.cpp@73@ATOMIC@#pragma omp atomic update@emp4i_p[0] += denom * (f1tbc+f1ncb+f2tcb+f3nbc+f4ncb) * (f1tbc-f2tbc*2-f3tbc*2+f4tbc)
+./285634219/ccsd_tengy.cpp@78@ATOMIC@#pragma omp atomic update@emp4k_p[0] += denom * (f1nbc+f1tcb+f2ncb+f3tbc+f4tcb) * (f1nbc-f2nbc*2-f3nbc*2+f4nbc)
+./285634219/ccsd_tengy.cpp@91@ATOMIC@#pragma omp atomic update@emp5i_p[0] += denom * t1v1b * dintx1c * (f1tbc+f2nbc+f4ncb-(f3tbc+f4nbc+f2ncb+f1nbc+f2tbc+f3ncb)*2
+./285634219/ccsd_tengy.cpp@95@ATOMIC@#pragma omp atomic update@emp5k_p[0] += denom * t1v2b * dintx2c * (f1nbc+f2tbc+f4tcb -(f3nbc+f4tbc+f2tcb +f1tbc+f2nbc+f3tcb)*2
+./285634219/kernel_gpu.cpp@66@ATOMIC@#pragma omp atomic@gBest[j] += tempParticle1[j];
+./285634219/kernel_bucketcount.h@35@ATOMIC@#pragma omp atomic capture@offset = s_offset[warpBase+idx]++;
+./285634219/Vector_functions.hpp@80@ATOMIC@#pragma omp atomic@vec_coefs[idx] += coefs[i];
+./285634219/omp-Vector_functions.hpp@78@ATOMIC@#pragma omp atomic@vec_coefs[idx] += coefs[i];
+./285634219/omp-SparseMatrix_functions.hpp@129@ATOMIC@#pragma omp atomic@row_coefs[loc-row_indices] += input_coefs[i];
+./285634219/omp-SparseMatrix_functions.hpp@433@ATOMIC@#pragma omp atomic@b.coefs[i] -= sum*prescribed_value;
+./285634219/force_kernel.cpp@97@ATOMIC@#pragma omp atomic update@atom_list[j].f[n] += -holder;
+./285634219/force_kernel.cpp@105@ATOMIC@#pragma omp atomic update@atom_list[i].f[n] += af[n];
+./285634219/force_kernel.cpp@166@ATOMIC@#pragma omp atomic update@atom_list[j].f[n] += -holder;
+./285634219/force_kernel.cpp@191@ATOMIC@#pragma omp atomic update@atom_list[j].f[n] += -holder;
+./285634219/force_kernel.cpp@203@ATOMIC@#pragma omp atomic update@atom_list[i].f[n] += af[n];
+./285634219/force_kernel.cpp@311@ATOMIC@#pragma omp atomic update@atom_list[i].f[n] += af[n];
+./285634219/force_kernel.cpp@313@ATOMIC@#pragma omp atomic update@atom_list[j].f[n] += -af[n];
+./285634219/sptrsv_syncfree.cpp@13@ATOMIC@#pragma omp atomic read@const int value = *vaddr;
+./285634219/sptrsv_syncfree.cpp@25@ATOMIC@#pragma omp atomic write@*vaddr = value;
+./285634219/linearprobing.cpp@38@ATOMIC@#pragma omp atomic capture@"{
+prev = pHashTable[slot].key;
+pHashTable[slot].key = (prev == kEmpty) ? key : prev;
+}
+if (prev == kEmpty || prev == key)
+{
+pHashTable[slot].value = value;
+break;
+}
+"
+./285634219/linearprobing.cpp@111@ATOMIC@#pragma omp atomic capture@"{ size = kvs_size; kvs_size++; }
+device_kvs[size] = pHashTable[tid];
+}
+}
+}
+
+auto end = std::chrono::steady_clock::now();
+auto time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+printf(""Kernel execution time (iterate): %f (s)\n"", time * 1e-9f);
+"
+./285634219/gqsort_kernel.h@75@ATOMIC@#pragma omp atomic capture@"{
+lbeg = *psstart;
+*psstart += ltsum;
+}
+
+#pragma omp atomic capture
+{
+gbeg = *psend;
+*psend -= gtsum;
+}"
+./285634219/gqsort_kernel.h@81@ATOMIC@#pragma omp atomic capture@"{
+gbeg = *psend;
+*psend -= gtsum;
+}
+gbeg -= gtsum;
+
+}
+#pragma omp barrier
+
+lfrom = lbeg + lt[localid];"
+./285634219/gqsort_kernel.h@106@ATOMIC@#pragma omp atomic capture@"{
+old_blockcount = *pblockcount;
+(*pblockcount)--;
+}
+
+if (old_blockcount == 0) {
+uint sstart = *psstart;
+uint send = *psend;
+uint oldstart = *poldstart;
+uint oldend = *poldend;"
+./285634219/cuBool_cpu.h@324@ATOMIC@#pragma omp atomic@distance_update_sum += distance_update;
+./285634219/kernel_functions.hpp@73@ATOMIC@#pragma omp atomic update@counts[18]++;
+./285634219/kernel_functions.hpp@77@ATOMIC@#pragma omp atomic update@counts[19]++;
+./285634219/kernel_functions.hpp@81@ATOMIC@#pragma omp atomic update@counts[20]++;
+./285634219/kernel_functions.hpp@86@ATOMIC@#pragma omp atomic update@counts[21]++;
+./285634219/kernel_functions.hpp@90@ATOMIC@#pragma omp atomic update@counts[22]++;
+./285634219/kernel_functions.hpp@94@ATOMIC@#pragma omp atomic update@counts[23]++;
+./285634219/kernel_functions.hpp@102@ATOMIC@#pragma omp atomic update@counts[0]++;
+./285634219/kernel_functions.hpp@106@ATOMIC@#pragma omp atomic update@counts[1]++;
+./285634219/kernel_functions.hpp@110@ATOMIC@#pragma omp atomic update@counts[2]++;
+./285634219/kernel_functions.hpp@116@ATOMIC@#pragma omp atomic update@counts[3]++;
+./285634219/kernel_functions.hpp@120@ATOMIC@#pragma omp atomic update@counts[4]++;
+./285634219/kernel_functions.hpp@124@ATOMIC@#pragma omp atomic update@counts[5]++;
+./285634219/kernel_functions.hpp@129@ATOMIC@#pragma omp atomic update@counts[6]++;
+./285634219/kernel_functions.hpp@133@ATOMIC@#pragma omp atomic update@counts[7]++;
+./285634219/kernel_functions.hpp@137@ATOMIC@#pragma omp atomic update@counts[8]++;
+./285634219/kernel_functions.hpp@141@ATOMIC@#pragma omp atomic update@counts[9]++;
+./285634219/kernel_functions.hpp@145@ATOMIC@#pragma omp atomic update@counts[10]++;
+./285634219/kernel_functions.hpp@149@ATOMIC@#pragma omp atomic update@counts[11]++;
+./285634219/kernel_functions.hpp@154@ATOMIC@#pragma omp atomic update@counts[12]++;
+./285634219/kernel_functions.hpp@158@ATOMIC@#pragma omp atomic update@counts[13]++;
+./285634219/kernel_functions.hpp@162@ATOMIC@#pragma omp atomic update@counts[14]++;
+./285634219/kernel_functions.hpp@167@ATOMIC@#pragma omp atomic update@counts[15]++;
+./285634219/kernel_functions.hpp@171@ATOMIC@#pragma omp atomic update@counts[16]++;
+./285634219/kernel_functions.hpp@175@ATOMIC@#pragma omp atomic update@counts[17]++;
+./285634219/kernel_functions.hpp@181@ATOMIC@#pragma omp atomic update@counts[24]++;
+./285634219/kernel_functions.hpp@185@ATOMIC@#pragma omp atomic update@counts[25]++;
+./285634219/kernel_functions.hpp@189@ATOMIC@#pragma omp atomic update@counts[26]++;
+./285634219/kernel_functions.hpp@194@ATOMIC@#pragma omp atomic update@counts[39]++;
+./285634219/kernel_functions.hpp@198@ATOMIC@#pragma omp atomic update@counts[40]++;
+./285634219/kernel_functions.hpp@202@ATOMIC@#pragma omp atomic update@counts[41]++;
+./285634219/kernel_functions.hpp@208@ATOMIC@#pragma omp atomic update@counts[27]++;
+./285634219/kernel_functions.hpp@212@ATOMIC@#pragma omp atomic update@counts[28]++;
+./285634219/kernel_functions.hpp@216@ATOMIC@#pragma omp atomic update@counts[29]++;
+./285634219/kernel_functions.hpp@221@ATOMIC@#pragma omp atomic update@counts[42]++;
+./285634219/kernel_functions.hpp@225@ATOMIC@#pragma omp atomic update@counts[43]++;
+./285634219/kernel_functions.hpp@229@ATOMIC@#pragma omp atomic update@counts[44]++;
+./285634219/kernel_functions.hpp@235@ATOMIC@#pragma omp atomic update@counts[30]++;
+./285634219/kernel_functions.hpp@239@ATOMIC@#pragma omp atomic update@counts[31]++;
+./285634219/kernel_functions.hpp@243@ATOMIC@#pragma omp atomic update@counts[32]++;
+./285634219/kernel_functions.hpp@248@ATOMIC@#pragma omp atomic update@counts[45]++;
+./285634219/kernel_functions.hpp@252@ATOMIC@#pragma omp atomic update@counts[46]++;
+./285634219/kernel_functions.hpp@256@ATOMIC@#pragma omp atomic update@counts[47]++;
+./285634219/kernel_functions.hpp@262@ATOMIC@#pragma omp atomic update@counts[33]++;
+./285634219/kernel_functions.hpp@266@ATOMIC@#pragma omp atomic update@counts[34]++;
+./285634219/kernel_functions.hpp@270@ATOMIC@#pragma omp atomic update@counts[35]++;
+./285634219/kernel_functions.hpp@275@ATOMIC@#pragma omp atomic update@counts[48]++;
+./285634219/kernel_functions.hpp@279@ATOMIC@#pragma omp atomic update@counts[49]++;
+./285634219/kernel_functions.hpp@283@ATOMIC@#pragma omp atomic update@counts[50]++;
+./285634219/kernel_functions.hpp@289@ATOMIC@#pragma omp atomic update@counts[36]++;
+./285634219/kernel_functions.hpp@293@ATOMIC@#pragma omp atomic update@counts[37]++;
+./285634219/kernel_functions.hpp@297@ATOMIC@#pragma omp atomic update@counts[38]++;
+./285634219/kernel_functions.hpp@302@ATOMIC@#pragma omp atomic update@counts[51]++;
+./285634219/kernel_functions.hpp@306@ATOMIC@#pragma omp atomic update@counts[52]++;
+./285634219/kernel_functions.hpp@310@ATOMIC@#pragma omp atomic update@counts[53]++;
+./285634219/kernel_functions.hpp@386@ATOMIC@#pragma omp atomic update@counts[0]++;
+./285634219/kernel_functions.hpp@390@ATOMIC@#pragma omp atomic update@counts[1]++;
+./285634219/kernel_functions.hpp@394@ATOMIC@#pragma omp atomic update@counts[2]++;
+./285634219/kernel_functions.hpp@401@ATOMIC@#pragma omp atomic update@counts[12]++;
+./285634219/kernel_functions.hpp@405@ATOMIC@#pragma omp atomic update@counts[13]++;
+./285634219/kernel_functions.hpp@409@ATOMIC@#pragma omp atomic update@counts[14]++;
+./285634219/kernel_functions.hpp@413@ATOMIC@#pragma omp atomic update@counts[15]++;
+./285634219/kernel_functions.hpp@417@ATOMIC@#pragma omp atomic update@counts[16]++;
+./285634219/kernel_functions.hpp@421@ATOMIC@#pragma omp atomic update@counts[17]++;
+./285634219/kernel_functions.hpp@427@ATOMIC@#pragma omp atomic update@counts[3]++;
+./285634219/kernel_functions.hpp@431@ATOMIC@#pragma omp atomic update@counts[4]++;
+./285634219/kernel_functions.hpp@435@ATOMIC@#pragma omp atomic update@counts[5]++;
+./285634219/kernel_functions.hpp@439@ATOMIC@#pragma omp atomic update@counts[6]++;
+./285634219/kernel_functions.hpp@443@ATOMIC@#pragma omp atomic update@counts[7]++;
+./285634219/kernel_functions.hpp@447@ATOMIC@#pragma omp atomic update@counts[8]++;
+./285634219/kernel_functions.hpp@451@ATOMIC@#pragma omp atomic update@counts[9]++;
+./285634219/kernel_functions.hpp@455@ATOMIC@#pragma omp atomic update@counts[10]++;
+./285634219/kernel_functions.hpp@459@ATOMIC@#pragma omp atomic update@counts[11]++;
+./285634219/kernel_functions.hpp@466@ATOMIC@#pragma omp atomic update@counts[18]++;
+./285634219/kernel_functions.hpp@470@ATOMIC@#pragma omp atomic update@counts[19]++;
+./285634219/kernel_functions.hpp@474@ATOMIC@#pragma omp atomic update@counts[20]++;
+./285634219/kernel_functions.hpp@478@ATOMIC@#pragma omp atomic update@counts[21]++;
+./285634219/kernel_functions.hpp@482@ATOMIC@#pragma omp atomic update@counts[22]++;
+./285634219/kernel_functions.hpp@486@ATOMIC@#pragma omp atomic update@counts[23]++;
+./285634219/kernel_functions.hpp@493@ATOMIC@#pragma omp atomic update@counts[24]++;
+./285634219/kernel_functions.hpp@497@ATOMIC@#pragma omp atomic update@counts[25]++;
+./285634219/kernel_functions.hpp@501@ATOMIC@#pragma omp atomic update@counts[26]++;
+./285634219/kernel_functions.hpp@505@ATOMIC@#pragma omp atomic update@counts[39]++;
+./285634219/kernel_functions.hpp@509@ATOMIC@#pragma omp atomic update@counts[40]++;
+./285634219/kernel_functions.hpp@513@ATOMIC@#pragma omp atomic update@counts[41]++;
+./285634219/kernel_functions.hpp@519@ATOMIC@#pragma omp atomic update@counts[27]++;
+./285634219/kernel_functions.hpp@523@ATOMIC@#pragma omp atomic update@counts[28]++;
+./285634219/kernel_functions.hpp@527@ATOMIC@#pragma omp atomic update@counts[29]++;
+./285634219/kernel_functions.hpp@531@ATOMIC@#pragma omp atomic update@counts[42]++;
+./285634219/kernel_functions.hpp@535@ATOMIC@#pragma omp atomic update@counts[43]++;
+./285634219/kernel_functions.hpp@539@ATOMIC@#pragma omp atomic update@counts[44]++;
+./285634219/kernel_functions.hpp@545@ATOMIC@#pragma omp atomic update@counts[30]++;
+./285634219/kernel_functions.hpp@549@ATOMIC@#pragma omp atomic update@counts[31]++;
+./285634219/kernel_functions.hpp@553@ATOMIC@#pragma omp atomic update@counts[32]++;
+./285634219/kernel_functions.hpp@557@ATOMIC@#pragma omp atomic update@counts[45]++;
+./285634219/kernel_functions.hpp@561@ATOMIC@#pragma omp atomic update@counts[46]++;
+./285634219/kernel_functions.hpp@565@ATOMIC@#pragma omp atomic update@counts[47]++;
+./285634219/kernel_functions.hpp@571@ATOMIC@#pragma omp atomic update@counts[33]++;
+./285634219/kernel_functions.hpp@575@ATOMIC@#pragma omp atomic update@counts[34]++;
+./285634219/kernel_functions.hpp@579@ATOMIC@#pragma omp atomic update@counts[35]++;
+./285634219/kernel_functions.hpp@583@ATOMIC@#pragma omp atomic update@counts[48]++;
+./285634219/kernel_functions.hpp@587@ATOMIC@#pragma omp atomic update@counts[49]++;
+./285634219/kernel_functions.hpp@591@ATOMIC@#pragma omp atomic update@counts[50]++;
+./285634219/kernel_functions.hpp@597@ATOMIC@#pragma omp atomic update@counts[36]++;
+./285634219/kernel_functions.hpp@601@ATOMIC@#pragma omp atomic update@counts[37]++;
+./285634219/kernel_functions.hpp@605@ATOMIC@#pragma omp atomic update@counts[38]++;
+./285634219/kernel_functions.hpp@609@ATOMIC@#pragma omp atomic update@counts[51]++;
+./285634219/kernel_functions.hpp@613@ATOMIC@#pragma omp atomic update@counts[52]++;
+./285634219/kernel_functions.hpp@617@ATOMIC@#pragma omp atomic update@counts[53]++;
+./285634219/SparseMatrix_functions.hpp@131@ATOMIC@#pragma omp atomic@row_coefs[loc-row_indices] += input_coefs[i];
+./285634219/SparseMatrix_functions.hpp@435@ATOMIC@#pragma omp atomic@b.coefs[i] -= sum*prescribed_value;
+./410821171/Practice7.cpp@55@ATOMIC@#pragma omp atomic@sum += local_sum;
+./438852969/scalar_product.cpp@40@ATOMIC@#pragma omp atomic@scalar_product = scalar_product + prod;
+./117122510/atomic.hpp@23@ATOMIC@#pragma omp atomic@out += val;
+./117122510/atomic.hpp@32@ATOMIC@#pragma omp atomic@values[0] += real(val);
+./117122510/atomic.hpp@34@ATOMIC@#pragma omp atomic@values[1] += imag(val);
+./117122510/rcm_kernels.cpp@116@ATOMIC@#pragma omp atomic update@++(*threads_working);
+./117122510/rcm_kernels.cpp@126@ATOMIC@#pragma omp atomic read@val_threads_working = *threads_working;
+./117122510/rcm_kernels.cpp@138@ATOMIC@#pragma omp atomic update@++(*threads_working);
+./117122510/rcm_kernels.cpp@202@ATOMIC@#pragma omp atomic read@level = levels[node];
+./117122510/rcm_kernels.cpp@217@ATOMIC@#pragma omp atomic read@old_neighbour_level = levels[neighbour];
+./117122510/rcm_kernels.cpp@281@ATOMIC@#pragma omp atomic update@--threads_working;
+./117122510/rcm_kernels.cpp@549@ATOMIC@#pragma omp atomic read@written = perm[base_offset + read_offset];
+./117122510/rcm_kernels.cpp@553@ATOMIC@#pragma omp atomic read@written = perm[base_offset + read_offset];
+./117122510/rcm_kernels.cpp@565@ATOMIC@#pragma omp atomic read@neighbour_level = levels[neighbour];
+./117122510/rcm_kernels.cpp@569@ATOMIC@#pragma omp atomic write@levels[neighbour] = level_processed;
+./117122510/rcm_kernels.cpp@585@ATOMIC@#pragma omp atomic write@perm[base_write_offset + i] = valid_neighbours[i];
+./117122510/par_ilut_kernels.cpp@190@ATOMIC@#pragma omp atomic@total_histogram[bucket] += local_histogram[bucket];

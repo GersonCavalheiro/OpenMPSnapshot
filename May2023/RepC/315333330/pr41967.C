@@ -1,0 +1,13 @@
+int
+foo ()
+{
+int sum = 0;
+#pragma omp for collapse(2)
+for (int i = 0; i < 5; ++i)
+{
+for (int j = 0; j < 5; ++j)
+++sum;
+++sum;	
+}
+return sum;
+}

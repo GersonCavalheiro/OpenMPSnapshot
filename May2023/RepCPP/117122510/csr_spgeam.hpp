@@ -1,0 +1,74 @@
+
+
+#ifndef GKO_OMP_COMPONENTS_CSR_SPGEAM_HPP_
+#define GKO_OMP_COMPONENTS_CSR_SPGEAM_HPP_
+
+
+#include <limits>
+
+
+#include <ginkgo/core/matrix/csr.hpp>
+
+
+#include "core/base/utils.hpp"
+
+
+namespace gko {
+namespace kernels {
+namespace omp {
+
+
+
+template <typename ValueType, typename IndexType, typename BeginCallback,
+typename EntryCallback, typename EndCallback>
+void abstract_spgeam(const matrix::Csr<ValueType, IndexType>* a,
+const matrix::Csr<ValueType, IndexType>* b,
+BeginCallback begin_cb, EntryCallback entry_cb,
+EndCallback end_cb)
+{
+auto num_rows = a->get_size()[0];
+auto a_row_ptrs = a->get_const_row_ptrs();
+auto a_col_idxs = a->get_const_col_idxs();
+auto a_vals = a->get_const_values();
+auto b_row_ptrs = b->get_const_row_ptrs();
+auto b_col_idxs = b->get_const_col_idxs();
+auto b_vals = b->get_const_values();
+constexpr auto sentinel = std::numeric_limits<IndexType>::max();
+#pragma omp parallel for
+for (size_type row = 0; row < num_rows; ++row) {
+auto a_begin = a_row_ptrs[row];
+auto a_end = a_row_ptrs[row + 1];
+auto b_begin = b_row_ptrs[row];
+auto b_end = b_row_ptrs[row + 1];
+auto total_size = (a_end - a_begin) + (b_end - b_begin);
+bool skip{};
+auto local_data = begin_cb(row);
+for (IndexType i = 0; i < total_size; ++i) {
+if (skip) {
+skip = false;
+continue;
+}
+auto a_col = checked_load(a_col_idxs, a_begin, a_end, sentinel);
+auto b_col = checked_load(b_col_idxs, b_begin, b_end, sentinel);
+auto a_val =
+checked_load(a_vals, a_begin, a_end, zero<ValueType>());
+auto b_val =
+checked_load(b_vals, b_begin, b_end, zero<ValueType>());
+auto col = min(a_col, b_col);
+entry_cb(row, col, a_col == col ? a_val : zero<ValueType>(),
+b_col == col ? b_val : zero<ValueType>(), local_data);
+a_begin += (a_col <= b_col);
+b_begin += (b_col <= a_col);
+skip = a_col == b_col;
+}
+end_cb(row, local_data);
+}
+}
+
+
+}  
+}  
+}  
+
+
+#endif  

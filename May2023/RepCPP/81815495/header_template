@@ -1,0 +1,218 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+#error Please change the author fullname and if your license is different please state it above
+#error Please change the KRATOS_FILENAME_H_INCLUDED and ClassName and remove these error pragmas
+
+#pragma once
+
+
+#include <string>
+#include <iostream>
+
+
+
+
+
+
+#include "includes/define.h"
+
+
+namespace Kratos {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Detail class definition.
+*/
+class ClassName
+{
+public:
+    
+    
+
+    
+    KRATOS_CLASS_POINTER_DEFINITION(ClassName);
+
+    
+    
+    
+
+    
+    ClassName();
+
+    
+    ClassName(ClassName const& rOther) = delete;
+
+    
+    
+    
+
+    
+    ClassName& operator=(ClassName const& rOther) = delete;
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+    
+    std::string Info() const;
+
+    
+    void PrintInfo(std::ostream& rOStream) const;
+
+    
+    void PrintData(std::ostream& rOStream) const;
+
+
+    
+    
+    
+
+
+    
+
+protected:
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+
+private:
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+
+}; 
+
+
+
+
+
+
+
+
+
+
+
+inline std::istream& operator >> (std::istream& rIStream,
+                ClassName& rThis);
+
+
+inline std::ostream& operator << (std::ostream& rOStream,
+                const ClassName& rThis)
+{
+    rThis.PrintInfo(rOStream);
+    rOStream << std::endl;
+    rThis.PrintData(rOStream);
+
+    return rOStream;
+}
+
+
+
+
+} 

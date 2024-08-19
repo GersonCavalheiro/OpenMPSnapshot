@@ -1,0 +1,156 @@
+#include <iostream>
+#include <fstream>
+#include<stdlib.h>
+#include <vector>
+#include <math.h>
+#include <time.h>
+#include <atomic>
+
+#include <chrono>
+
+struct dim
+{
+  double a,b,c;
+  int belong;
+};
+
+std::vector<dim> points;
+std::vector<dim> centroid;
+std::atomic<double> ca[10],cb[10],cc[10]; 
+
+int n, d, k;
+std::atomic<int> delta(0);
+
+int Kbelong(int x)
+{
+  double min=99999999, temp;
+  int tempi;
+  dim *a_pointer=&(points.at(x));
+  dim a=*a_pointer;
+  dim b;
+  for (int j = 0; j < k; ++j)
+  {
+    b=centroid.at(j);
+    temp=sqrt( ((a.a-b.a)*(a.a-b.a)) + ((a.b-b.b)*(a.b-b.b)) + ((a.c-b.c)*(a.c-b.c)) );
+    if(temp<min)
+    {
+      tempi=j;
+      min=temp;
+    }
+  }
+  if(a.belong!=tempi)
+    delta++;
+
+  ca[tempi]=ca[tempi]+a.a;
+  cb[tempi]=cb[tempi]+a.b;
+  cc[tempi]=cc[tempi]+a.c;
+  (*a_pointer).belong=tempi;
+  return tempi;
+}
+
+
+int main(int argc, char *argv[])
+{
+  using namespace std;
+
+  using namespace std::chrono;
+  auto start = high_resolution_clock::now(); 
+
+  
+  srand (time(NULL));
+
+  
+
+  ifstream file;
+  file.open(argv[1]);
+  file>>n>>d>>k;
+
+  
+
+  int limit=5000;
+
+  dim x;
+  x.belong=0;
+  for (int i = 0; i < n; ++i)
+  {
+    file>>x.a;
+    file>>x.b;
+    file>>x.c;
+    points.push_back(x);
+  }
+
+  file.close();
+
+  for (int i = 0; i < k; ++i)
+  {
+    centroid.push_back(points.at(rand()%n));
+  }
+
+  
+
+  int iter=0;
+  int sizek[k];
+  
+  while(true)
+  {
+    vector<int> memk[k];
+    
+    delta=0;
+
+    for (int i = 0; i < k; ++i)
+    {
+      sizek[i]=0;
+      ca[i]=0;
+      cb[i]=0;
+      cc[i]=0;
+    }
+
+
+    for (int i = 0; i < n; ++i)
+    {
+      int tempi=Kbelong(i);
+      memk[tempi].push_back(i);
+      sizek[tempi]++;
+    }
+    double a,b,c;
+    
+    #pragma omp for 
+    for (int i = 0; i < k; ++i)
+    {
+      dim temp;
+      a=ca[i]/sizek[i];
+      b=cb[i]/sizek[i];
+      c=cc[i]/sizek[i];
+
+      temp.a=a;
+      temp.b=b;
+      temp.c=c;
+      temp.belong=0;
+
+      centroid.at(i)=temp;
+
+      if(sizek[i]==0)
+      cout<<"ooOO";
+    }
+
+    ++iter;
+
+    if(iter>2 && delta<limit)
+      break;
+  }
+
+  cout<<endl<<iter<<endl;
+
+  dim temp;
+
+  for (int i = 0; i < k; ++i)
+  {
+    temp=centroid.at(i);
+    cout<<i<<". "<<temp.a<<"   "<<temp.b<<"   "<<temp.c<<"   "<<sizek[i]<<endl;
+  }
+  auto stop = high_resolution_clock::now(); 
+
+  auto duration = duration_cast<microseconds>(stop - start); 
+  cout << duration.count() << endl;
+
+}

@@ -1,0 +1,223 @@
+
+
+#pragma once
+
+#ifdef ALPAKA_ACC_SYCL_ENABLED
+
+#    include <alpaka/core/Sycl.hpp>
+#    include <alpaka/dev/DevGenericSycl.hpp>
+#    include <alpaka/dev/Traits.hpp>
+#    include <alpaka/dim/DimIntegralConst.hpp>
+#    include <alpaka/dim/Traits.hpp>
+#    include <alpaka/mem/buf/BufCpu.hpp>
+#    include <alpaka/mem/buf/Traits.hpp>
+#    include <alpaka/mem/view/Accessor.hpp>
+#    include <alpaka/vec/Vec.hpp>
+
+#    include <CL/sycl.hpp>
+
+#    include <memory>
+#    include <type_traits>
+
+namespace alpaka
+{
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+class BufGenericSycl
+{
+static_assert(
+!std::is_const_v<TElem>,
+"The elem type of the buffer can not be const because the C++ Standard forbids containers of const "
+"elements!");
+static_assert(!std::is_const_v<TIdx>, "The idx type of the buffer can not be const!");
+
+public:
+template<typename TExtent>
+BufGenericSycl(TDev const& dev, sycl::buffer<TElem, TDim::value> buffer, TExtent const& extent)
+: m_dev{dev}
+, m_extentElements{getExtentVecEnd<TDim>(extent)}
+, m_buffer{buffer}
+{
+ALPAKA_DEBUG_MINIMAL_LOG_SCOPE;
+
+static_assert(
+TDim::value == Dim<TExtent>::value,
+"The dimensionality of TExtent and the dimensionality of the TDim template parameter have to be "
+"identical!");
+
+static_assert(
+std::is_same_v<TIdx, Idx<TExtent>>,
+"The idx type of TExtent and the TIdx template parameter have to be identical!");
+}
+
+TDev m_dev;
+Vec<TDim, TIdx> m_extentElements;
+sycl::buffer<TElem, TDim::value> m_buffer;
+};
+} 
+
+namespace alpaka::trait
+{
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct DevType<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+using type = TDev;
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct GetDev<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+static auto getDev(BufGenericSycl<TElem, TDim, TIdx, TDev> const& buf)
+{
+return buf.m_dev;
+}
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct DimType<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+using type = TDim;
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct ElemType<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+using type = TElem;
+};
+
+template<typename TIdxIntegralConst, typename TElem, typename TDim, typename TIdx, typename TDev>
+struct GetExtent<TIdxIntegralConst, BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+static_assert(TDim::value > TIdxIntegralConst::value, "Requested dimension out of bounds");
+
+static auto getExtent(BufGenericSycl<TElem, TDim, TIdx, TDev> const& buf) -> TIdx
+{
+return buf.m_extentElements[TIdxIntegralConst::value];
+}
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct GetPtrNative<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+static_assert(
+!sizeof(TElem),
+"Accessing device-side pointers on the host is not supported by the SYCL back-end");
+
+static auto getPtrNative(BufGenericSycl<TElem, TDim, TIdx, TDev> const&) -> TElem const*
+{
+return nullptr;
+}
+
+static auto getPtrNative(BufGenericSycl<TElem, TDim, TIdx, TDev>&) -> TElem*
+{
+return nullptr;
+}
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct GetPtrDev<BufGenericSycl<TElem, TDim, TIdx, TDev>, TDev>
+{
+static_assert(
+!sizeof(TElem),
+"Accessing device-side pointers on the host is not supported by the SYCL back-end");
+
+static auto getPtrDev(BufGenericSycl<TElem, TDim, TIdx, TDev> const&, TDev const&) -> TElem const*
+{
+return nullptr;
+}
+
+static auto getPtrDev(BufGenericSycl<TElem, TDim, TIdx, TDev>&, TDev const&) -> TElem*
+{
+return nullptr;
+}
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TPltf>
+struct BufAlloc<TElem, TDim, TIdx, DevGenericSycl<TPltf>>
+{
+template<typename TExtent>
+static auto allocBuf(DevGenericSycl<TPltf> const& dev, TExtent const& ext)
+-> BufGenericSycl<TElem, TDim, TIdx, DevGenericSycl<TPltf>>
+{
+ALPAKA_DEBUG_MINIMAL_LOG_SCOPE;
+
+if constexpr(TDim::value == 0 || TDim::value == 1)
+{
+auto const width = getWidth(ext);
+
+#    if ALPAKA_DEBUG >= ALPAKA_DEBUG_FULL
+auto const widthBytes = width * static_cast<TIdx>(sizeof(TElem));
+std::cout << __func__ << " ew: " << width << " ewb: " << widthBytes << '\n';
+#    endif
+
+auto const range = sycl::range<1>{width};
+return {dev, sycl::buffer<TElem, 1>{range}, ext};
+}
+else if constexpr(TDim::value == 2)
+{
+auto const width = getWidth(ext);
+auto const height = getHeight(ext);
+
+#    if ALPAKA_DEBUG >= ALPAKA_DEBUG_FULL
+auto const widthBytes = width * static_cast<TIdx>(sizeof(TElem));
+std::cout << __func__ << " ew: " << width << " eh: " << height << " ewb: " << widthBytes
+<< " pitch: " << widthBytes << '\n';
+#    endif
+
+auto const range = sycl::range<2>{width, height};
+return {dev, sycl::buffer<TElem, 2>{range}, ext};
+}
+else if constexpr(TDim::value == 3)
+{
+auto const width = getWidth(ext);
+auto const height = getHeight(ext);
+auto const depth = getDepth(ext);
+
+#    if ALPAKA_DEBUG >= ALPAKA_DEBUG_FULL
+auto const widthBytes = width * static_cast<TIdx>(sizeof(TElem));
+std::cout << __func__ << " ew: " << width << " eh: " << height << " ed: " << depth
+<< " ewb: " << widthBytes << " pitch: " << widthBytes << '\n';
+#    endif
+
+auto const range = sycl::range<3>{width, height, depth};
+return {dev, sycl::buffer<TElem, 3>{range}, ext};
+}
+}
+};
+
+template<typename TIdxIntegralConst, typename TElem, typename TDim, typename TIdx, typename TDev>
+struct GetOffset<TIdxIntegralConst, BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+static auto getOffset(BufGenericSycl<TElem, TDim, TIdx, TDev> const&) -> TIdx
+{
+return 0u;
+}
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TDev>
+struct IdxType<BufGenericSycl<TElem, TDim, TIdx, TDev>>
+{
+using type = TIdx;
+};
+
+template<typename TElem, typename TDim, typename TIdx, typename TPltf>
+struct GetPtrDev<BufCpu<TElem, TDim, TIdx>, DevGenericSycl<TPltf>>
+{
+static_assert(!sizeof(TElem), "Accessing host pointers on the device is not supported by the SYCL back-end");
+
+static auto getPtrDev(BufCpu<TElem, TDim, TIdx> const&, DevGenericSycl<TPltf> const&) -> TElem const*
+{
+return nullptr;
+}
+
+static auto getPtrDev(BufCpu<TElem, TDim, TIdx>&, DevGenericSycl<TPltf> const&) -> TElem*
+{
+return nullptr;
+}
+};
+} 
+
+#    include <alpaka/mem/buf/sycl/Accessor.hpp>
+#    include <alpaka/mem/buf/sycl/Copy.hpp>
+#    include <alpaka/mem/buf/sycl/Set.hpp>
+
+#endif

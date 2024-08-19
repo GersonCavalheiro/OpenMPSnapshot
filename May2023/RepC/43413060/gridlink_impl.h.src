@@ -1,0 +1,43 @@
+#pragma once
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "defs.h"  
+#include "cellarray_DOUBLE.h" 
+#include "cell_pair_DOUBLE.h" 
+#include "weight_defs_DOUBLE.h" 
+extern cellarray_DOUBLE * gridlink_DOUBLE(const int64_t np,
+DOUBLE *x, DOUBLE *y, DOUBLE *z, weight_struct *weights,
+const DOUBLE xmin, const DOUBLE xmax,
+const DOUBLE ymin, const DOUBLE ymax,
+const DOUBLE zmin, const DOUBLE zmax,
+const DOUBLE max_x_size,
+const DOUBLE max_y_size,
+const DOUBLE max_z_size,
+const DOUBLE xwrap,
+const DOUBLE ywrap,
+const DOUBLE zwrap,
+const int xbin_refine_factor,
+const int ybin_refine_factor,
+const int zbin_refine_factor,
+int *nlattice_x,
+int *nlattice_y,
+int *nlattice_z,
+const struct config_options *options) __attribute__((warn_unused_result));
+struct cell_pair_DOUBLE * generate_cell_pairs_DOUBLE(struct cellarray_DOUBLE *lattice1,
+struct cellarray_DOUBLE *lattice2,
+const int64_t totncells,
+int64_t *ncell_pairs,
+const int xbin_refine_factor, const int ybin_refine_factor, const int zbin_refine_factor,
+const int nmesh_x, const int nmesh_y, const int nmesh_z,
+const DOUBLE xdiff, const DOUBLE ydiff, const DOUBLE zdiff,
+const DOUBLE max_3D_sep, const DOUBLE max_2D_sep, const DOUBLE max_1D_sep,
+const int enable_min_sep_opt,
+const int autocorr,
+const int periodic_x, const int periodic_y, const int periodic_z)
+__attribute__((warn_unused_result));
+extern void free_cellarray_DOUBLE(cellarray_DOUBLE *lattice, const int64_t totncells);
+#ifdef __cplusplus
+}
+#endif

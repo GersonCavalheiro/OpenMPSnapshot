@@ -1,0 +1,139 @@
+
+#include "hashtree.h"
+#include <omp.h>
+
+HashTree::HashTree(const string& pathName, bool fromFile = false){
+
+if (fromFile) {
+build_fromFile(pathName);
+} else {
+this->root = pathName;
+build(pathName);
+}
+}
+
+void HashTree::build_fromFile(const string& path) {
+bool first = true;
+ifstream file(path);
+if(!file) {
+perror("Unable to Open File");
+}
+string line;
+while(getline(file,line)) {
+string node;
+vector<string> info;
+stringstream tokenizer(line);
+getline(tokenizer, node, '|');
+string temp;
+if (first) {
+this->root = node;
+first = false;
+}
+while(getline(tokenizer, temp, '|')) {
+info.push_back(temp);
+}
+this->tree[node] = info;
+}
+}
+
+string HashTree::get_root() {
+return this->root;
+}
+
+string HashTree::get_hash(const string& node) {
+return this->tree[node][0];
+}
+
+vector<string> HashTree::get_children(const string& node) {
+return {tree[node].begin() + 1, tree[node].end()};
+}
+
+void HashTree::save(const string& destination) {
+ofstream file;
+file.open(destination);
+queue<string> current;
+current.push(this->root);
+while(!current.empty()) {
+string node = current.front();
+string s;
+current.pop();
+
+s = node + "|" + tree[node][0] + "|";
+for(int i = 1; i < tree[node].size();i++) {
+s += tree[node][i] + "|";
+current.push(tree[node][i]);
+}
+s += "\n";
+file << s; 
+}
+cout << "Hash Tree saved at " << destination << endl;
+file.close();
+}
+
+void HashTree::print() {
+queue<string> current;
+current.push(this->root);
+while(!current.empty()) {
+string node = current.front();
+current.pop();
+
+cout << node << " " << "Hash: " << tree[node][0] << " Children: [";
+for(int i = 1; i < tree[node].size();i++) {
+cout << tree[node][i] << ", ";
+current.push(tree[node][i]);
+}
+cout << "] " << tree[node].size() - 1 << endl;
+}
+}
+
+void HashTree::print_metadata() {
+cout << "Path: " << this->root << endl;
+cout << "Root Hash: " << this->tree[root][0] << endl;
+cout << "Number of Files: " << this->tree.size() << endl;
+}
+
+void HashTree::build(const string& path) {
+SHA256 hash;
+vector<string> info;
+if(is_directory(path)) {
+for (const auto &entry : directory_iterator(path)) {
+info.push_back(entry.path()); 
+}
+sort(info.begin(), info.end());
+
+for (const string &child : info) {
+if (!is_directory(child)) {
+#pragma omp task default(none) firstprivate(child) priority(1)
+build(child); 
+} else {
+#pragma omp task default(none) firstprivate(child) priority(0)
+build(child);
+}
+}
+
+#pragma omp taskwait
+for (const string &child : info) {
+string child_hash = this->tree[child][0]; 
+hash.add(&child_hash, child_hash.length());
+}
+} else {
+ifstream stream;
+stream.open(path, ifstream::binary);
+if(!stream) {
+perror("Unable to Open File");
+} else {
+std::filebuf* pbuf = stream.rdbuf();
+
+std::size_t size = pbuf->pubseekoff (0,stream.end,std::ifstream::in);
+pbuf->pubseekpos (0,std::ifstream::in);
+
+char* buffer=new char[size];
+
+pbuf->sgetn (buffer,size);
+hash.add(buffer, size);
+}
+}
+info.insert(info.begin(), hash.getHash());
+this->tree[path] = info;
+}
+

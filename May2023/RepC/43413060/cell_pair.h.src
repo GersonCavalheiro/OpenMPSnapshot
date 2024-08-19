@@ -1,0 +1,23 @@
+#pragma once
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "weight_defs_DOUBLE.h"
+struct cell_pair_DOUBLE{
+int64_t cellindex1;
+int64_t cellindex2;
+DOUBLE xwrap;
+DOUBLE ywrap;
+DOUBLE zwrap;
+DOUBLE min_dx;
+DOUBLE min_dy;
+DOUBLE min_dz;
+DOUBLE closest_x1;
+DOUBLE closest_y1;
+DOUBLE closest_z1;
+int8_t same_cell;
+};
+#ifdef __cplusplus
+}
+#endif

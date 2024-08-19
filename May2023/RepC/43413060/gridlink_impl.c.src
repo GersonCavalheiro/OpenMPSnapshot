@@ -1,0 +1,451 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "defs.h"
+#include "function_precision.h"
+#include "utils.h"
+#include "sglib.h"
+#include "gridlink_utils_DOUBLE.h"
+#include "gridlink_impl_DOUBLE.h"
+#if defined(_OPENMP)
+#include <omp.h>
+#endif
+#ifndef CONVERT_3D_INDEX_TO_LINEAR
+#define CONVERT_3D_INDEX_TO_LINEAR(ix, iy, iz, nx, ny, nz)           {ix*ny*nz + iy*nz + iz}
+#endif
+void warn_flat_dim_DOUBLE(const char *dim);
+void free_cellarray_DOUBLE(cellarray_DOUBLE *lattice, const int64_t totncells)
+{
+(void) totncells;
+if(lattice[0].owns_memory == 0) {
+free(lattice[0].original_index);
+} else {
+free(lattice[0].x);
+free(lattice[0].y);
+free(lattice[0].z);
+for(int w = 0; w < lattice[0].weights.num_weights; w++){
+free(lattice[0].weights.weights[w]);
+}
+}
+free(lattice);
+}
+void warn_flat_dim_DOUBLE(const char *dim){
+fprintf(stderr, "Warning: all particles appear to have the same %s coordinate.\n"
+"         Corrfunc will operate correctly, but make sure this is what you expected.",
+dim);
+}
+cellarray_DOUBLE * gridlink_DOUBLE(const int64_t NPART,
+DOUBLE *X, DOUBLE *Y, DOUBLE *Z, weight_struct *WEIGHTS,
+const DOUBLE xmin, const DOUBLE xmax,
+const DOUBLE ymin, const DOUBLE ymax,
+const DOUBLE zmin, const DOUBLE zmax,
+const DOUBLE max_x_size,
+const DOUBLE max_y_size,
+const DOUBLE max_z_size,
+const DOUBLE xwrap,
+const DOUBLE ywrap,
+const DOUBLE zwrap,
+const int xbin_refine_factor,
+const int ybin_refine_factor,
+const int zbin_refine_factor,
+int *nlattice_x,
+int *nlattice_y,
+int *nlattice_z,
+const struct config_options *options)
+{
+int nmesh_x=0,nmesh_y=0,nmesh_z=0;
+struct timeval t0;
+if(options->verbose) {
+gettimeofday(&t0,NULL);
+}
+DOUBLE xbinsize=ZERO, ybinsize=ZERO, zbinsize=ZERO;
+const int xstatus = get_binsize_DOUBLE(xmax-xmin, xwrap, max_x_size, xbin_refine_factor, options->max_cells_per_dim, &xbinsize, &nmesh_x);
+const int ystatus = get_binsize_DOUBLE(ymax-ymin, ywrap, max_y_size, ybin_refine_factor, options->max_cells_per_dim, &ybinsize, &nmesh_y);
+const int zstatus = get_binsize_DOUBLE(zmax-zmin, zwrap, max_z_size, zbin_refine_factor, options->max_cells_per_dim, &zbinsize, &nmesh_z);
+if(xstatus != EXIT_SUCCESS || ystatus != EXIT_SUCCESS || zstatus != EXIT_SUCCESS) {
+fprintf(stderr,"Received xstatus = %d ystatus = %d zstatus = %d. Error\n", xstatus, ystatus, zstatus);
+return NULL;
+}
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
+if(xbinsize == ZERO && NPART > 2) warn_flat_dim_DOUBLE("X");
+if(ybinsize == ZERO && NPART > 2) warn_flat_dim_DOUBLE("Y");
+if(zbinsize == ZERO && NPART > 2) warn_flat_dim_DOUBLE("Z");
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+const int64_t totncells = (int64_t) nmesh_x * (int64_t) nmesh_y * (int64_t) nmesh_z;
+if(options->verbose) {
+fprintf(stderr,"In %s> Running with [nmesh_x, nmesh_y, nmesh_z]  = %d,%d,%d. ",__FUNCTION__,nmesh_x,nmesh_y,nmesh_z);
+}
+cellarray_DOUBLE *lattice  = (cellarray_DOUBLE *) my_malloc(sizeof(*lattice), totncells);
+DOUBLE *realX = NULL, *realY = NULL, *realZ = NULL;  
+DOUBLE *realW[MAX_NUM_WEIGHTS] = {NULL};  
+int w_alloc_status = 0;
+int num_weights = (WEIGHTS == NULL) ? 0 : WEIGHTS->num_weights;
+int64_t *cellstarts = (int64_t *) my_malloc(sizeof(*cellstarts), totncells);
+int64_t *all_cell_indices = (int64_t *) my_malloc(sizeof(*all_cell_indices), NPART);
+int64_t *original_indices =  NULL;
+if(options->copy_particles) {
+realX = (DOUBLE *) my_malloc(sizeof(*realX), NPART);
+realY = (DOUBLE *) my_malloc(sizeof(*realY), NPART);
+realZ = (DOUBLE *) my_malloc(sizeof(*realZ), NPART);
+for(int w = 0; w < num_weights; w++){
+realW[w] = (DOUBLE *) my_malloc(sizeof(*(realW[w])), NPART);
+w_alloc_status |= realW[w] == NULL;
+}
+} else {
+original_indices = (int64_t *) my_malloc(sizeof(*original_indices), NPART);
+}
+if(lattice == NULL || all_cell_indices == NULL ||
+(options->copy_particles == 0 && original_indices == NULL) ||
+(options->copy_particles && (realX == NULL || realY == NULL || realZ == NULL || cellstarts == NULL || w_alloc_status != 0))){
+free(lattice);free(realX);free(realY);free(realZ);free(all_cell_indices);free(original_indices);
+for(int w = 0; w < num_weights; w++){
+free(realW[w]);
+}
+fprintf(stderr,"Error: In %s> Could not allocate memory for creating the lattice and associated arrays\n", __FUNCTION__);
+return NULL;
+}
+const DOUBLE xinv = xbinsize > 0 ? 1.0/xbinsize : 0.;
+const DOUBLE yinv = ybinsize > 0 ? 1.0/ybinsize : 0.;
+const DOUBLE zinv = zbinsize > 0 ? 1.0/zbinsize : 0.;
+int64_t out_of_bounds = 0;
+#if defined(_OPENMP)
+#pragma omp parallel for schedule(static) reduction(+:out_of_bounds)
+#endif
+for (int64_t i=0;i<NPART;i++)  {
+int ix=(int)((X[i]-xmin)*xinv) ;
+int iy=(int)((Y[i]-ymin)*yinv) ;
+int iz=(int)((Z[i]-zmin)*zinv) ;
+if (ix>nmesh_x-1)  ix--;    
+if (iy>nmesh_y-1)  iy--;
+if (iz>nmesh_z-1)  iz--;
+out_of_bounds += ix < 0 || ix >= nmesh_x || iy < 0 || iy >= nmesh_y || iz < 0 || iz >= nmesh_z;
+const int64_t icell = CONVERT_3D_INDEX_TO_LINEAR(ix, iy, iz, nmesh_x, nmesh_y, nmesh_z);
+all_cell_indices[i] = icell;
+if(options->copy_particles == 0){
+original_indices[i] = i;
+}
+}
+XRETURN(out_of_bounds == 0, NULL, "%"PRId64" particles are out of bounds. Check periodic wrapping?\n", out_of_bounds);
+#if defined(_OPENMP)
+int nthreads = omp_get_max_threads();  
+#else
+int nthreads = 1;
+#endif
+int64_t *cell_occupation[nthreads];
+#if defined(_OPENMP)
+#pragma omp parallel
+#endif
+{
+#if defined(_OPENMP)
+int tid = omp_get_thread_num();
+nthreads = omp_get_num_threads();  
+#else
+int tid = 0;
+#endif
+cell_occupation[tid] = my_calloc(sizeof(*(cell_occupation[0])), totncells);
+#if defined(_OPENMP)
+#pragma omp for schedule(static)
+#endif
+for(int64_t i = 0; i < NPART; i++){
+cell_occupation[tid][all_cell_indices[i]]++;
+}
+}
+#if defined(_OPENMP)
+#pragma omp parallel for schedule(static)
+#endif
+for(int64_t c = 0; c < totncells; c++){
+for(int t = 1; t < nthreads; t++){
+cell_occupation[0][c] += cell_occupation[t][c];
+}
+}
+parallel_cumsum(cell_occupation[0], totncells, cellstarts);
+#if defined(_OPENMP)
+#pragma omp parallel for schedule(static)
+#endif
+for (int64_t icell=0;icell<totncells;icell++) {
+lattice[icell].nelements = 0;
+lattice[icell].owns_memory = 0;
+lattice[icell].weights.num_weights = num_weights;
+lattice[icell].xbounds[0] = MAX_POSITIVE_FLOAT;
+lattice[icell].xbounds[1] = -MAX_POSITIVE_FLOAT;
+lattice[icell].ybounds[0] = MAX_POSITIVE_FLOAT;
+lattice[icell].ybounds[1] = -MAX_POSITIVE_FLOAT;
+lattice[icell].zbounds[0] = MAX_POSITIVE_FLOAT;
+lattice[icell].zbounds[1] = -MAX_POSITIVE_FLOAT;
+lattice[icell].original_index = NULL;
+if(options->copy_particles) {
+lattice[icell].owns_memory = icell == 0;
+lattice[icell].x = realX + cellstarts[icell];
+lattice[icell].y = realY + cellstarts[icell];
+lattice[icell].z = realZ + cellstarts[icell];
+for(int w = 0; w < num_weights; w++){
+lattice[icell].weights.weights[w] = realW[w] + cellstarts[icell];
+}
+} else {
+lattice[icell].original_index = original_indices + cellstarts[icell];
+lattice[icell].x = X + cellstarts[icell];
+lattice[icell].y = Y + cellstarts[icell];
+lattice[icell].z = Z + cellstarts[icell];
+for(int w = 0; w < num_weights; w++){
+lattice[icell].weights.weights[w] = ((DOUBLE *) WEIGHTS->weights[w]) + cellstarts[icell];
+}
+}
+}
+free(cellstarts);
+#if defined(_OPENMP)
+#pragma omp parallel
+#endif
+{
+#if defined(_OPENMP)
+int tid = omp_get_thread_num();
+#else
+int tid = 0;
+#endif
+int64_t cstart = totncells*tid/nthreads;
+int64_t cend = totncells*(tid+1)/nthreads;
+for (int64_t i=0;i<NPART;i++) {
+const int64_t icell = all_cell_indices[i];
+if(icell < cstart || icell >= cend){
+continue;
+}
+if(options->copy_particles) {
+const int64_t ipos = lattice[icell].nelements;
+lattice[icell].x[ipos] = X[i];
+lattice[icell].y[ipos] = Y[i];
+lattice[icell].z[ipos] = Z[i];
+for(int w = 0; w < num_weights; w++){
+lattice[icell].weights.weights[w][ipos] = ((DOUBLE *) WEIGHTS->weights[w])[i];
+}
+}
+lattice[icell].xbounds[0] = X[i] < lattice[icell].xbounds[0] ? X[i]:lattice[icell].xbounds[0];
+lattice[icell].ybounds[0] = Y[i] < lattice[icell].ybounds[0] ? Y[i]:lattice[icell].ybounds[0];
+lattice[icell].zbounds[0] = Z[i] < lattice[icell].zbounds[0] ? Z[i]:lattice[icell].zbounds[0];
+lattice[icell].xbounds[1] = X[i] > lattice[icell].xbounds[1] ? X[i]:lattice[icell].xbounds[1];
+lattice[icell].ybounds[1] = Y[i] > lattice[icell].ybounds[1] ? Y[i]:lattice[icell].ybounds[1];
+lattice[icell].zbounds[1] = Z[i] > lattice[icell].zbounds[1] ? Z[i]:lattice[icell].zbounds[1];
+lattice[icell].nelements++;
+}
+}  
+for(int64_t c = 0; c < totncells; c++){
+XRETURN(lattice[c].nelements == cell_occupation[0][c], NULL,
+"Error in %s> Expected to assign all particles = %"PRId64" into cells but only seem "
+"to have assigned %"PRId64".\n",
+__FUNCTION__, cell_occupation[0][c], lattice[c].nelements);
+}
+for(int t = 0; t < nthreads; t++)
+free(cell_occupation[t]);
+if(!options->copy_particles) {
+if(sizeof(*(lattice->original_index)) != sizeof(*original_indices)) {
+fprintf(stderr, "Error: In %s> The array to track the indices of input particle positions "
+"should be the same size as the indices themselves\n", __FUNCTION__);
+fprintf(stderr,"Perhaps check that these two variables are the same type\n");
+fprintf(stderr,"'original_index' within the 'struct cellarray', defined in 'cellarray.h.src' and \n");
+fprintf(stderr,"'original_indices' defined within function '%s' in file '%s'\n", __FUNCTION__, __FILE__);
+return NULL;
+}
+#define MULTIPLE_ARRAY_EXCHANGER(type,a,i,j) {                          \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, X, i, j);            \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, Y, i, j);            \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, Z, i, j);            \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(int64_t, original_indices, i, j); \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(int64_t, all_cell_indices, i, j); \
+for(int w = 0; w < num_weights; w++) {             \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, ((DOUBLE *) WEIGHTS->weights[w]), i, j); \
+}                                                           \
+}
+int64_t num_sorted = 1;
+for(int64_t ii=0;ii<NPART-1;ii++) {
+num_sorted += (all_cell_indices[ii+1] >= all_cell_indices[ii]) ? +1:-1;
+}
+if(num_sorted < NPART) {
+if(options->use_heap_sort || num_sorted > FRACTION_SORTED_REQD_TO_HEAP_SORT * NPART) {
+SGLIB_ARRAY_HEAP_SORT(int64_t, all_cell_indices, NPART, SGLIB_NUMERIC_COMPARATOR, MULTIPLE_ARRAY_EXCHANGER);
+} else {
+SGLIB_ARRAY_QUICK_SORT(int64_t, all_cell_indices, NPART, SGLIB_NUMERIC_COMPARATOR, MULTIPLE_ARRAY_EXCHANGER);
+}
+}
+#undef MULTIPLE_ARRAY_EXCHANGER
+}
+free(all_cell_indices);  
+if(options->sort_on_z) {
+#if defined(_OPENMP)
+#pragma omp parallel for schedule(dynamic)
+#endif
+for(int64_t icell=0;icell<totncells;icell++) {
+const cellarray_DOUBLE *first=&(lattice[icell]);
+if(first->nelements == 0) continue;
+#define MULTIPLE_ARRAY_EXCHANGER(type,a,i,j) {                          \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, first->x, i, j); \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, first->y, i, j); \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, first->z, i, j); \
+\
+if(options->copy_particles == 0) { \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(int64_t, first->original_index, i, j); \
+} \
+for(int w = 0; w < first->weights.num_weights; w++){    \
+SGLIB_ARRAY_ELEMENTS_EXCHANGER(DOUBLE, ((DOUBLE *)first->weights.weights[w]), i, j); \
+}                                                       \
+}
+int64_t num_sorted = 1;
+for(int64_t ii=0;ii<first->nelements-1;ii++) {
+num_sorted += (first->z[ii+1] >= first->z[ii]) ? +1:-1;
+}
+if(num_sorted < first->nelements) {
+if(options->use_heap_sort || num_sorted > FRACTION_SORTED_REQD_TO_HEAP_SORT * first->nelements) {
+SGLIB_ARRAY_HEAP_SORT(DOUBLE, first->z, first->nelements, SGLIB_NUMERIC_COMPARATOR , MULTIPLE_ARRAY_EXCHANGER);
+} else {
+SGLIB_ARRAY_QUICK_SORT(DOUBLE, first->z, first->nelements, SGLIB_NUMERIC_COMPARATOR , MULTIPLE_ARRAY_EXCHANGER);
+}
+}
+#undef MULTIPLE_ARRAY_EXCHANGER
+}
+}
+*nlattice_x=nmesh_x;
+*nlattice_y=nmesh_y;
+*nlattice_z=nmesh_z;
+if(options->verbose) {
+struct timeval t1;
+gettimeofday(&t1,NULL);
+fprintf(stderr," Time taken = %7.3lf sec\n",ADD_DIFF_TIME(t0,t1));
+}
+return lattice;
+}
+struct cell_pair_DOUBLE * generate_cell_pairs_DOUBLE(struct cellarray_DOUBLE *lattice1,
+struct cellarray_DOUBLE *lattice2,
+const int64_t totncells,
+int64_t *ncell_pairs,
+const int xbin_refine_factor, const int ybin_refine_factor, const int zbin_refine_factor,
+const int nmesh_x, const int nmesh_y, const int nmesh_z,
+const DOUBLE xwrap, const DOUBLE ywrap, const DOUBLE zwrap,
+const DOUBLE max_3D_sep, const DOUBLE max_2D_sep, const DOUBLE max_1D_sep,
+const int enable_min_sep_opt,
+const int autocorr,
+const int periodic_x, const int periodic_y, const int periodic_z)
+{
+const int64_t nx_ngb = 2*xbin_refine_factor + 1;
+const int64_t ny_ngb = 2*ybin_refine_factor + 1;
+const int64_t nz_ngb = 2*zbin_refine_factor + 1;
+const int64_t max_ngb_cells = nx_ngb * ny_ngb * nz_ngb - 1; 
+const int any_periodic = periodic_x || periodic_y || periodic_z;
+if( ! (autocorr == 0 || autocorr == 1) ) {
+fprintf(stderr,"Error: Strange value of autocorr = %d. Expected to receive either 1 (auto-correlations) or 0 (cross-correlations)\n", autocorr);
+return NULL;
+}
+const int64_t num_self_pairs = totncells;
+const int64_t num_nonself_pairs = totncells * max_ngb_cells;
+const int64_t max_num_cell_pairs = num_self_pairs + num_nonself_pairs;
+int64_t num_cell_pairs = 0;
+struct cell_pair_DOUBLE *all_cell_pairs = my_malloc(sizeof(*all_cell_pairs), max_num_cell_pairs);
+XRETURN(all_cell_pairs != NULL, NULL,
+"Error: Could not allocate memory for storing all the cell pairs. "
+"Reducing bin refine factors might help. Requested for %"PRId64" elements "
+"with each element of size %zu bytes\n", max_num_cell_pairs, sizeof(*all_cell_pairs));
+const int check_for_duplicate_ngb_cells = ( any_periodic &&
+(nmesh_x < (2*xbin_refine_factor + 1) ||
+nmesh_y < (2*ybin_refine_factor + 1) ||
+nmesh_z < (2*zbin_refine_factor + 1))  ) ? 1:0;
+for(int64_t icell=0;icell<totncells;icell++) {
+struct cellarray_DOUBLE *first = &(lattice1[icell]);
+if(first->nelements == 0) continue;
+const int iz = icell % nmesh_z;
+const int ix = icell / (nmesh_y * nmesh_z );
+const int iy = (icell - iz - ix*nmesh_z*nmesh_y)/nmesh_z;
+XRETURN(icell == (ix * nmesh_y * nmesh_z + iy * nmesh_z + (int64_t) iz), NULL,
+ANSI_COLOR_RED"BUG: Index reconstruction is wrong. icell = %"PRId64" reconstructed index = %"PRId64 ANSI_COLOR_RESET"\n",
+icell, (ix * nmesh_y * nmesh_z + iy * nmesh_z + (int64_t) iz));
+int64_t num_ngb_this_cell = 0;
+for(int iix=-xbin_refine_factor;iix<=xbin_refine_factor;iix++){
+const int periodic_ix = (ix + iix + nmesh_x) % nmesh_x;
+const int non_periodic_ix = ix + iix;
+const int iiix = (periodic_x == 1) ? periodic_ix:non_periodic_ix;
+if(iiix < 0 || iiix >= nmesh_x) continue;
+const DOUBLE off_xwrap = ((ix + iix) >= 0) && ((ix + iix) < nmesh_x) ? 0.0: ((ix+iix) < 0 ? xwrap:-xwrap);
+for(int iiy=-ybin_refine_factor;iiy<=ybin_refine_factor;iiy++) {
+const int periodic_iy = (iy + iiy + nmesh_y) % nmesh_y;
+const int non_periodic_iy = iy + iiy;
+const int iiiy = (periodic_y == 1) ? periodic_iy:non_periodic_iy;
+if(iiiy < 0 || iiiy >= nmesh_y) continue;
+const DOUBLE off_ywrap = ((iy + iiy) >= 0) && ((iy + iiy) < nmesh_y) ? 0.0: ((iy+iiy) < 0 ? ywrap:-ywrap);
+for(int64_t iiz=-zbin_refine_factor;iiz<=zbin_refine_factor;iiz++){
+const int periodic_iz = (iz + iiz + nmesh_z) % nmesh_z;
+const int non_periodic_iz = iz + iiz;
+const int iiiz = (periodic_z == 1) ? periodic_iz:non_periodic_iz;
+if(iiiz < 0 || iiiz >= nmesh_z) continue;
+const DOUBLE off_zwrap = ((iz + iiz) >= 0) && ((iz + iiz) < nmesh_z) ? 0.0: ((iz+iiz) < 0 ? zwrap:-zwrap);
+const int64_t icell2 = iiiz + (int64_t) nmesh_z*iiiy + nmesh_z*nmesh_y*iiix;
+if((autocorr == 1 && icell2 > icell) || lattice2[icell2].nelements == 0) {
+continue;
+}
+if(check_for_duplicate_ngb_cells) {
+CHECK_AND_CONTINUE_FOR_DUPLICATE_NGB_CELLS_DOUBLE(icell, icell2, off_xwrap, off_ywrap, off_zwrap, num_cell_pairs, num_ngb_this_cell, all_cell_pairs);
+}
+struct cellarray_DOUBLE *second = &(lattice2[icell2]);
+DOUBLE closest_x1 = ZERO, closest_y1 = ZERO, closest_z1 = ZERO;
+DOUBLE min_dx = ZERO, min_dy = ZERO, min_dz = ZERO;
+if(enable_min_sep_opt) {
+const DOUBLE x_low = first->xbounds[0] + off_xwrap, x_hi = first->xbounds[1] + off_xwrap;
+const DOUBLE y_low = first->ybounds[0] + off_ywrap, y_hi = first->ybounds[1] + off_ywrap;
+const DOUBLE z_low = first->zbounds[0] + off_zwrap, z_hi = first->zbounds[1] + off_zwrap;
+closest_x1 = iix < 0 ? x_low:(iix > 0 ? x_hi:ZERO);
+closest_y1 = iiy < 0 ? y_low:(iiy > 0 ? y_hi:ZERO);
+closest_z1 = iiz < 0 ? z_low:(iiz > 0 ? z_hi:ZERO);
+const DOUBLE first_x  = iix < 0 ? x_low:x_hi;
+const DOUBLE second_x = iix < 0 ? second->xbounds[1]:second->xbounds[0];
+min_dx = iix != 0 ? (first_x - second_x):ZERO;
+const DOUBLE first_y  = iiy < 0 ? y_low:y_hi;
+const DOUBLE second_y = iiy < 0 ? second->ybounds[1]:second->ybounds[0];
+min_dy = iiy != 0  ? (first_y - second_y):ZERO;
+const DOUBLE first_z  = iiz < 0 ? z_low:z_hi;
+const DOUBLE second_z = iiz < 0 ? second->zbounds[1]:second->zbounds[0];
+min_dz = iiz != 0 ? (first_z - second_z):ZERO;
+if(max_3D_sep > 0) {
+const DOUBLE sqr_min_sep_cells = min_dx*min_dx + min_dy*min_dy + min_dz*min_dz;
+if(sqr_min_sep_cells >= max_3D_sep*max_3D_sep) {
+continue;
+}
+}
+if(max_2D_sep > 0) {
+const DOUBLE sqr_min_sep_cells = min_dx*min_dx + min_dy*min_dy;
+if(sqr_min_sep_cells >= max_2D_sep*max_2D_sep) {
+continue;
+}
+} 
+if(max_1D_sep > 0 && iiz != 0) {
+const DOUBLE sqr_min_sep_cells = min_dz*min_dz;
+if(sqr_min_sep_cells >= max_1D_sep*max_1D_sep) {
+continue;
+}
+} 
+} 
+XRETURN(num_cell_pairs < max_num_cell_pairs, NULL,
+"Error: Assigning this existing cell-pair would require accessing invalid memory.\n"
+"Expected that the total number of cell pairs can be at most %"PRId64" but "
+"currently have number of cell pairs = %"PRId64"\n", max_num_cell_pairs, num_cell_pairs);
+struct cell_pair_DOUBLE *this_cell_pair = &all_cell_pairs[num_cell_pairs];
+this_cell_pair->cellindex1 = icell;
+this_cell_pair->cellindex2 = icell2;
+this_cell_pair->xwrap = off_xwrap;
+this_cell_pair->ywrap = off_ywrap;
+this_cell_pair->zwrap = off_zwrap;
+this_cell_pair->min_dx = min_dx;
+this_cell_pair->min_dy = min_dy;
+this_cell_pair->min_dz = min_dz;
+this_cell_pair->closest_x1 = closest_x1;
+this_cell_pair->closest_y1 = closest_y1;
+this_cell_pair->closest_z1 = closest_z1;
+this_cell_pair->same_cell = (autocorr == 1 && icell2 == icell) ? 1:0;
+num_cell_pairs++;
+num_ngb_this_cell++;
+} 
+} 
+}
+}
+*ncell_pairs = num_cell_pairs;
+return all_cell_pairs;
+}

@@ -1,0 +1,38 @@
+Directive&Version&C&CPP&Total&
+parallel & 1.0  &9242&7524&16766& Parallel Control \\
+parallel for & 1.0  &4900&5546&10446& Parallel Control; Loop \\
+for & 1.0  &4691&1486&6177& Parallel Control; Loop \\
+barrier & 1.0  &2286&495&2781& Synchronization \\
+single & 1.0  &1242&476&1718& Parallel Control \\
+critical & 1.0  &646&768&1414& Synchronization \\
+section & 1.0  &727&285&1012& Parallel Control \\
+master & 1.0  &660&271&931& Parallel Control \\
+sections & 1.0  &171&48&219& Parallel Control \\
+parallel sections & 1.0  &134&49&183& Parallel Control \\
+atomic & 2.0  &1970&515&2485& Synchronization \\
+ordered & 2.0  &343&21&364& Synchronization \\
+flush & 2.0  &209&29&238& Synchronization \\
+threadprivate & 2.0  &125&27&152& Data Privacy and Sharing \\
+task & 3.0  &3115&438&3553& Parallel Control; Task \\
+taskwait & 3.1  &725&109&834& Synchronization; Task \\
+taskloop & 3.2  &318&11&329& Parallel Control; Loop; Task \\
+taskgroup & 3.3  &90&6&96& Synchronization; Task \\
+taskyield & 3.4  &16&0&16& Synchronization; Task \\
+target & 4.0  &1959&1469&3428& Teams and Distribution \\
+simd & 4.0  &1226&546&1772& Parallel Control; Loop; SIMD \\
+teams & 4.5  &178&99&277& Teams and Distribution \\
+parallel for simd & 4.5  &122&76&198& Parallel Control; Loop; SIMD \\
+distribute & 4.5  &120&22&142& Parallel Control \\
+for simd & 4.5  &33&11&44& Parallel Control; Loop; SIMD \\
+taskloop simd & 4.5  &31&0&31& Parallel Control; Loop; Task; SIMD \\
+requires & 4.5  &22&0&22& Metaprogramming and Requirements \\
+declare & 5.0  &592&182&774& Metaprogramming and Requirements \\
+loop & 5.0  &47&0&47& Parallel Control; Loop \\
+metadirective & 5.0  &8&0&8& Metaprogramming and Requirements \\
+depobj & 5.0  &7&0&7& Memory Allocation and Management \\
+allocate & 5.0  &4&0&4& Memory Allocation and Management \\
+assume & 5.1  &7&0&7& Metaprogramming and Requirements \\
+error & 5.1  &5&0&5& Execution Control and Debugging \\
+scope & 5.1  &4&0&4& Execution Control and Debugging \\
+tile & 5.1  &2&0&2& Parallel Control; Loop \\
+mask & 5.1  &2&0&2& Execution Control and Debugging \\

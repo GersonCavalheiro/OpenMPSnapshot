@@ -1,0 +1,5490 @@
+Arquivo@Número da Linha@Caso@Diretiva OpenMP@Linha Seguinte
+./96631497/SimulationNBodyV2.hxx@173@CRITICAL@#pragma omp critical@closNeighj = std::min(closNeighj, rij);
+./96631497/SimulationNBodyV2Intrinsics.hxx@225@CRITICAL@#pragma omp critical@rclosNeighj.store(this->closestNeighborDist + jVec * mipp::N<T>());
+./107320494/host_vector.cpp@947@CRITICAL@#pragma omp critical@"#endif
+{
+if(val > value)
+{
+value = val;
+index = i;
+}
+}
+}
+"
+./142172127/critical.cpp@47@CRITICAL@#pragma omp critical@pi += sum*step;
+./434676452/Bruteforce.cpp@31@CRITICAL@#pragma omp critical@"{
+std::cout << ""FOUND KEY: "" << key << std::endl;
+std::string filename = ""probably_key"" + std::to_string(key) + "".out"";
+std::ofstream file(filename, std::ios::binary);
+unsigned char bytes[4] = { 0 };
+bytes[0] = (key >> 24) & 0xFF;
+bytes[1] = (key >> 16) & 0xFF;
+bytes[2] = (key >> 8) & 0xFF;
+bytes[3] = key & 0xFF;
+file << bytes[0] << bytes[1] << bytes[2] << bytes[3];"
+./268835699/eliminate-branches.h@38@CRITICAL@#pragma omp critical@tree.eraseBranch(root);
+./268835699/eliminate-branches.h@66@CRITICAL@#pragma omp critical@tree.eraseBranch(root);
+./268835699/eliminate-branches.h@94@CRITICAL@#pragma omp critical@tree.eraseBranch(root);
+./268835699/eliminate-branches.h@123@CRITICAL@#pragma omp critical@tree.eraseBranch(root);
+./293300824/graph.hpp@88@CRITICAL@#pragma omp critical(queue_update)@queue.insert(queue.end(), private_queue.begin(), private_queue.end());
+./293300824/graph.hpp@122@CRITICAL@#pragma omp critical(queue_update)@queue.insert(queue.end(), private_queue.begin(), private_queue.end());
+./293300824/graph.hpp@255@CRITICAL@#pragma omp critical(queue_update)@queue.push_back(next);
+./365493075/main.cpp@44@CRITICAL@#pragma omp critical@"{
+privateNonce = nonce;
+nonce++;
+}
+#pragma omp barrier
+
+while (true)
+{
+privateText = blockChain.GetText(privateNonce);
+privateHash = Sha256(privateText, sha256K);"
+./365493075/main.cpp@99@CRITICAL@#pragma omp critical@"{
+if (acceptCounter < threadNums / 2)
+{
+if (blockChain.Control(privateHash)) {
+cout << ""Hash accepted: "" << privateHash << ""\t \t nonce: "" << acceptNonce << ""\t \t tid: "" << omp_get_thread_num() << endl;
+++acceptCounter;
+}
+else cout << ""Error tid: "" << omp_get_thread_num() << endl;
+}
+++entryCounter;"
+./448185761/mandelbrot.c@120@CRITICAL@#pragma omp critical@"for(col = 0; col<width; col++) {
+XSetForeground (display, gc, couleur[col]);
+XDrawPoint (display, win, gc, col, row);
+XFlush(display);
+}
+#endif
+}
+
+#ifdef WITH_DISPLAY
+"
+./524786911/q1.cpp@28@CRITICAL@#pragma omp critical@"{
+if (i > loc)
+loc = i;
+}
+}
+}
+return 0;
+}"
+./546806621/omp_critical.c@59@CRITICAL@#pragma omp critical@"{
+if (numbers[i] > maxval){
+maxval = numbers[i];
+}
+}
+}
+printf(""max number in file: %d\n"",maxval);
+
+int num_n0 = 0;
+#pragma omp parallel for"
+./546806621/omp_critical.c@72@CRITICAL@#pragma omp critical@num_n0++;
+./546806621/parallel.c@51@CRITICAL@#pragma omp critical@maxval = numbers[i];
+./394534802/main.cpp@17@CRITICAL@#pragma omp critical@"{
+cout<<""Enter choice (0=yes / 1 = no) for thread""<< omp_get_thread_num()<<"" = "";
+cin>>choice;
+if (choice == 1)
+{
+consensus = false;
+}
+}
+}
+if (consensus)"
+./538481564/omp9.cpp@36@CRITICAL@#pragma omp critical@max = d[i][j];
+./538481564/omp9.cpp@41@CRITICAL@#pragma omp critical@min = d[i][j];
+./538481564/omp15.cpp@31@CRITICAL@#pragma omp critical@result.push_back(i);
+./538481564/omp11.cpp@32@CRITICAL@#pragma omp critical@"{
+if (a[i] % DIVIDER == 0 && a[i] > max) {
+max = a[i];
+}
+}
+}
+}
+
+if (max != numeric_limits<int>::min()) {
+printf(""Max multiple of 7 value in the array: %d\n"", max);"
+./149614655/bf-omp.cpp@114@CRITICAL@#pragma omp critical@dist[v] = dist[u] + weight;
+./149614655/bf-omp.cpp@116@CRITICAL@#pragma omp critical@relaxed_times[v] += 1;
+./149614655/bf-omp.cpp@131@CRITICAL@#pragma omp critical@has_change = has_change || my_has_change;
+./196579227/ConvertRepresentation.cpp@26@CRITICAL@#pragma omp critical (write_text)@"{
+cout << ""read "" << i << "" of "" << files.size() <<  endl;
+}
+filename = xray_dir + files[i];
+frame = imread(filename.c_str(), cv::IMREAD_GRAYSCALE);
+
+frame.copyTo(zslices[i]);
+}
+}
+}"
+./196579227/LevelSets.cpp@548@CRITICAL@#pragma omp critical@"{
+index_mask_pairs.push_back(pair<int, Mat>(i, bw_ims[thread_id].clone()));
+
+}
+}
+}
+}
+
+if (iter != 0 && (iter % (write_interval) == 0) && write_on_image == true){
+iter_write_dir  = result_image_dir + ""color"" + ToString<int>(iter);"
+./196579227/LevelSets.cpp@1355@CRITICAL@#pragma omp critical@"{
+cout << ""Creating new panel for thread "" << thread_id << endl;
+d_gamma_indices_per_thread[thread_id].push_back(new int_type_t[max_per_panel]);
+}
+
+index_per_panel[thread_id] = 0;
+panel_number_per_thread[thread_id]++;
+}
+
+d_gamma_indices_per_thread[thread_id][panel_number_per_thread[thread_id]][index_per_panel[thread_id]] = rs_index;"
+./512222906/main.cpp@225@CRITICAL@#pragma omp critical@"if (a > max_a) {
+max_a = a;
+}
+}
+
+}
+
+
+t += omp_get_wtime();
+cout << ""\nerror_time = "" << t << ""\n"";"
+./261549670/ParallelKMeans.hpp@90@CRITICAL@#pragma omp critical@minPropDist[j] = minDist[j] / sum;
+./261549670/ParallelKMeans.hpp@141@CRITICAL@#pragma omp critical@P.SetClusterId(clusterId);
+./261549670/ParallelKMeans.hpp@145@CRITICAL@#pragma omp critical@clusters[clusterId].Add(i);
+./439117495/tree_mesh_builder.cpp@105@CRITICAL@#pragma omp critical(critical)@mTriangles.push_back(triangle);
+./439117495/loop_mesh_builder.cpp@61@CRITICAL@#pragma omp critical(crit)@mTriangles.push_back(triangle);
+./632610376/main.cpp@94@CRITICAL@#pragma omp critical@"{
+sum++;
+}
+}
+}
+#pragma omp section
+{
+for (long long i = 0 ; i < max;i++){
+#pragma omp critical
+{"
+./632610376/main.cpp@103@CRITICAL@#pragma omp critical@"{
+sum--;
+}
+}
+}
+}
+}
+end = std::chrono::steady_clock::now();
+elapsed_seconds = end-start;
+std::cout << ""Access control by using critical seciton elapsed time: "" << elapsed_seconds.count() << ""s\n"";"
+./122826324/calc_par.cpp@63@CRITICAL@#pragma omp critical@"{
+if (max_err_wave > max_err) max_err = max_err_wave;
+}
+}
+}
+} while (max_err > eps);
+}
+else {
+cout << ""Error!!!"" << endl;
+}"
+./448724645/bz_mesh.cpp@180@CRITICAL@#pragma omp critical@list_energies.push_back(energy);
+./448724645/bz_mesh.cpp@203@CRITICAL@#pragma omp critical@list_energies.push_back(energy);
+./79154277/deadlock.cpp@11@CRITICAL@#pragma omp critical@"{
+auto id = omp_get_thread_num();
+std::cout << ""o,hai there, i'm "" << id << '\n';
+}
+
+}
+
+void deadlockA()
+{
+int sum{0};"
+./79154277/deadlock.cpp@26@CRITICAL@#pragma omp critical@"{
+sum += ii;
+foo();
+}
+}
+}
+
+
+void deadlockB()
+{"
+./79154277/deadlock.cpp@39@CRITICAL@#pragma omp critical(A)@"{
+#pragma omp critical(B)
+{
+std::cout << ""whassup\n"";
+}
+}
+#pragma omp critical(B)
+{
+#pragma omp critical(A)
+{"
+./79154277/deadlock.cpp@41@CRITICAL@#pragma omp critical(B)@"{
+std::cout << ""whassup\n"";
+}
+}
+#pragma omp critical(B)
+{
+#pragma omp critical(A)
+{
+std::cout << ""ahoy\n"";
+}"
+./79154277/deadlock.cpp@46@CRITICAL@#pragma omp critical(B)@"{
+#pragma omp critical(A)
+{
+std::cout << ""ahoy\n"";
+}
+}
+}
+
+}
+"
+./79154277/deadlock.cpp@48@CRITICAL@#pragma omp critical(A)@"{
+std::cout << ""ahoy\n"";
+}
+}
+}
+
+}
+
+
+"
+./72936111/server.h@182@CRITICAL@#pragma omp critical(CriticalClient)@"{
+int socketPosition = -1;
+for(int idxClient = 0 ; idxClient < nbClients ; ++idxClient){
+if( clients[idxClient].first == inClientSocket ){
+socketPosition = idxClient;
+break;
+}
+}
+if( socketPosition != -1 ){
+::close(inClientSocket);"
+./72936111/server.h@202@CRITICAL@#pragma omp critical(CriticalClient)@"{
+if(nbClients != MaximumClients){
+clients[nbClients++].first = inClientSocket;
+cliendAdded = true;
+}
+}
+return cliendAdded;
+}
+
+void broadcast(const directive& data){"
+./72936111/server.h@215@CRITICAL@#pragma omp critical(CriticalClient)@"{
+for(int idxClient = 0 ; idxClient < nbClients ; ++idxClient){
+
+std::string tempBuffer=""msg from "" +data.nick+ "": ""+data.buffer;
+if( write(clients[idxClient].first, tempBuffer.c_str(), std::strlen(tempBuffer.c_str()) ) <= 0 ){
+::close(clients[idxClient].first);
+--nbClients;
+clients[idxClient] = clients[nbClients];
+--idxClient;
+}"
+./72936111/server.h@231@CRITICAL@#pragma omp critical(CriticalClient)@"{
+bool found=false;
+int idxClient=SearchClient(data.dest);
+if(idxClient>=0)
+{
+std::string tempBuffer=""msg from "" +data.nick+ "": "" +data.buffer;
+if( write(clients[idxClient].first, tempBuffer.c_str(), std::strlen(tempBuffer.c_str()) ) <= 0 ){
+::close(clients[idxClient].first);
+--nbClients;
+clients[idxClient] = clients[nbClients];"
+./72936111/server.h@260@CRITICAL@#pragma omp critical(CriticalClient)@"{
+if(idxClient>=0)
+{
+std::string tempBuffer=""msg from "" +data.nick+ "": "" +data.buffer;
+if( write(clients[idxClient].first, tempBuffer.c_str(), std::strlen(tempBuffer.c_str()) ) <= 0 ){
+::close(clients[idxClient].first);
+--nbClients;
+clients[idxClient] = clients[nbClients];
+}
+found =true;"
+./72936111/server.h@379@CRITICAL@#pragma omp critical(FileUpdate)@"{
+std::ofstream fout( newname.c_str() , std::ios::out|std::ios::app);
+fout<<msg.c_str();
+fout.close();
+}
+}
+bool sendsaved(const int userid)
+{
+bool failed=false;
+std::string newname=clients[userid].second+"".dat"";"
+./72936111/server.h@391@CRITICAL@#pragma omp critical(FileUpdate)@"{
+if(check(newname))
+{
+std::ifstream fin(newname.c_str());
+char buffer[BufferSize];
+fin.read( buffer, BufferSize);
+int lenghtRead= strlen( buffer );
+
+do
+{"
+./75787342/pothole_SWAT.cpp@293@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbasins; i++) {
+m_surfqToCh[i] += tmp_surfq2ch[i] * m_cellArea;
+m_sedToCh[i] += tmp_sed2ch[i];
+m_surNO3ToCh[i] += tmp_sno32ch[i] * m_cellArea;
+m_surNH4ToCh[i] += tmp_snh42ch[i] * m_cellArea;
+m_surSolPToCh[i] += tmp_solp2ch[i] * m_cellArea;
+m_surCodToCh[i] += tmp_cod2ch[i] * m_cellArea;
+m_sedOrgNToCh[i] += tmp_orgn2ch[i] * m_cellArea;
+m_sedOrgPToCh[i] += tmp_orgp2ch[i] * m_cellArea;"
+./75787342/SSR_DA.cpp@157@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbsns; i++) {
+m_ifluQ2Rch[i] += tmp_qiSubbsn[i];
+}
+}
+delete[] tmp_qiSubbsn;
+tmp_qiSubbsn = nullptr;
+}
+
+for (int i = 1; i <= m_nSubbsns; i++) {"
+./75787342/NutrientTransportSediment.cpp@283@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbsns; i++) {
+m_surfRfSedOrgNToCh[i] += tmp_orgn2ch[i];
+m_surfRfSedOrgPToCh[i] += tmp_orgp2ch[i];
+m_surfRfSedAbsorbMinPToCh[i] += tmp_minpa2ch[i];
+m_surfRfSedSorbMinPToCh[i] += tmp_minps2ch[i];
+}
+}
+delete[] tmp_orgn2ch;
+delete[] tmp_orgp2ch;"
+./75787342/IUH_OL.cpp@82@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbsns; i++) {
+m_Q_SBOF[i] += tmp_qsSub[i];
+}
+}
+delete[] tmp_qsSub;
+tmp_qsSub = nullptr;
+}
+
+for (int n = 1; n <= m_nSubbsns; n++) {"
+./75787342/NutrCH_QUAL2E.cpp@118@CRITICAL@#pragma omp critical@"{
+for (int irch = 0; irch <= m_nReaches; irch++) {
+m_chDaylen[irch] += tmp_chDaylen[irch];
+m_chSr[irch] += tmp_chSr[irch];
+m_chTemp[irch] += tmp_chTemp[irch];
+m_chCellCount[irch] += tmp_chCellCount[irch];
+}
+}
+delete[] tmp_chDaylen;
+delete[] tmp_chSr;"
+./75787342/IUH_SED_OL.cpp@82@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbsns; i++) {
+m_sedtoCh[i] += tmp_sed2ch[i];
+}
+}
+delete[] tmp_sed2ch;
+tmp_sed2ch = nullptr;
+}
+for (int i = 1; i < m_nSubbsns + 1; i++) {
+m_sedtoCh[0] += m_sedtoCh[i];"
+./75787342/NutrientMovementViaWater.cpp@90@CRITICAL@#pragma omp critical@"{
+for (int i = 1; i <= m_nSubbsns; i++) {
+m_latNO3ToCh[i] += tmp_latNO3ToCh[i];
+m_surfRfNO3ToCh[i] += tmp_surfRfNO3ToCh[i];
+m_surfRfNH4ToCh[i] += tmp_surfRfNH4ToCh[i];
+m_surfRfSolPToCh[i] += tmp_surfRfSolPToCh[i];
+m_surfRfCodToCh[i] += tmp_surfRfCodToCh[i];
+m_percoNGw[i] += tmp_percoNGw[i];
+m_percoPGw[i] += tmp_percoPGw[i];
+}"
+./61810048/Laser.cpp@436@CRITICAL@#pragma omp critical@"{
+double omega = omega_ * chirpProfile_->valueAt( t );
+double phi = ( *phase )( j, k );
+amp = timeProfile_->valueAt( t-( phi+delay_phase_ )/omega ) * ( *space_envelope )( j, k ) * sin( omega*t - phi );
+}
+return amp;
+}
+
+LaserProfileNonSeparable::~LaserProfileNonSeparable()
+{"
+./61810048/Laser.cpp@540@CRITICAL@#pragma omp critical@"{
+amp *= extraProfile->valueAt( pos, t );
+}
+return amp;
+}
+
+LaserProfileFile::~LaserProfileFile()
+{
+#pragma omp critical
+{"
+./61810048/Laser.cpp@549@CRITICAL@#pragma omp critical@"{
+if( magnitude )
+{
+delete magnitude   ;
+magnitude   =NULL;
+}
+if( phase )
+{
+delete phase       ;
+phase       =NULL;"
+./61810048/SimWindow.cpp@189@CRITICAL@#pragma omp critical@"#endif
+mypatch = PatchesFactory::clone( vecPatches( 0 ), params, smpi, vecPatches.domain_decomposition_, h0 + patch_to_be_created[my_thread][j], n_moved, false );
+
+if( mypatch->isXmin() && mypatch->EMfields->emBoundCond[0] ) {
+mypatch->EMfields->emBoundCond[0]->disableExternalFields();
+}
+
+mypatch->finalizeMPIenvironment( params );
+vecPatches.patches_[patch_to_be_created[my_thread][j]] = mypatch ;
+if( mypatch->MPI_neighbor_[0][1] != MPI_PROC_NULL ) {"
+./61810048/SimWindow.cpp@463@CRITICAL@#pragma omp critical@"#endif
+{
+for( unsigned int j=0; j<2; j++ ) {
+for( unsigned int i=0 ; i< params.nDim_field ; i++ ) {
+vecPatches( 0 )->EMfields->poynting[j][i] += poynting[j][i];
+}
+}
+
+vecPatches( 0 )->EMfields->nrj_mw_out += energy_field_out;
+vecPatches( 0 )->EMfields->nrj_mw_inj += energy_field_inj;"
+./61810048/IonizationFromRate.cpp@40@CRITICAL@#pragma omp critical@"{
+ParticleData particleData( npart );
+particleData.startAt( ipart_min );
+particleData.set( particles );
+ret = ( PyArrayObject * )PyObject_CallFunctionObjArgs( ionization_rate_, particleData.get(), NULL );
+PyTools::checkPyError();
+if( ret == NULL ) {
+ERROR( ""ionization_rate profile has not provided a correct result"" );
+}
+double *arr = ( double * ) PyArray_GETPTR1( ret, 0 );"
+./61810048/Histogram.h@546@CRITICAL@#pragma omp critical@"{
+particleData.resize( npart );
+particleData.set( s->particles );
+PyArrayObject *ret = ( PyArrayObject * )PyObject_CallFunctionObjArgs( function, particleData.get(), NULL );
+particleData.clear();
+double *arr = ( double * ) PyArray_GETPTR1( ret, 0 );
+for( unsigned int ipart = 0 ; ipart < npart ; ipart++ )
+{
+if( index[ipart]<0 ) {
+continue;"
+./61810048/Histogram.h@1098@CRITICAL@#pragma omp critical@"{
+particleData.resize( npart );
+particleData.set( s->particles );
+PyArrayObject *ret = ( PyArrayObject * )PyObject_CallFunctionObjArgs( function, particleData.get(), NULL );
+particleData.clear();
+double *arr = ( double * ) PyArray_GETPTR1( ret, 0 );
+for( unsigned int ipart = 0 ; ipart < npart ; ipart++ ) {
+if( index[ipart]<0 ) {
+continue;
+}"
+./61810048/Laser.h@127@CRITICAL@#pragma omp critical@amp = spaceAndTimeProfile_->valueAt( pos, t );
+./61810048/Laser.h@135@CRITICAL@#pragma omp critical@amp = spaceAndTimeProfile_->complexValueAt( pos, t );
+./61810048/DiagnosticTrack.cpp@493@CRITICAL@#pragma omp critical@"{
+for( unsigned int iPart=0; iPart<s; iPart++ ) {
+particles.id( iPart ) = ++latest_Id;
+}
+}
+}
+
+
+template<typename T>
+void DiagnosticTrack::fill_buffer( VectorPatch &vecPatches, unsigned int iprop, vector<T> &buffer )"
+./61810048/DiagnosticScalar.cpp@594@CRITICAL@#pragma omp critical@"{
+if( minloc.val < ( double )*fieldMin[ifield] ) {
+*fieldMin[ifield] = minloc;
+}
+if( maxloc.val > ( double )*fieldMax[ifield] ) {
+*fieldMax[ifield] = maxloc;
+}
+}
+}
+}"
+./244012100/boruvka.h@224@CRITICAL@#pragma omp critical@"std::cout << ""from: "" << p.first << "" weight: "" << p.second.first << "" id: "" << p.second.second  << ""\n"";"
+./244012100/boruvka.h@263@CRITICAL@#pragma omp critical@"std::cout << ""u: "" << u << "" v: "" << min_edge_u.to << "" mu_id: "" << get_id(shortest_edges[u]) << "" mv_id: "" << get_id(shortest_edges[v]) << ""\n"";"
+./244012100/boruvka.h@271@CRITICAL@#pragma omp critical@"std:: cout << ""selected "" << get_id(shortest_edges[u]) << "" from "" << u << "" to "" << v << ""\n"";"
+./244012100/boruvka.h@282@CRITICAL@#pragma omp critical@"std::cout << ""Put edge no. "" << i << "" to position "" << current_mst_size + edge_selected_prefix[i] - 1 << ""\n"";"
+./122359169/main.cpp@230@CRITICAL@#pragma omp critical@suggest_solution(next);
+./450431845/kdtree.cpp@126@CRITICAL@#pragma omp critical@"{
+vect.push_back({a,b});
+}
+}
+}
+
+bool myaxis=false;
+double start = omp_get_wtime();
+root = kd_tree(vect,myaxis, &compt);
+double endtime = omp_get_wtime();"
+./450431845/kdtreehybrid.cpp@131@CRITICAL@#pragma omp critical@"{
+vect.push_back({a,b});
+}
+}
+}
+starttime = MPI_Wtime();
+struct Node* ndo = new Node;
+sort(vect.begin(),vect.end());
+int l= vect.size()/2;
+std::vector<std::vector<double>> vet{};"
+./450431845/Kd_tree_MPI_openmp.cpp@126@CRITICAL@#pragma omp critical@"{
+vect.push_back({a,b});
+}
+}
+}
+
+bool myaxis=false;
+double start = omp_get_wtime();
+root = kd_tree(vect,myaxis, &compt);
+double endtime = omp_get_wtime();"
+./46390503/bf.cpp@115@CRITICAL@#pragma omp critical@"#endif
+for(int xx=0; xx < nearestContactPoint.size(); xx++)
+result.push_back(nearestContactPoint[xx]);
+#endif
+#if defined(SharedTBB) && defined(peanoCall)
+}});
+#else
+}
+#endif
+return result;"
+./46390503/read.cpp@185@CRITICAL@#pragma omp critical@uniqueVertices.push_back(vertex);
+./46390503/penalty.cpp@205@CRITICAL@#pragma omp critical@"#endif
+for(int xx=0; xx < nearestContactPoint.size(); xx++)
+result.push_back(nearestContactPoint[xx]);
+#endif
+#if defined(SharedTBB) && defined(peanoCall)
+}});
+#else
+}
+#endif
+return result;"
+./227389214/tree_mesh_builder.cpp@81@CRITICAL@#pragma omp critical(emitTriangle)@mTriangles.push_back(triangle);
+./227389214/loop_mesh_builder.cpp@53@CRITICAL@#pragma omp critical(emitTriangle)@mTriangles.push_back(triangle);
+./273021503/aprioriomp.cpp@340@CRITICAL@#pragma omp critical@"{
+FOR_MAP(ii,temp)
+{
+C[ii->first]+=ii->second;
+}
+temp.clear();
+}
+
+}
+"
+./154528299/cpp_omp_sample.cpp@32@CRITICAL@#pragma omp critical@"{
+cout << ""Number of threads = "" << nthreads << endl;
+cout <<  ""Hello from thread number "" << myid << endl ;
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** CRITICAL REGION ***""  << endl ;
+total = 0 ;"
+./154528299/cpp_omp_sample.cpp@46@CRITICAL@#pragma omp critical@"{
+total = total + myid ;
+}
+}
+cout <<  ""Total = "" << total  << endl ;
+cout << endl ;
+
+
+cout <<  ""*** PRIVATE VARIABLES ***"" << endl ;
+cout <<  ""i before private region: "" << i << endl ;"
+./154528299/cpp_omp_sample.cpp@61@CRITICAL@#pragma omp critical@"{
+cout <<  ""Hello from thread number "" << myid
+<< "". I have changed i to "" << i << endl ;
+}
+}
+cout <<  ""i after private region: "" << i << endl ;
+cout << endl ;
+
+
+cout <<  ""*** PARALLEL FOR LOOP ***"" << endl ;"
+./154528299/cpp_omp_sample.cpp@80@CRITICAL@#pragma omp critical@"{
+cout << ""Hello from thread number "" << myid << "". I am doing iteration ""
+<< i << endl ;
+}
+
+}
+
+#pragma omp critical
+{
+cout << ""My ID is "" << myid << "", I didn't wait for my friends to finish."""
+./154528299/cpp_omp_sample.cpp@88@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "", I didn't wait for my friends to finish.""
+<< endl ;
+}
+}
+
+cout << endl ;
+
+
+cout <<  ""*** ATOMIC REGION ***""  << endl ;"
+./154528299/cpp_omp_sample.cpp@130@CRITICAL@#pragma omp critical@"{
+cout <<  ""Thread "" << myid << "" thinks it's Duck season.""  << endl ;
+}
+#pragma omp section
+#pragma omp critical
+{
+cout <<  ""Thread "" << myid << "" thinks it's Rabbit season.""  << endl ;
+}
+#pragma omp section
+#pragma omp critical"
+./154528299/cpp_omp_sample.cpp@135@CRITICAL@#pragma omp critical@"{
+cout <<  ""Thread "" << myid << "" thinks it's Rabbit season.""  << endl ;
+}
+#pragma omp section
+#pragma omp critical
+{
+cout << ""Thread "" << myid << "" doesn't care what season it is."" << endl;
+}
+}
+}"
+./154528299/cpp_omp_sample.cpp@140@CRITICAL@#pragma omp critical@"{
+cout << ""Thread "" << myid << "" doesn't care what season it is."" << endl;
+}
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** SINGLE / COPYPRIVATE***""  << endl ;
+#pragma omp parallel private(myid,i)"
+./154528299/cpp_omp_sample.cpp@155@CRITICAL@#pragma omp critical@"{
+cout <<  ""My ID is "" << myid << "" and i= "" << i  << endl ;
+}
+
+#pragma omp barrier
+
+#pragma omp single copyprivate(i)
+{
+i=20 ;
+cout << ""My ID is "" << myid << "", I arrived first and set i="" << i << endl ;"
+./154528299/cpp_omp_sample.cpp@168@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "" and i="" << i << endl ;
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** ORDERED ***""  << endl ;
+#pragma omp parallel private(myid,i)
+{"
+./154528299/cpp_omp_sample.cpp@206@CRITICAL@#pragma omp critical@"{
+cout << ""In the 1st parallel region, my ID is "" << myid
+<< "", my athp ="" << athp << endl ;
+}
+}
+
+cout << endl ;
+cout <<  ""Just left the first parallel region, athp="" << athp << endl ;
+cout << endl ;
+"
+./154528299/cpp_omp_sample.cpp@220@CRITICAL@#pragma omp critical@"{
+cout <<  ""In the 2nd parallel region, my ID is"" << myid
+<< "", my athp="" << athp << endl ;
+}
+}
+
+cout << endl ;
+cout <<  ""Just left the 2nd parallel region, athp="" << athp << endl ;
+cout << endl ;
+"
+./154528299/cpp_omp_sample.cpp@234@CRITICAL@#pragma omp critical@"{
+cout <<  ""In the 3rd parallel region, my ID is"" << myid
+<< "", my athp="" << athp << endl ;
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** FIRST PRIVATE ***""  << endl ;
+cout <<  ""About to enter the parallel region, bthp="" << bthp  << endl ;"
+./154528299/cpp_omp_sample.cpp@250@CRITICAL@#pragma omp critical@"{
+cout <<  ""In the parallel region, my ID is "" << myid
+<< "", my bthp ="" << bthp << endl ;
+}
+}
+cout << endl ;
+cout <<  ""Just left the parallel region, bthp="" << bthp << endl ;
+cout << endl ;
+
+"
+./154528299/cpp_omp_sample.cpp@269@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "", I'm working on iteration "" << i
+<< ""and bthp="" << bthp  << endl ;
+}
+}
+
+cout << endl ;
+cout <<  ""Just left the parallel region, bthp ="" << bthp << endl ;
+cout << endl ;
+"
+./154528299/cpp_omp_sample.cpp@286@CRITICAL@#pragma omp critical@"{
+cout <<  ""My ID is "" << myid
+<< "", executing in parallel, so i must equal 10."" << endl ;
+}
+}
+cout << endl ;
+i=11 ;
+#pragma omp parallel if(i==10) private(myid)
+{
+myid = omp_get_thread_num() ;"
+./154528299/cpp_omp_sample.cpp@297@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "", I'm alone so i must not be 10."" << endl ;
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** NUM THREADS ***""  << endl ;
+#pragma omp parallel num_threads(2)
+{"
+./154528299/cpp_omp_sample.cpp@309@CRITICAL@#pragma omp critical@"{
+cout <<  ""For this parallel region only the number of threads is ""
+<< nthreads << endl ;
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** SCHEDULING ***""  << endl ;
+"
+./154528299/cpp_omp_sample.cpp@330@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is ""<< myid <<"", I'm working on iteration "" << i << endl;
+}
+}
+}
+cout << endl ;
+
+
+cout <<  ""*** SIMPLE LOCK ***"" << endl ;
+omp_init_lock(&lck) ;"
+./154528299/cpp_omp_sample.cpp@348@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid
+<< "". I own the lock and am about to release it."" << endl ;
+}
+omp_unset_lock(&lck) ;
+#pragma omp critical
+{
+cout << ""My ID is "" << myid << "". I just released the lock."" << endl ;
+}
+"
+./154528299/cpp_omp_sample.cpp@354@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "". I just released the lock."" << endl ;
+}
+
+while (not omp_test_lock(&lck)) {
+i++ ;
+}
+
+#pragma omp critical
+{"
+./154528299/cpp_omp_sample.cpp@363@CRITICAL@#pragma omp critical@"{
+cout << ""My ID is "" << myid << "", I counted to "" << i
+<< "" while waiting for the lock."" << endl ;
+}
+omp_unset_lock(&lck) ;
+
+}
+omp_destroy_lock(&lck);
+
+return 0 ;"
+./485138225/OpenMP.cpp@10@CRITICAL@#pragma omp critical@"cout<<""Threads ID is OpemMP stage 1 = ""<<omp_get_thread_num()<<endl;"
+./394157680/task1.cpp@12@CRITICAL@#pragma omp critical@"{
+int temp = count;
+temp++;
+count = temp;
+}
+}
+cout<<""Thread Count = ""<<count<<endl;
+cout<<""Name = Hassan Shahzad""<<endl;
+cout<<""Roll No = 18i-0441""<<endl;
+}"
+./174601583/pi_mc.c@13@CRITICAL@#pragma omp critical@"printf("" %d threads "",omp_get_num_threads());"
+./267597733/9.norace1.c@7@CRITICAL@#pragma omp critical@sum += i;
+./948139/mcmap.cpp@97@CRITICAL@#pragma omp critical@"#endif
+{ s.increment(); }
+}
+}
+
+auto end = std::chrono::high_resolution_clock::now();
+
+logger::debug(
+""Rendered in {}ms"",
+std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)"
+./157857606/tsp.cpp@218@CRITICAL@#pragma omp critical@minCycle = min(make_pair(localMin,initPopl[0]),minCycle);
+./581187585/psp_process.cpp@1485@CRITICAL@#pragma omp critical@"for (unsigned int i = 0; i < msize; ++i) {
+sol_rms_partial[i] += local_sol_rms[i];
+sol_avg_partial[i] += local_sol_avg[i];
+}
+}
+
+if (0 == my_mpi_rank) {
+std::cout << ""Wait for all ranks to complete frame processing"" << std::endl;
+}
+"
+./581187585/psp_process.cpp@2007@CRITICAL@#pragma omp critical@"for (unsigned int i = 0; i < msize; ++i) {
+rms[i] += local_rms[i];
+avg[i] += local_avg[i];
+gain[i] += local_gain[i];
+}
+}
+
+
+std::cout << ""Rank "" << my_mpi_rank << "" finished nodes ""
+<< ""["" << node_start << "","" << node_end << ""]"" << std::endl;"
+./405455996/code.cpp@26@CRITICAL@#pragma omp critical@solutions++;
+./554401622/swarm_search.cpp@188@CRITICAL@#pragma omp critical@"{
+#endif
+if(result < best_global_result.result)
+{
+best_global_result.result = result;
+best_global_result.x = particle.position;
+}
+#ifdef OPENMP_ENABLED
+}
+#endif"
+./554401622/random_search.cpp@64@CRITICAL@#pragma omp critical@"{
+#endif
+if(result < best_result)
+{
+best_result = result;
+best_position = current_point;
+}
+#ifdef OPENMP_ENABLED
+}
+#endif"
+./554401622/random_search.cpp@112@CRITICAL@#pragma omp critical@"{
+#endif
+if(result < best_result)
+{
+best_result = result;
+best_position = current_point;
+}
+#ifdef OPENMP_ENABLED
+}
+#endif"
+./554401622/random_search.cpp@188@CRITICAL@#pragma omp critical@"{
+#endif
+if(result < best_result)
+{
+best_result = result;
+best_position = current_point;
+}
+#ifdef OPENMP_ENABLED
+}
+#endif"
+./131303714/parallel_dobfs.cpp@38@CRITICAL@#pragma omp critical@next.push_back(i);
+./131303714/parallel_dobfs.cpp@56@CRITICAL@#pragma omp critical(adding)@"{
+if(g[*neighbors.first].distance < 0){
+g[*neighbors.first].distance = distance;
+next.push_back(*neighbors.first);
+}
+}
+}
+}
+}
+"
+./175065265/driver.cpp@67@CRITICAL@#pragma omp critical@"std::cout << std::endl << ""Failed for i_task="" << i_task << "". Probably out of memory."" << std::endl;
+
+szTotal += task_list[i_task]->vol_total;
+
+#pragma omp simd
+for (size_t i=0;i<task_list[i_task]->vol_total;i++)
+((double*)task_list[i_task]->data_src)[i]=i;
+}
+std::cout << ""Done! Total size: "" << szTotal*sizeof(double)/1024/1024 << "" MB"" << std::endl ;
+"
+./174347692/main.cpp@74@CRITICAL@#pragma omp critical@"for (auto i = 1; i < numprocs; i++){
+int results_length;
+
+MPI_Recv(&results_length, 1, MPI_INT, i, i, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+
+for (auto j=0; j < results_length; j++){
+int line_length;
+char char_array[1024];
+memset(char_array, 0, sizeof(char_array));
+MPI_Recv(&line_length, 1, MPI_INT, i, i, MPI_COMM_WORLD,MPI_STATUS_IGNORE);"
+./128194616/main.cpp@74@CRITICAL@#pragma omp critical@"for (auto i = 1; i < numprocs; i++){
+int results_length;
+
+MPI_Recv(&results_length, 1, MPI_INT, i, i, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+
+for (auto j=0; j < results_length; j++){
+int line_length;
+char char_array[1024];
+memset(char_array, 0, sizeof(char_array));
+MPI_Recv(&line_length, 1, MPI_INT, i, i, MPI_COMM_WORLD,MPI_STATUS_IGNORE);"
+./497678098/triplex_finder.cpp@277@CRITICAL@#pragma omp critical (potential_lock)@"{
+for (auto& potential_entry : tpx_args.potentials) {
+auto result_ptr = potentials.find(potential_entry.first);
+if (result_ptr == potentials.end()) {
+potentials.insert(std::move(potential_entry));
+} else {
+seqan::mergeCount(result_ptr->second, potential_entry.second);
+}
+}
+}"
+./497678098/tfo_finder.cpp@215@CRITICAL@#pragma omp critical (motifs)@"{
+motifs.reserve(motifs.size() + tfo_args.motifs.size());
+std::move(tfo_args.motifs.begin(), tfo_args.motifs.end(), std::back_inserter(motifs));
+}
+if (opts.run_mode == run_mode_t::tfo_search) {
+#pragma omp critical (potentials)
+{
+potentials.reserve(potentials.size() + tfo_args.potentials.size());
+std::move(tfo_args.potentials.begin(), tfo_args.potentials.end(), std::back_inserter(potentials));
+}"
+./497678098/tfo_finder.cpp@221@CRITICAL@#pragma omp critical (potentials)@"{
+potentials.reserve(potentials.size() + tfo_args.potentials.size());
+std::move(tfo_args.potentials.begin(), tfo_args.potentials.end(), std::back_inserter(potentials));
+}
+}
+#endif
+}
+}
+
+void find_tfo_motifs(const options& opts)"
+./497678098/tts_finder.cpp@163@CRITICAL@#pragma omp critical@"{
+motifs.reserve(motifs.size() + tts_args.motifs.size());
+std::move(tts_args.motifs.begin(), tts_args.motifs.end(), std::back_inserter(motifs));
+}
+if (opts.run_mode == run_mode_t::tts_search) {
+#pragma omp critical (potentials)
+{
+potentials.reserve(potentials.size() + tts_args.potentials.size());
+std::move(tts_args.potentials.begin(), tts_args.potentials.end(), std::back_inserter(potentials));
+}"
+./497678098/tts_finder.cpp@169@CRITICAL@#pragma omp critical (potentials)@"{
+potentials.reserve(potentials.size() + tts_args.potentials.size());
+std::move(tts_args.potentials.begin(), tts_args.potentials.end(), std::back_inserter(potentials));
+}
+}
+#endif
+}
+}
+
+void find_tts_motifs(const options& opts)"
+./86997234/main.cpp@389@CRITICAL@#pragma omp critical@"{
+if (localChildren.size() != 0)
+children.insert(children.end(), localChildren.begin(), localChildren.end());
+}
+}
+}
+return children;
+}
+vector<Chromosome> slice(vector<Chromosome> &v, int start, int end)
+{"
+./277890040/ft.cpp@447@CRITICAL@#pragma omp critical@chk = dcomplex_add(chk, chk_worker);
+./277890040/lu.cpp@1636@CRITICAL@#pragma omp critical@"{
+sum[0] += sum0;
+sum[1] += sum1;
+sum[2] += sum2;
+sum[3] += sum3;
+sum[4] += sum4;
+}
+#pragma omp barrier
+
+#pragma omp single"
+./277890040/ep.cpp@150@CRITICAL@#pragma omp critical@"{
+for (i = 0; i <= NQ - 1; i++) q[i] += qq[i];
+}
+
+}
+
+for(i=0; i<=NQ-1; i++){
+gc = gc + q[i];
+}
+"
+./84281731/Sobel.cpp@53@CRITICAL@#pragma omp critical@thread_rows.push_back(std::make_pair(thread_id, i*chunkSize));
+./84281731/Sobel.cpp@67@CRITICAL@#pragma omp critical@thread_rows.push_back(std::make_pair(thread_id, i*chunkSize));
+./268889840/omp_critical.cpp@33@CRITICAL@#pragma omp critical@dot_prod +=  aux_dot;
+./392927467/main.cpp@69@CRITICAL@#pragma omp critical@"{
+MPI_Send(send+count,dist, MPI_INT, i, 6, MPI_COMM_WORLD);
+count+=dist;
+MPI_Send(&search,1, MPI_INT, i, 6, MPI_COMM_WORLD);
+
+}
+}
+
+MPI_Recv (&recv_master, 1, MPI_INT,MPI_ANY_SOURCE,6, MPI_COMM_WORLD, &status);
+"
+./392927467/main.cpp@102@CRITICAL@#pragma omp critical@"{
+MPI_Recv (recv_slave, max_size, MPI_INT,0,6, MPI_COMM_WORLD, &status);
+MPI_Get_count(&status, MPI_INT,&size_of_recv);
+cout<<""SLAVE ""<<rank<<"": "";
+
+for (int i =0; i<size_of_recv; i++)
+{
+cout<<recv_slave[i]<<"" "";
+}
+cout<<endl<<endl<<endl;"
+./356992498/calculatePI.cpp@43@CRITICAL@#pragma omp critical@sum += temp;
+./481917853/sobel_mpi_omp.cpp@64@CRITICAL@#pragma omp critical@"{
+if (pixel_value < pixel_value_min) pixel_value_min = pixel_value;
+}
+}
+if (pixel_value > pixel_value_max) {
+#pragma omp critical
+{
+if (pixel_value > pixel_value_max) pixel_value_max = pixel_value;
+}
+}"
+./481917853/sobel_mpi_omp.cpp@70@CRITICAL@#pragma omp critical@"{
+if (pixel_value > pixel_value_max) pixel_value_max = pixel_value;
+}
+}
+}
+}
+
+std::cout << ""Min/Max on Process "" << rank << "" of "" << gProcessorName << "": "" << pixel_value_min << ""/"" << pixel_value_max << std::endl;
+MPI_Status status;
+"
+./481917853/sobel_omp.cpp@71@CRITICAL@#pragma omp critical@"{
+if (pixel_value < pixel_value_min) pixel_value_min = pixel_value;
+}
+}
+if (pixel_value > pixel_value_max) {
+#pragma omp critical
+{
+if (pixel_value > pixel_value_max) pixel_value_max = pixel_value;
+}
+}"
+./481917853/sobel_omp.cpp@77@CRITICAL@#pragma omp critical@"{
+if (pixel_value > pixel_value_max) pixel_value_max = pixel_value;
+}
+}
+}
+}
+std::cout << ""the minimum value: "" << pixel_value_min << std::endl;
+std::cout << ""the maximum value: "" << pixel_value_max << std::endl;
+if ((int)(pixel_value_max - pixel_value_min) == 0) {
+std::cout << ""Nothing exists!!!"" << std::endl;"
+./116200058/openmp_bellman_ford_fast_with_queue.cpp@106@CRITICAL@#pragma omp critical@"{
+queue.push(v);
+}
+}
+}
+}
+}
+}
+
+"
+./212375578/09.cpp@28@CRITICAL@#pragma omp critical@"if (localMin < min) {
+min = localMin;
+}
+#pragma omp critical
+if (localMax > max) {
+max = localMax;
+}
+}
+
+double t2 = omp_get_wtime();"
+./212375578/09.cpp@32@CRITICAL@#pragma omp critical@"if (localMax > max) {
+max = localMax;
+}
+}
+
+double t2 = omp_get_wtime();
+
+printf(""min=%d, max=%d\n"", min, max);
+printf(""found in %f seconds\n"", t2 - t1);
+}"
+./212375578/11.cpp@14@CRITICAL@#pragma omp critical@"if (array[i] > max) {
+max = array[i];
+}
+}
+}
+
+printArray(array, size);
+printf(""max divisible by 7 = %d\n"", max);
+}"
+./308846402/MCTS.h@188@CRITICAL@#pragma omp critical@backpropogate(result, path);
+./548297608/task11.cpp@21@CRITICAL@#pragma omp critical@"if (a[l] % D == 0 && max < a[l]) {
+max = a[l];
+isChanged = true;
+}
+}
+
+if (!isChanged) {
+std::cout << ""There are no multiples of "" + std::to_string(D) + "" in the array \n"";
+} else {
+std::cout << ""Max value is "" + std::to_string(max) + ""\n"";"
+./548297608/task09.cpp@24@CRITICAL@#pragma omp critical@min = d[i][j];
+./548297608/task09.cpp@28@CRITICAL@#pragma omp critical@max = d[i][j];
+./248028642/labirynt_omp.cpp@58@CRITICAL@#pragma omp critical (threadCounter)@"{
+threadCounter++;
+currentThreadIndex = threadCounter;
+}
+
+return threadCounter;
+}
+
+bool checkCorridor(int x, int y) {
+bool isCorridorEmpty;"
+./419120644/test.cpp@69@CRITICAL@#pragma omp critical@result += tmp;
+./419120644/main.cpp@47@CRITICAL@#pragma omp critical@result += thread_result;
+./419120644/main.cpp@61@CRITICAL@#pragma omp critical@tests.push_back(value);
+./121857435/online_EM_funcs.hpp@114@CRITICAL@#pragma omp critical@"{
+S_pjk += S_pjk_local;
+S_ipk += S_ipk_local;
+S_ppk += S_ppk_local;
+}
+}
+
+return std::make_tuple(S_pjk, S_ipk, S_ppk);
+}
+"
+./121857435/online_EM_funcs.hpp@237@CRITICAL@#pragma omp critical@"{
+res.S_pjk += S_pjk;
+res.S_ipk += S_ipk;
+S_ppk += S_ppk_local;
+delta_log_PS += delta_log_PS_local;
+}
+}
+
+return delta_log_PS;
+}"
+./56463083/openmp.cpp@66@CRITICAL@#pragma omp critical@"if (dmin < absmin) absmin = dmin;
+
+#pragma omp master
+if( fsave && (step%SAVEFREQ) == 0 )
+save( fsave, n, particles );
+}
+}
+}
+simulation_time = read_timer() - simulation_time;
+"
+./188832080/kmeans.cpp@248@CRITICAL@#pragma omp critical@"for (color_t c = 0; c < cn; ++c)
+{
+agg_sums_y[c] += sums_y[c];
+agg_sums_x[c] += sums_x[c];
+}
+#pragma omp critical
+for (color_t c = 0; c < cn; ++c)
+{
+agg_counts[c] += counts[c];
+converge &= local_converge;"
+./188832080/kmeans.cpp@254@CRITICAL@#pragma omp critical@"for (color_t c = 0; c < cn; ++c)
+{
+agg_counts[c] += counts[c];
+converge &= local_converge;
+}
+
+}
+
+
+for (color_t c = 0; c < cn; ++c)"
+./571082615/OpenWP.cpp@99@CRITICAL@#pragma omp critical@s += m_arr[i];
+./368544377/synchronisation.cpp@22@CRITICAL@#pragma omp critical@"std::cout << ""Hi"" << std::endl ;"
+./368544377/basics.cpp@30@CRITICAL@#pragma omp critical@"{
+std::cout << ""I'm in a threadpool of 4 but im a critical section so everything stops so I can run!"" << std::endl ;
+}
+}
+
+return 0 ;
+}"
+./182386153/DNASequencesCompareWithNeedlemanWunsch.cpp@159@CRITICAL@#pragma omp critical@"{
+scores[scores_count*3]=compare_matrix[200][200];
+scores[scores_count*3+1]=i;
+scores[scores_count*3+2]=j;
+scores_count++;
+}
+}
+}
+#pragma omp barrier
+"
+./197342552/primsomp.h@28@CRITICAL@#pragma omp critical@"{
+if (min_local < min)
+{
+min = min_local;
+index = index_local;
+}
+}
+}
+return index;
+"
+./210781113/phasechanges.cxx@127@CRITICAL@#pragma omp critical(phase_change_simple_subduction)@"{
+hydms.append_marker(eta, el, 0);
+++hydem[el][0];
+}
+}
+
+
+
+return new_mt;
+}"
+./116965614/ft.cpp@695@CRITICAL@#pragma omp critical@"{
+sums[i].real += chk.real;
+sums[i].imag += chk.imag;
+}
+#pragma omp barrier
+#pragma omp single
+{
+
+sums[i].real = sums[i].real/(double)(NTOTAL);
+sums[i].imag = sums[i].imag/(double)(NTOTAL);"
+./116965614/ep.cpp@136@CRITICAL@#pragma omp critical@"{
+for (i = 0; i <= NQ - 1; i++) q[i] += qq[i];
+}
+#if defined(_OPENMP)
+#pragma omp master
+nthreads = omp_get_num_threads();
+#endif
+}
+for (i = 0; i <= NQ-1; i++) {
+gc = gc + q[i];"
+./116965614/mg.cpp@698@CRITICAL@#pragma omp critical@"{
+s += p_s;
+if (p_a > *rnmu) *rnmu = p_a;
+}
+
+#pragma omp barrier
+#pragma omp single
+{
+*rnm2 = sqrt(s/(double)n);
+s = 0.0;"
+./169283207/Mesh.cpp@245@CRITICAL@#pragma omp critical@"{
+currentEdge.edgeInFront
+=  std::pair<unsigned int, unsigned int>(elm, k);
+mesh.elements[elm].edges[k].edgeInFront
+= std::pair<unsigned int, unsigned int>
+(elVecSize, edgePos);
+currentEdge.nodeIndexEdgeInFront = std::move(permutation1);
+mesh.elements[elm].edges[k].nodeIndexEdgeInFront
+= std::move(permutation2);
+}"
+./249790277/in_element.cpp@45@CRITICAL@#pragma omp critical@IJV.push_back(Triplet<Scalar>(e,r,1));
+./249790277/prob_1.cpp@118@CRITICAL@#pragma omp critical@integralValue += my_value;
+./249790277/kdtree.c@687@CRITICAL@#pragma omp critical@"#endif
+{
+searcher = vl_kdforest_new_searcher(self) ;
+neighbors = vl_calloc (sizeof(VlKDForestNeighbor), numNeighbors) ;
+}
+
+#ifdef _OPENMP
+#pragma omp for
+#endif
+for(qi = 0 ; qi < (signed)numQueries; ++ qi) {"
+./249790277/kdtree.c@729@CRITICAL@#pragma omp critical@"#endif
+{
+numComparisons += thisNumComparisons ;
+vl_kdforestsearcher_delete (searcher) ;
+vl_free (neighbors) ;
+}
+}
+return numComparisons ;
+}
+"
+./249790277/gmm.c@664@CRITICAL@#pragma omp critical@"#endif
+{
+clusterPosteriorSum_ = vl_calloc(sizeof(TYPE), numClusters) ;
+means_ = vl_calloc(sizeof(TYPE), self->dimension * numClusters) ;
+covariances_ = vl_calloc(sizeof(TYPE), self->dimension * numClusters) ;
+}
+
+
+
+#if defined(_OPENMP)"
+./249790277/gmm.c@737@CRITICAL@#pragma omp critical@"#endif
+{
+for (i_cl = 0 ; i_cl < (signed)numClusters ; ++i_cl) {
+priors [i_cl] += clusterPosteriorSum_ [i_cl];
+for (dim = 0 ; dim < self->dimension ; ++dim) {
+means [i_cl * self->dimension + dim] += means_ [i_cl * self->dimension + dim] ;
+covariances [i_cl * self->dimension + dim] += covariances_ [i_cl * self->dimension + dim] ;
+}
+}
+vl_free(means_);"
+./249790277/kmeans.c@364@CRITICAL@#pragma omp critical@"#endif
+searcher = vl_kdforest_new_searcher (forest) ;
+
+#ifdef _OPENMP
+#pragma omp for
+#endif
+for(x = 0 ; x < (signed)numData ; ++x) {
+vl_kdforestsearcher_query (searcher, &neighbor, 1, (TYPE const *) (data + x*self->dimension));
+
+if (distances) {"
+./106249716/patcc.cxx@232@CRITICAL@#pragma omp critical@"shifted_spoles_index.push_back(i);
+} else if(min_lat_except_pole > coord_values[PDLN_LAT][i])
+min_lat_except_pole = coord_values[PDLN_LAT][i];
+}
+
+if (do_npole_processing) {
+if(float_eq(coord_values[PDLN_LAT][i], 90.0)) {
+#pragma omp critical
+shifted_npoles_index.push_back(i);
+} else if(max_lat_except_pole < coord_values[PDLN_LAT][i])"
+./106249716/patcc.cxx@240@CRITICAL@#pragma omp critical@"shifted_npoles_index.push_back(i);
+} else if(max_lat_except_pole < coord_values[PDLN_LAT][i])
+max_lat_except_pole = coord_values[PDLN_LAT][i];
+}
+
+if (do_disabled_point_making) {
+mask[i] = true;
+for (int j = 0; j < num; j++) {
+double *disabled_circle = (double*) data;
+if (point_in_circle(coord_values[0][i], coord_values[1][i], &disabled_circle[j*3])) {"
+./106249716/patcc.cxx@387@CRITICAL@#pragma omp critical@"{
+if (x_buckets[idx].min > coord_values[PDLN_LAT][i]) x_buckets[idx].min = coord_values[PDLN_LAT][i];
+if (x_buckets[idx].max < coord_values[PDLN_LAT][i]) x_buckets[idx].max = coord_values[PDLN_LAT][i];
+x_buckets[idx].num++;
+}
+}
+
+if (do_we_inserting) {
+int idx = get_bucket_index(coord_values[PDLN_LAT][i], minY_public, widthY / num_y);
+"
+./106249716/patcc.cxx@400@CRITICAL@#pragma omp critical@"{
+if (y_buckets[idx].min > coord_values[PDLN_LON][i]) y_buckets[idx].min = coord_values[PDLN_LON][i];
+if (y_buckets[idx].max < coord_values[PDLN_LON][i]) y_buckets[idx].max = coord_values[PDLN_LON][i];
+y_buckets[idx].num++;
+}
+}
+}
+}
+
+"
+./106249716/grid_decomposition.cxx@1273@CRITICAL@#pragma omp critical@decomp->local_leaf_nodes.push_back(node);
+./106249716/grid_decomposition.cxx@1275@CRITICAL@#pragma omp critical@decomp->all_leaf_nodes.push_back(node);
+./106249716/grid_decomposition.cxx@1325@CRITICAL@#pragma omp critical@update_workloads(num_points, ids_start, ids_end, kill_tiny_region);
+./106249716/grid_decomposition.cxx@1444@CRITICAL@#pragma omp critical@"{
+MPI_Isend(checksum, 1, MPI_UNSIGNED_LONG, processing_info->get_processing_unit(dst_common_id)->process_id,
+tag, processing_info->get_mpi_comm(), *req);
+}
+}
+}
+
+
+void Delaunay_grid_decomposition::recv_checksum_from_remote(int src_common_id, int dst_common_id, unsigned long* checksum, int tag, MPI_Request** req)
+{"
+./106249716/grid_decomposition.cxx@1462@CRITICAL@#pragma omp critical@"{
+MPI_Irecv(checksum, 1, MPI_UNSIGNED_LONG, processing_info->get_processing_unit(src_common_id)->process_id,
+tag, processing_info->get_mpi_comm(), *req);
+}
+}
+}
+
+
+namespace std
+{"
+./106249716/grid_decomposition.cxx@2255@CRITICAL@#pragma omp critical@decomp->all_leaf_nodes.push_back(node);
+./106249716/grid_decomposition.cxx@2320@CRITICAL@#pragma omp critical@(*leaf_nodes_found).push_back(node);
+./106249716/grid_decomposition.cxx@2556@CRITICAL@#pragma omp critical@"{
+if (local_ret == 1)
+expanding_fail = 1;
+else if (local_ret == -1)
+goon = 1;
+}
+}
+} while (!expanding_fail && goon);
+
+int global_expanding_fail = 0;"
+./106249716/processing_unit_mgt.cxx@205@CRITICAL@#pragma omp critical@"{
+send_packets.push_back(Thread_comm_packet(buf, count*size, src, dst, tag));
+}
+}
+
+
+void Processing_resource::recv_from_local_thread(void *buf, int max_count, int size, int src, int dst, int tag)
+{
+#pragma omp critical
+{"
+./106249716/processing_unit_mgt.cxx@214@CRITICAL@#pragma omp critical@"{
+recv_packets.push_back(Thread_comm_packet(buf, max_count*size, src, dst, tag));
+}
+}
+
+
+void Processing_resource::do_thread_send_recv()
+{
+for (unsigned i = 0; i < send_packets.size(); i++) {
+for (unsigned j = 0; j < recv_packets.size(); j++) {"
+./343896296/v2.cpp@83@CRITICAL@#pragma omp critical@"{
+C->coo.insert( C->coo.end(), coo.coo.begin(), coo.coo.end() );
+C->nnz += coo.nnz;
+}
+}
+
+
+clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
+printf(""[Info] V2 took %f s\n"", delta_us);"
+./343896296/v1.cpp@47@CRITICAL@#pragma omp critical@"{
+C.coo.insert( C.coo.end(), coo.coo.begin(), coo.coo.end() );
+C.nnz += coo.nnz;
+}
+
+}
+
+
+clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);"
+./343896296/v4.cpp@95@CRITICAL@#pragma omp critical@"{
+C->coo.insert( C->coo.end(), coo.coo.begin(), coo.coo.end() );
+C->nnz += coo.nnz;
+}
+
+}
+
+
+delete A;
+delete B;"
+./343896296/v3.cpp@82@CRITICAL@#pragma omp critical@"{
+C->coo.insert( C->coo.end(), coo.coo.begin(), coo.coo.end() );
+C->nnz += coo.nnz;
+}
+}
+
+
+clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
+printf(""[Info] V3 took %f s\n"", delta_us);"
+./436468599/NotWorking.cpp@8@CRITICAL@#pragma omp critical@"{
+work -= workSpeed;
+actualWork[workerNum] += workSpeed;
+}
+}
+}
+
+int main() {
+int workerCount = 3;
+int iterCount = 5;"
+./84542403/testsuite_parallel.hpp@57@CRITICAL@#pragma omp critical@"{
+m_stats.m_num_fails += fails;
+m_stats.m_num_errs += errs;
+}
+}
+m_teardown_fn();
+m_state = IS_DONE;
+m_stats.m_elapsed_t += d.get();
+}
+}"
+./209143275/unparser.cpp@466@CRITICAL@"unparser->ofs << ""#pragma omp critical\n"";"@UNPARSE_FIRST_AS_BLOCK_TEST(VT_S);
+./209143275/main.cpp@87@CRITICAL@#pragma omp critical@"{
+a1_STACKf.push(x[0]);
+if(tid==0) usleep(1e6);
+y=x[0];
+#pragma omp atomic
+x[0]+=x[0];
+}
+#pragma omp barrier
+assert(a1_STACKf.top()==y);
+assert(x[0]==4.);"
+./81815495/normal_check_process.cpp@82@CRITICAL@#pragma omp critical@"{
+std::move(nodes_marker_backup_buffer.begin(),nodes_marker_backup_buffer.end(),back_inserter(nodes_marker_backup));
+std::move(nodes_not_marker_backup_buffer.begin(),nodes_not_marker_backup_buffer.end(),back_inserter(nodes_not_marker_backup));
+std::move(elements_marker_backup_buffer.begin(),elements_marker_backup_buffer.end(),back_inserter(elements_marker_backup));
+std::move(elements_not_marker_backup_buffer.begin(),elements_not_marker_backup_buffer.end(),back_inserter(elements_not_marker_backup));
+std::move(conditions_marker_backup_buffer.begin(),conditions_marker_backup_buffer.end(),back_inserter(conditions_marker_backup));
+std::move(conditions_not_marker_backup_buffer.begin(),conditions_not_marker_backup_buffer.end(),back_inserter(conditions_not_marker_backup));
+}
+}
+"
+./81815495/from_json_check_result_process.cpp@256@CRITICAL@#pragma omp critical@"{
+mErrorMessage += ss.str();
+}
+}
+
+
+
+
+void FromJSONCheckResultProcess::CheckNodeValues(IndexType& rCheckCounter)
+{"
+./81815495/from_json_check_result_process.cpp@775@CRITICAL@#pragma omp critical@"{
+for (auto it_node = nodes_buffer.begin(); it_node < nodes_buffer.end(); ++it_node)
+mNodesArray.push_back(*(it_node.base()));
+}
+}
+this->Set(NODES_CONTAINER_INITIALIZED, true);
+}
+
+return mNodesArray;
+"
+./81815495/from_json_check_result_process.cpp@812@CRITICAL@#pragma omp critical@"{
+for (auto it_elem = elements_buffer.begin(); it_elem < elements_buffer.end(); ++it_elem)
+mElementsArray.push_back(*(it_elem.base()));
+}
+}
+this->Set(ELEMENTS_CONTAINER_INITIALIZED, true);
+}
+
+return mElementsArray;
+"
+./81815495/initial_stress_2D_utilities.hpp@156@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rCurrentModelPart.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rCurrentModelPart.NodesBegin();
+"
+./81815495/impose_rigid_movement_process.cpp@116@CRITICAL@#pragma omp critical@"{
+r_rigid_model_part.AddMasterSlaveConstraints(constraints_buffer.begin(),constraints_buffer.end());
+mrThisModelPart.AddMasterSlaveConstraints(constraints_buffer.begin(),constraints_buffer.end());
+}
+}
+
+KRATOS_CATCH("""")
+}
+
+"
+./81815495/hole_cutting_utility.cpp@162@CRITICAL@#pragma omp critical@n_faces_map[ids] += 1;
+./81815495/hole_cutting_utility.cpp@187@CRITICAL@#pragma omp critical@"{
+if (n_faces_map[ids] == 1)
+ordered_skin_face_nodes_map[ids] = unsorted_ids;
+}
+}
+}
+IndexType id_condition = 1;
+Condition const& r_ref_triangle_condition =
+KratosComponents<Condition>::Get(""SurfaceCondition3D3N"");
+Condition const& r_ref_line_condition ="
+./81815495/skin_detection_process.cpp@290@CRITICAL@#pragma omp critical@"{
+std::move(conditions_ids_buffer.begin(),conditions_ids_buffer.end(),back_inserter(conditions_ids));
+}
+}
+
+sub_model_part.AddConditions(conditions_ids);
+}
+}
+}
+"
+./81815495/distributed_matrix.hpp@1127@CRITICAL@#pragma omp critical@radius = std::max(radius, emax);
+./81815495/distributed_matrix.hpp@1162@CRITICAL@#pragma omp critical@b0_loc_norm += t_norm;
+./81815495/distributed_matrix.hpp@1213@CRITICAL@#pragma omp critical@"{
+b1_loc_norm += t_norm;
+loc_radius  += t_radi;
+}
+}
+
+radius = comm.reduce(MPI_SUM, loc_radius);
+
+if (++iter < power_iters) {
+scalar_type b1_norm;"
+./81815495/explicit_builder.h@407@CRITICAL@#pragma omp critical@"{
+dof_global_set.insert(dofs_tmp_set.begin(), dofs_tmp_set.end());
+}
+}
+
+KRATOS_INFO_IF(""ExplicitBuilder"", ( this->GetEchoLevel() > 2)) << ""Initializing ordered array filling\n"" << std::endl;
+
+mDofSet = DofsArrayType();
+DofsArrayType temp_dof_set;
+temp_dof_set.reserve(dof_global_set.size());"
+./81815495/test_parallel_utilities.cpp@352@CRITICAL@#pragma omp critical@"{
+this->max_value = std::max(this->max_value,rOther.max_value);
+this->max_abs   = std::max(this->max_abs,std::abs(rOther.max_abs));
+}
+}
+};
+
+auto partition = IndexPartition<unsigned int>(data_vector.size());
+
+double max_value,max_abs;"
+./81815495/calculate_water_fraction.h@158@CRITICAL@#pragma omp critical@"{
+if ( local_thread_water_height > all_threads_water_height ) all_threads_water_height = local_thread_water_height;
+}
+}
+}
+
+return all_threads_water_height;
+
+KRATOS_CATCH("""")
+}"
+./81815495/calculate_water_fraction.h@203@CRITICAL@#pragma omp critical@"{
+if ( local_thread_max_courant > all_threads_max_courant ) all_threads_max_courant = local_thread_max_courant;
+}
+}
+}
+
+all_threads_max_courant *= delta_t * 1.414;
+
+return all_threads_max_courant;
+"
+./81815495/calculate_water_fraction.h@252@CRITICAL@#pragma omp critical@"{
+if ( local_thread_max_courant > all_threads_max_courant ) all_threads_max_courant = local_thread_max_courant;
+}
+}
+}
+
+
+return all_threads_max_courant;
+
+KRATOS_CATCH("""")"
+./81815495/mpm_search_element_utility.h@77@CRITICAL@#pragma omp critical@rGeom.SetValue(GEOMETRY_NEIGHBOURS, geometry_neighbours);
+./81815495/mpm_search_element_utility.h@189@CRITICAL@#pragma omp critical@rMissingElements.push_back(&*element_itr);
+./81815495/mpm_search_element_utility.h@226@CRITICAL@#pragma omp critical@rMissingConditions.push_back(&*condition_itr);
+./81815495/spgemm.hpp@374@CRITICAL@#pragma omp critical@max_row_width = std::max(max_row_width, my_max);
+./81815495/internal_variables_interpolation_process.cpp@131@CRITICAL@#pragma omp critical@"{
+std::move(points_buffer.begin(),points_buffer.end(),back_inserter(this_point_vector));
+}
+}
+
+return this_point_vector;
+}
+
+
+"
+./81815495/master_slave_process.cpp@59@CRITICAL@#pragma omp critical@"{
+std::move(index_node_buffer.begin(),index_node_buffer.end(),back_inserter(index_node));
+std::move(index_cond_buffer.begin(),index_cond_buffer.end(),back_inserter(index_cond));
+}
+}
+
+r_contact_model_part.AddNodes(index_node);
+r_contact_model_part.AddConditions(index_cond);
+
+KRATOS_CATCH("""");"
+./81815495/calculate_wave_height_utility.cpp@176@CRITICAL@#pragma omp critical@"{
+if (rOther.distance < this->distance) {
+this->distance = rOther.distance;
+this->wave_height = rOther.wave_height;
+}
+}
+}
+};
+
+return block_for_each<CustomReducer>(mrModelPart.Nodes(),[&,this](NodeType& rNode) -> ReductionArguments {"
+./81815495/builtin.hpp@777@CRITICAL@#pragma omp critical@radius = std::max(radius, emax);
+./81815495/builtin.hpp@804@CRITICAL@#pragma omp critical@b0_norm += loc_norm;
+./81815495/builtin.hpp@842@CRITICAL@#pragma omp critical@"{
+b1_norm += loc_norm;
+radius  += loc_radi;
+}
+}
+
+if (++iter < power_iters) {
+b1_norm = 1 / sqrt(b1_norm);
+#pragma omp parallel for
+for(ptrdiff_t i = 0; i < n; ++i) {"
+./81815495/self_contact_utilities.cpp@261@CRITICAL@#pragma omp critical@"{
+std::move(master_conditions_ids_buffer.begin(),master_conditions_ids_buffer.end(),back_inserter(master_conditions_ids));
+}
+}
+
+rModelPart.CreateSubModelPart(""AuxMasterModelPart"");
+ModelPart& aux_model_part = rModelPart.GetSubModelPart(""AuxMasterModelPart"");
+
+std::sort( master_conditions_ids.begin(), master_conditions_ids.end() );
+master_conditions_ids.erase( std::unique( master_conditions_ids.begin(), master_conditions_ids.end() ), master_conditions_ids.end() );"
+./81815495/base_contact_search_process.cpp@260@CRITICAL@#pragma omp critical@"{
+std::move(slave_nodes_ids_buffer.begin(),slave_nodes_ids_buffer.end(),back_inserter(slave_nodes_ids));
+std::move(master_nodes_ids_buffer.begin(),master_nodes_ids_buffer.end(),back_inserter(master_nodes_ids));
+std::move(slave_conditions_ids_buffer.begin(),slave_conditions_ids_buffer.end(),back_inserter(slave_conditions_ids));
+std::move(master_conditions_ids_buffer.begin(),master_conditions_ids_buffer.end(),back_inserter(master_conditions_ids));
+}
+}
+
+r_slave_model_part.AddNodes(slave_nodes_ids);
+r_slave_model_part.AddConditions(slave_conditions_ids);"
+./81815495/nodal_values_interpolation_process.cpp@102@CRITICAL@#pragma omp critical@"{
+std::move(to_extrapolate_nodes_buffer.begin(),to_extrapolate_nodes_buffer.end(),back_inserter(to_extrapolate_nodes));
+}
+}
+
+if (extrapolate_values && to_extrapolate_nodes.size() > 0) {
+const std::size_t original_number_of_conditions = mrDestinationMainModelPart.NumberOfConditions();
+
+const std::string name_auxiliar_model_part = ""SKIN_MODEL_PART_TO_LATER_REMOVE"";
+GenerateBoundary(name_auxiliar_model_part);"
+./81815495/nodal_values_interpolation_process.cpp@230@CRITICAL@#pragma omp critical@"{
+std::move(points_buffer.begin(),points_buffer.end(),back_inserter(point_list_destination));
+}
+}
+
+IndexPartition<std::size_t>(point_list_destination.size()).for_each(
+[&point_list_destination](std::size_t i)
+{ point_list_destination[i]->UpdatePoint(); }
+);
+"
+./81815495/mapping_variables_3D_utilities.hpp@152@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l][s].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rModelPartNew.NodesBegin();"
+./81815495/mapping_variables_3D_utilities.hpp@343@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l][s].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rModelPartNew.NodesBegin();"
+./81815495/explicit_solver_strategy.cpp@226@CRITICAL@#pragma omp critical@"{
+neighbour_walls_vector[j]->GetVectorOfGluedParticles().push_back(mListOfSphericParticles[i]);
+}
+mListOfSphericParticles[i]->Set(DEMFlags::STICKY, true);
+break;
+}
+}
+}
+}
+KRATOS_CATCH("""")"
+./81815495/explicit_solver_strategy.cpp@1408@CRITICAL@#pragma omp critical@"{
+if (used_bonds_counter < (int) (*mpContact_model_part).Elements().size()) {
+add_new_bond = false;
+private_counter = used_bonds_counter;
+used_bonds_counter++;
+}
+}
+if (!add_new_bond) {
+Element::Pointer& p_old_contact_element = (*mpContact_model_part).Elements().GetContainer()[private_counter];
+p_old_contact_element->GetGeometry()(0) = mListOfSphericParticles[i]->GetGeometry()(0);"
+./81815495/explicit_solver_strategy.cpp@1431@CRITICAL@#pragma omp critical@"{
+(*mpContact_model_part).Elements().push_back(p_new_contact_element);
+used_bonds_counter++;
+}
+ParticleContactElement* p_bond = dynamic_cast<ParticleContactElement*> (p_new_contact_element.get());
+mListOfSphericParticles[i]->mBondElements[j] = p_bond;
+}
+
+}
+}"
+./81815495/explicit_solver_strategy.cpp@1579@CRITICAL@#pragma omp critical@"{
+p_wall->mNeighbourSphericParticles.push_back(mListOfSphericParticles[i]);
+}
+}
+}
+}
+}
+KRATOS_CATCH("""")
+}
+"
+./81815495/contact_residualbased_elimination_builder_and_solver_with_constraints.h@256@CRITICAL@#pragma omp critical@"{
+rModelPart.AddMasterSlaveConstraints(constraints_buffer.begin(),constraints_buffer.end());
+}
+}
+}
+
+rModelPart.RemoveMasterSlaveConstraintsFromAllLevels(TO_ERASE);
+
+KRATOS_INFO_IF(""ContactResidualBasedEliminationBuilderAndSolverWithConstraints"", (this->GetEchoLevel() > 0)) <<
+""Model part after creating new constraints"" << rModelPart << std::endl;"
+./81815495/finite_difference_utility.cpp@63@CRITICAL@#pragma omp critical@"{
+const IndexType coord_dir = FiniteDifferenceUtility::GetCoordinateDirection(rDesignVariable);
+
+Matrix LHS_perturbed;
+Vector dummy;
+
+if ( (rOutput.size1() != rLHS.size1()) || (rOutput.size2() != rLHS.size2() ) )
+rOutput.resize(rLHS.size1(), rLHS.size2(), false);
+
+rNode.GetInitialPosition()[coord_dir] += rPertubationSize;"
+./81815495/finite_difference_utility.cpp@109@CRITICAL@#pragma omp critical@"{
+const IndexType coord_dir = FiniteDifferenceUtility::GetCoordinateDirection(rDesignVariable);
+
+Matrix perturbed_mass_matrix;
+
+if ( (rOutput.size1() != rMassMatrix.size1()) || (rOutput.size2() != rMassMatrix.size2() ) )
+rOutput.resize(rMassMatrix.size1(), rMassMatrix.size2(), false);
+
+rNode.GetInitialPosition()[coord_dir] += rPertubationSize;
+rNode.Coordinates()[coord_dir] += rPertubationSize;"
+./81815495/apply_periodic_boundary_condition_process.cpp@182@CRITICAL@#pragma omp critical@"{
+int current_num_constraint = mrMasterModelPart.GetRootModelPart().NumberOfMasterSlaveConstraints();
+auto constraint1 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_x, rSlaveNode, r_var_x, master_weight * mTransformationMatrixVariable(0,0), constant_x);
+auto constraint2 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_y, rSlaveNode, r_var_x, master_weight * mTransformationMatrixVariable(0,1), constant_x);
+auto constraint3 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_z, rSlaveNode, r_var_x, master_weight * mTransformationMatrixVariable(0,2), constant_x);
+
+auto constraint4 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_x, rSlaveNode, r_var_y, master_weight * mTransformationMatrixVariable(1,0), constant_y);
+auto constraint5 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_y, rSlaveNode, r_var_y, master_weight * mTransformationMatrixVariable(1,1), constant_y);
+auto constraint6 = r_clone_constraint.Create(++current_num_constraint, master_node, r_var_z, rSlaveNode, r_var_y, master_weight * mTransformationMatrixVariable(1,2), constant_y);
+"
+./81815495/apply_periodic_boundary_condition_process.cpp@229@CRITICAL@#pragma omp critical@"{
+int current_num_constraint = mrMasterModelPart.GetRootModelPart().NumberOfMasterSlaveConstraints();
+auto constraint = r_clone_constraint.Create(++current_num_constraint,master_node, r_var, rSlaveNode, r_var, master_weight, 0.0);
+mrMasterModelPart.AddMasterSlaveConstraint(constraint);
+}
+master_index++;
+}
+}
+
+void ApplyPeriodicConditionProcess::CalculateTransformationMatrix()"
+./81815495/mapper_vertex_morphing_adaptive_radius.cpp@143@CRITICAL@#pragma omp critical@"{
+for (auto &r_gp : rOther.gp_vector.GetContainer())
+{
+this->gp_vector.push_back(r_gp);
+}
+}
+}
+};
+
+const auto &r_data_communicator = mrDestinationModelPart.GetCommunicator().GetDataCommunicator();"
+./81815495/explicit_integration_utilities.cpp@164@CRITICAL@#pragma omp critical@"if (stable_delta_time < delta_time) delta_time = stable_delta_time;
+}
+} else {
+KRATOS_ERROR << ""Not enough parameters for prediction level "" << TimeStepPredictionLevel << std::endl;
+}
+}
+
+stable_delta_time = delta_time * SafetyFactor;
+
+return stable_delta_time;"
+./81815495/nonlocal_damage_2D_utilities.hpp@116@CRITICAL@#pragma omp critical@"{
+mGaussPointList.push_back( new GaussPoint(ConstitutiveLawVector[GPoint],AuxGlobalCoordinates,Weight) );
+rAuxVariables.GaussPointCellMatrix[Row][Column].push_back(mGaussPointList[NGPoints]);
+NGPoints++;
+}
+}
+}
+}
+}
+"
+./81815495/nonlocal_damage_2D_utilities.hpp@171@CRITICAL@#pragma omp critical@"{
+rMyGaussPoint.NeighbourPoints.push_back(&rMyNeighbourPoint);
+}
+}
+}
+}
+}
+}
+}
+}"
+./81815495/nonlocal_damage_3D_utilities.hpp@124@CRITICAL@#pragma omp critical@"{
+mGaussPointList.push_back( new GaussPoint(ConstitutiveLawVector[GPoint],AuxGlobalCoordinates,Weight) );
+rAuxVariables.GaussPointCellMatrix[Row][Column][Section].push_back(mGaussPointList[NGPoints]);
+NGPoints++;
+}
+}
+}
+}
+}
+"
+./81815495/nonlocal_damage_3D_utilities.hpp@188@CRITICAL@#pragma omp critical@"{
+rMyGaussPoint.NeighbourPoints.push_back(&rMyNeighbourPoint);
+}
+}
+}
+}
+}
+}
+}
+}"
+./81815495/test_chunk.cpp@187@CRITICAL@#pragma omp critical@buffer << e;
+./81815495/test_chunk.cpp@192@CRITICAL@#pragma omp critical@"buffer << ""UknownError"";"
+./81815495/auxiliar_model_part_utilities.cpp@79@CRITICAL@#pragma omp critical@"{
+list_of_properties.insert(buffer_list_of_properties.begin(),buffer_list_of_properties.end());
+}
+}
+
+for (const auto& p_prop : list_of_properties) {
+if (!mrModelPart.HasProperties(p_prop->Id())) {
+mrModelPart.AddProperties(p_prop);
+}
+}"
+./81815495/fracture_propagation_2D_utilities.hpp@476@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+
+unsigned int NumInterfaceSubModelPartsOld = rParameters[""fracture_data""][""interface_domain_sub_model_part_old_list""].size();
+"
+./81815495/fracture_propagation_2D_utilities.hpp@535@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rModelPartNew.NodesBegin();"
+./81815495/fracture_propagation_2D_utilities.hpp@716@CRITICAL@#pragma omp critical@"{
+BodyGaussPointOldCellMatrix[Row][Column].push_back(MyGaussPointOld);
+}
+}
+}
+}
+
+unsigned int NumInterfaceSubModelPartsOld = rParameters[""fracture_data""][""interface_domain_sub_model_part_old_list""].size();
+
+for(unsigned int i = 0; i < NumInterfaceSubModelPartsOld; i++)"
+./81815495/fracture_propagation_2D_utilities.hpp@762@CRITICAL@#pragma omp critical@"{
+InterfaceGaussPointOldCellMatrix[Row][Column].push_back(MyGaussPointOld);
+}
+}
+}
+}
+
+const ProcessInfo& CurrentProcessInfoNew = rModelPartNew.GetProcessInfo();
+const double PropagationLength = rParameters[""fracture_data""][""propagation_length""].GetDouble();
+array_1d<double,3> AuxGlobalCoordinates;"
+./81815495/fracture_propagation_2D_utilities.hpp@1116@CRITICAL@#pragma omp critical@"{
+rPropagationData.FracturePointsCellMatrix[Row][Column].push_back(MyFracturePoint);
+}
+}
+}
+}
+}
+
+
+void PropagateFracture("
+./81815495/shell_5p_element.cpp@504@CRITICAL@#pragma omp critical@GetGeometry().GetGeometryParent(0).SetValue(DIRECTOR_COMPUTED, false);
+./81815495/shell_5p_element.cpp@512@CRITICAL@#pragma omp critical@"if (!GetGeometry().GetGeometryParent(0).GetValue(DIRECTOR_COMPUTED))
+{
+GetGeometry().GetGeometryParent(0).SetValue(DIRECTOR_COMPUTED, true);
+compute_director = true;
+}
+if (compute_director) {
+auto& points = GetGeometry().GetGeometryParent(0).pGetGeometryPart(-1)->Points();
+for (auto& node : points)
+{
+const auto& r_director = node.GetValue(DIRECTOR);"
+./81815495/fracture_propagation_3D_utilities.hpp@644@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l][s].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+}
+
+unsigned int NumInterfaceSubModelPartsOld = rParameters[""fracture_data""][""interface_domain_sub_model_part_old_list""].size();"
+./81815495/fracture_propagation_3D_utilities.hpp@716@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l][s].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());"
+./81815495/fracture_propagation_3D_utilities.hpp@944@CRITICAL@#pragma omp critical@"{
+BodyGaussPointOldCellMatrix[Row][Column][Section].push_back(MyGaussPointOld);
+}
+}
+}
+}
+
+unsigned int NumInterfaceSubModelPartsOld = rParameters[""fracture_data""][""interface_domain_sub_model_part_old_list""].size();
+
+for(unsigned int i = 0; i < NumInterfaceSubModelPartsOld; i++)"
+./81815495/fracture_propagation_3D_utilities.hpp@992@CRITICAL@#pragma omp critical@"{
+InterfaceGaussPointOldCellMatrix[Row][Column][Section].push_back(MyGaussPointOld);
+}
+}
+}
+}
+
+const ProcessInfo& CurrentProcessInfoNew = rModelPartNew.GetProcessInfo();
+const double PropagationLength = rParameters[""fracture_data""][""propagation_length""].GetDouble();
+array_1d<double,3> AuxGlobalCoordinates;"
+./81815495/fracture_propagation_3D_utilities.hpp@1389@CRITICAL@#pragma omp critical@"{
+rPropagationData.FracturePointsCellMatrix[Row][Column][Section].push_back(MyFracturePoint);
+}
+}
+}
+}
+}
+
+
+void PropagateFracture("
+./81815495/cuthill_mckee.hpp@41@CRITICAL@#pragma omp critical@"{
+maxDegree = std::max(maxDegree, maxd);
+}
+}
+
+std::vector<ptrdiff_t> firstWithDegree(maxDegree + 1, -1);
+std::vector<ptrdiff_t> nFirstWithDegree(maxDegree + 1);
+
+perm[0] = initialNode;
+ptrdiff_t currentLevelSet = 1;"
+./81815495/apply_constant_interpolate_line_pressure_process.hpp@392@CRITICAL@#pragma omp critical@MaxNodeID = std::max<int>(MaxNodeID, rNode.Id());
+./81815495/periodic_interface_process.hpp@127@CRITICAL@#pragma omp critical@"{
+rE[ie].Set(ACTIVE,true);
+}
+}
+}
+}
+
+KRATOS_CATCH("""");
+}
+"
+./81815495/memory_pool.h@59@CRITICAL@#pragma omp critical@"{
+if (r_pools.size() <= BlockSize)
+r_pools.resize(BlockSize + 1, nullptr);
+}
+}
+
+if (r_pools[BlockSize] == nullptr) {
+#pragma omp critical
+{
+if (r_pools[BlockSize] == nullptr)"
+./81815495/memory_pool.h@67@CRITICAL@#pragma omp critical@"{
+if (r_pools[BlockSize] == nullptr)
+r_pools[BlockSize] = new FixedSizeMemoryPool(BlockSize);
+}
+}
+return r_pools[BlockSize];
+}
+
+
+"
+./81815495/inlet.cpp@322@CRITICAL@#pragma omp critical@"{
+ids_to_remove.insert(ids_to_remove.end(), ids_to_remove_partial.begin(), ids_to_remove_partial.end());
+
+for (unsigned int i = 0; i < ids_to_remove.size(); ++i){
+mOriginInletSubmodelPartIndexes.erase(ids_to_remove[i]);
+}
+}
+}
+
+}"
+./81815495/inlet.cpp@484@CRITICAL@#pragma omp critical@"{
+ids_to_remove.insert(ids_to_remove.end(), ids_to_remove_partial.begin(), ids_to_remove_partial.end());
+
+for (unsigned int i = 0; i < ids_to_remove.size(); ++i){
+mOriginInletSubmodelPartIndexes.erase(ids_to_remove[i]);
+}
+}
+}
+}
+"
+./81815495/logger.cpp@22@CRITICAL@#pragma omp critical@"{
+GetDefaultOutputInstance().WriteMessage(mCurrentMessage);
+for (auto i_output = outputs.begin(); i_output != outputs.end(); ++i_output)
+(*i_output)->WriteMessage(mCurrentMessage);
+}
+}
+
+void Logger::AddOutput(LoggerOutput::Pointer pTheOutput)
+{
+#pragma omp critical"
+./81815495/logger.cpp@32@CRITICAL@#pragma omp critical@"{
+GetOutputsInstance().push_back(pTheOutput);
+}
+}
+
+void Logger::RemoveOutput(LoggerOutput::Pointer pTheOutput)
+{
+KRATOS_TRY
+
+#pragma omp critical"
+./81815495/logger.cpp@42@CRITICAL@#pragma omp critical@"{
+auto i = std::find(GetOutputsInstance().begin(), GetOutputsInstance().end(), pTheOutput);
+if (i != GetOutputsInstance().end()) {
+GetOutputsInstance().erase(i);
+}
+}
+
+KRATOS_CATCH("""");
+}
+"
+./81815495/residualbased_elimination_builder_and_solver_with_constraints.h@437@CRITICAL@#pragma omp critical@"{
+dof_global_set.insert(dofs_tmp_set.begin(), dofs_tmp_set.end());
+dof_global_slave_set.insert(dof_temp_slave_set.begin(), dof_temp_slave_set.end());
+}
+}
+
+KRATOS_INFO_IF(""ResidualBasedEliminationBuilderAndSolverWithConstraints"", ( this->GetEchoLevel() > 2)) << ""Initializing ordered array filling\n"" << std::endl;
+
+dof_temp_all.reserve(dof_global_set.size());
+for (auto p_dof : dof_global_set) {"
+./81815495/residualbased_elimination_builder_and_solver_with_constraints.h@647@CRITICAL@#pragma omp critical@"{
+for (int i = 0; i < static_cast<int>(temp_indexes.size()); ++i) {
+indices[i].insert(temp_indexes[i].begin(), temp_indexes[i].end());
+}
+}
+}
+
+SizeType nnz = 0;
+for (IndexType i = 0; i < indices.size(); ++i)
+nnz += indices[i].size();"
+./81815495/residualbased_elimination_builder_and_solver_with_constraints.h@1156@CRITICAL@#pragma omp critical@"{
+dof_global_fixed_master_set.insert(dof_temp_fixed_master_set.begin(), dof_temp_fixed_master_set.end());
+}
+}
+
+dof_temp_fixed_master.reserve(dof_global_fixed_master_set.size());
+for (auto p_dof : dof_global_fixed_master_set) {
+dof_temp_fixed_master.push_back( p_dof );
+}
+dof_temp_fixed_master.Sort();"
+./81815495/residualbased_elimination_builder_and_solver_with_constraints.h@1634@CRITICAL@#pragma omp critical@"{
+auxiliar_constant_equations_ids.insert(auxiliar_temp_constant_equations_ids.begin(), auxiliar_temp_constant_equations_ids.end());
+}
+}
+
+return aux_constant_value > std::numeric_limits<double>::epsilon() ? true : false;
+
+KRATOS_CATCH("""");
+}
+"
+./81815495/distance_modification_process.cpp@220@CRITICAL@#pragma omp critical@"{
+mModifiedDistancesIDs.insert(mModifiedDistancesIDs.end(),aux_modified_distances_ids.begin(),aux_modified_distances_ids.end());
+mModifiedDistancesValues.insert(mModifiedDistancesValues.end(), aux_modified_distance_values.begin(), aux_modified_distance_values.end());
+}
+}
+}
+
+mrModelPart.GetCommunicator().SynchronizeCurrentDataToMin(DISTANCE);
+
+this->SetContinuousDistanceToSplitFlag();"
+./81815495/distance_modification_process.cpp@330@CRITICAL@#pragma omp critical@"{
+mModifiedDistancesIDs.insert(mModifiedDistancesIDs.end(),aux_modified_distances_ids.begin(),aux_modified_distances_ids.end());
+mModifiedElementalDistancesValues.insert(mModifiedElementalDistancesValues.end(),aux_modified_elemental_distances.begin(),aux_modified_elemental_distances.end());
+}
+}
+} else {
+#pragma omp parallel for
+for (int i_chunk = 0; i_chunk < num_chunks; ++i_chunk)
+{
+auto elems_begin = r_elems.begin() + partition_vec[i_chunk];"
+./81815495/distance_modification_process.cpp@363@CRITICAL@#pragma omp critical@"{
+mModifiedDistancesIDs.insert(mModifiedDistancesIDs.end(),aux_modified_distances_ids.begin(),aux_modified_distances_ids.end());
+mModifiedElementalDistancesValues.insert(mModifiedElementalDistancesValues.end(),aux_modified_elemental_distances.begin(),aux_modified_elemental_distances.end());
+}
+}
+}
+}
+
+this->SetDiscontinuousDistanceToSplitFlag();
+}"
+./81815495/simple_mortar_mapper_process.cpp@238@CRITICAL@#pragma omp critical@"{
+std::move(points_buffer.begin(),points_buffer.end(),back_inserter(point_list_destination));
+}
+}
+} else {
+auto& r_origin_elements_array = mOriginModelPart.Elements();
+const auto it_elem_begin = r_origin_elements_array.begin();
+
+#pragma omp parallel
+{"
+./81815495/simple_mortar_mapper_process.cpp@259@CRITICAL@#pragma omp critical@"{
+std::move(points_buffer.begin(),points_buffer.end(),back_inserter(point_list_destination));
+}
+}
+}
+
+IndexPartition<std::size_t>(point_list_destination.size()).for_each([point_list_destination](std::size_t Index){
+point_list_destination[Index]->UpdatePoint();
+});
+"
+./81815495/analytic_RigidFace.cpp@43@CRITICAL@#pragma omp critical@"{
+mContactingNeighbourSignedIds.push_back(signed_id);
+if (just_changed_side){
+const bool is_a_crosser = CheckProjectionFallsInside(p_particle);
+
+if (is_a_crosser){
+mNumberThroughput += side_sign;
+mCrossers.push_back(signed_id);
+mMasses.push_back(p_particle->GetMass());
+array_1d<double, 3> particle_vel = p_particle->GetGeometry()[0].FastGetSolutionStepValue(VELOCITY);"
+./81815495/rom_residuals_utility.h@253@CRITICAL@#pragma omp critical@"{
+noalias(a_phi) += temp_a_phi;
+}
+
+}
+return a_phi;
+}
+
+protected:
+std::vector< std::string > mNodalVariablesNames;"
+./81815495/thermal_explicit_solver_strategy.cpp@82@CRITICAL@#pragma omp critical@"{
+if (diff_time < min_diff_time) min_diff_time = diff_time;
+}
+
+});
+
+min_diff_time *= safety_factor;
+
+const double time_step = r_process_info[DELTA_TIME];
+if (min_diff_time < time_step)"
+./81815495/residualbased_elimination_builder_and_solver.h@857@CRITICAL@#pragma omp critical@"{
+for (int i = 0; i < static_cast<int>(temp_indexes.size()); ++i) {
+indices[i].insert(temp_indexes[i].begin(), temp_indexes[i].end());
+}
+}
+}
+
+SizeType nnz = 0;
+for (IndexType i = 0; i < indices.size(); ++i)
+nnz += indices[i].size();"
+./81815495/mapping_variables_2D_utilities.hpp@132@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+
+
+for(int k = Row_top; k <= Row_bot; k++)
+{
+for(int l = Column_left; l <= Column_right; l++)"
+./81815495/mapping_variables_2D_utilities.hpp@144@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rModelPartNew.NodesBegin();
+"
+./81815495/mapping_variables_2D_utilities.hpp@309@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+
+
+for(int k = Row_top; k <= Row_bot; k++)
+{
+for(int l = Column_left; l <= Column_right; l++)"
+./81815495/mapping_variables_2D_utilities.hpp@321@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rModelPartNew.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rModelPartNew.NodesBegin();
+"
+./81815495/spatial_methods.h@77@CRITICAL@#pragma omp critical@"{
+global_sum += sum;
+}
+}
+}
+
+global_sum = rModelPart.GetCommunicator().GetDataCommunicator().SumAll(global_sum);
+
+return global_sum;
+"
+./81815495/spatial_methods.h@159@CRITICAL@#pragma omp critical@"{
+global_sum += sum;
+}
+}
+}
+
+global_sum = rModelPart.GetCommunicator().GetDataCommunicator().SumAll(global_sum);
+const double number_of_items =
+rModelPart.GetCommunicator().GetDataCommunicator().SumAll(
+static_cast<double>(r_container.size()));"
+./81815495/spatial_methods.h@288@CRITICAL@#pragma omp critical@"{
+global_variance += variance;
+}
+}
+}
+
+global_variance =
+rModelPart.GetCommunicator().GetDataCommunicator().SumAll(global_variance);
+const double number_of_items =
+rModelPart.GetCommunicator().GetDataCommunicator().SumAll("
+./81815495/spatial_methods.h@393@CRITICAL@#pragma omp critical@"{
+if (current_max > global_max)
+{
+global_max = current_max;
+global_id = current_id;
+}
+}
+}
+
+const DataCommunicator& r_data_communicator ="
+./81815495/spatial_methods.h@459@CRITICAL@#pragma omp critical@"{
+if (current_min < global_min)
+{
+global_min = current_min;
+global_id = current_id;
+}
+}
+}
+
+const DataCommunicator& r_data_communicator ="
+./81815495/spatial_methods.h@687@CRITICAL@#pragma omp critical@"{
+for (int i = 0; i < number_of_limits; ++i)
+{
+distribution[i] += local_distribution[i];
+group_means[i] += local_means[i];
+group_variances[i] += local_variances[i];
+}
+}
+}
+"
+./81815495/mass_conservation_check_process.cpp@159@CRITICAL@#pragma omp critical@r_dist = aux_dist;
+./81815495/mass_conservation_check_process.cpp@162@CRITICAL@#pragma omp critical@r_dist = -aux_dist;
+./81815495/move_particle_utility.h@460@CRITICAL@#pragma omp critical@"{
+if (number_of_particles_in_current_elem<mmaximum_number_of_particles)
+{
+
+current_element_particle_pointers(post_offset+number_of_particles_in_current_elem) = &pparticle;
+
+number_of_particles_in_current_elem++ ;
+if (number_of_particles_in_current_elem>mmaximum_number_of_particles)
+KRATOS_WATCH(""MAL"");
+"
+./81815495/fast_transfer_between_model_parts_process.cpp@169@CRITICAL@#pragma omp critical@"{
+if (num_nodes != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::NODES || mEntity == EntityTransfered::NODESANDELEMENTS || mEntity == EntityTransfered::NODESANDCONDITIONS || mEntity == EntityTransfered::NODESANDGEOMETRIES))
+mrDestinationModelPart.AddNodes(nodes_buffer_vector.begin(),nodes_buffer_vector.end());
+
+if (num_elements != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::ELEMENTS || mEntity == EntityTransfered::NODESANDELEMENTS))
+mrDestinationModelPart.AddElements(elements_buffer_vector.begin(),elements_buffer_vector.end());
+
+if (num_conditions != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::CONDITIONS || mEntity == EntityTransfered::NODESANDCONDITIONS))
+mrDestinationModelPart.AddConditions(conditions_buffer_vector.begin(),conditions_buffer_vector.end());
+"
+./81815495/fast_transfer_between_model_parts_process.cpp@306@CRITICAL@#pragma omp critical@"{
+if (num_nodes != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::NODES || mEntity == EntityTransfered::NODESANDELEMENTS || mEntity == EntityTransfered::NODESANDCONDITIONS || mEntity == EntityTransfered::NODESANDGEOMETRIES))
+mrDestinationModelPart.AddNodes(nodes_buffer_vector.begin(),nodes_buffer_vector.end());
+
+if (num_elements != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::ELEMENTS || mEntity == EntityTransfered::NODESANDELEMENTS))
+mrDestinationModelPart.AddElements(elements_buffer_vector.begin(),elements_buffer_vector.end());
+
+if (num_conditions != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::CONDITIONS || mEntity == EntityTransfered::NODESANDCONDITIONS))
+mrDestinationModelPart.AddConditions(conditions_buffer_vector.begin(),conditions_buffer_vector.end());
+"
+./81815495/fast_transfer_between_model_parts_process.cpp@413@CRITICAL@#pragma omp critical@"{
+if (num_nodes != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::NODES || mEntity == EntityTransfered::NODESANDELEMENTS || mEntity == EntityTransfered::NODESANDCONDITIONS || mEntity == EntityTransfered::NODESANDGEOMETRIES))
+mrDestinationModelPart.AddNodes(nodes_buffer_vector.begin(),nodes_buffer_vector.end());
+
+if (num_elements != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::ELEMENTS || mEntity == EntityTransfered::NODESANDELEMENTS))
+mrDestinationModelPart.AddElements(elements_buffer_vector.begin(),elements_buffer_vector.end());
+
+if (num_conditions != 0 && (mEntity == EntityTransfered::ALL || mEntity == EntityTransfered::CONDITIONS || mEntity == EntityTransfered::NODESANDCONDITIONS))
+mrDestinationModelPart.AddConditions(conditions_buffer_vector.begin(),conditions_buffer_vector.end());
+"
+./81815495/move_particle_utility_pfem2.h@413@CRITICAL@#pragma omp critical@"{
+if (mparticles_vector[freeparticle].GetEraseFlag()==true)
+{
+mparticles_vector[freeparticle].GetEraseFlag()=false;
+keep_looking=false;
+}
+}
+if (keep_looking==false)
+break;
+"
+./81815495/move_particle_utility_pfem2.h@867@CRITICAL@#pragma omp critical@"{
+if (number_of_particles_in_current_elem<mmaximum_number_of_particles)
+{
+
+current_element_particle_pointers(post_offset+number_of_particles_in_current_elem) = &pparticle;
+
+number_of_particles_in_current_elem++ ;
+if (number_of_particles_in_current_elem>mmaximum_number_of_particles)
+KRATOS_WATCH(""MAL"");
+"
+./81815495/define_2d_wake_process.cpp@125@CRITICAL@#pragma omp critical@"{
+wake_elements_ordered_ids.push_back(it_elem->Id());
+}
+auto r_geometry = it_elem->GetGeometry();
+for (unsigned int i = 0; i < it_elem->GetGeometry().size(); i++) {
+r_geometry[i].SetLock();
+r_geometry[i].SetValue(WAKE_DISTANCE, nodal_distances_to_wake(i));
+r_geometry[i].UnSetLock();
+}
+}"
+./81815495/define_2d_wake_process.cpp@146@CRITICAL@#pragma omp critical@"{
+mTrailingEdgeElementsOrderedIds.push_back(rElement.Id());
+}
+}
+}
+}
+
+bool Define2DWakeProcess::CheckIfPotentiallyWakeElement(const Element& rElement) const
+{
+const auto distance_to_element_center ="
+./81815495/residualbased_block_builder_and_solver.h@581@CRITICAL@#pragma omp critical@"{
+dof_global_set.insert(dofs_tmp_set.begin(), dofs_tmp_set.end());
+}
+}
+
+KRATOS_INFO_IF(""ResidualBasedBlockBuilderAndSolver"", ( this->GetEchoLevel() > 2)) << ""Initializing ordered array filling\n"" << std::endl;
+
+DofsArrayType Doftemp;
+BaseType::mDofSet = DofsArrayType();
+"
+./81815495/residualbased_block_builder_and_solver.h@1016@CRITICAL@#pragma omp critical@"{
+mInactiveSlaveDofs.insert(auxiliar_inactive_slave_dofs.begin(), auxiliar_inactive_slave_dofs.end());
+}
+}
+
+for (auto eq_id : mMasterIds) {
+mConstantVector[eq_id] = 0.0;
+mT(eq_id, eq_id) = 1.0;
+}
+"
+./81815495/create_and_destroy.cpp@171@CRITICAL@#pragma omp critical@"{
+r_modelpart.AddNode(pnew_node);
+}
+pnew_node->FastGetSolutionStepValue(VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(PARTICLE_MATERIAL) = params[PARTICLE_MATERIAL] + 100;
+}
+else {
+pnew_node = Kratos::make_intrusive<Node>(aId, bx, cy, dz);
+pnew_node->SetSolutionStepVariablesList(&r_modelpart.GetNodalSolutionStepVariablesList());
+pnew_node->SetBufferSize(r_modelpart.GetBufferSize());"
+./81815495/create_and_destroy.cpp@182@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+}
+
+pnew_node->FastGetSolutionStepValue(VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(PARTICLE_MATERIAL) = params[PARTICLE_MATERIAL];
+}
+
+if (has_rotation && pnew_node->SolutionStepsDataHas(PARTICLE_ROTATION_DAMP_RATIO) ) {
+pnew_node->FastGetSolutionStepValue(PARTICLE_ROTATION_DAMP_RATIO) = params[PARTICLE_ROTATION_DAMP_RATIO];"
+./81815495/create_and_destroy.cpp@246@CRITICAL@#pragma omp critical@"{
+r_modelpart.AddNode(pnew_node);
+}
+pnew_node->FastGetSolutionStepValue(VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(PARTICLE_MATERIAL) = params[PARTICLE_MATERIAL] + 100;
+}
+else {
+pnew_node = Kratos::make_intrusive<Node>(aId, bx, cy, dz);
+pnew_node->SetSolutionStepVariablesList(&r_modelpart.GetNodalSolutionStepVariablesList());
+pnew_node->SetBufferSize(r_modelpart.GetBufferSize());"
+./81815495/create_and_destroy.cpp@257@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+}
+
+noalias(pnew_node->FastGetSolutionStepValue(VELOCITY)) = null_vector;
+pnew_node->FastGetSolutionStepValue(PARTICLE_MATERIAL) = params[PARTICLE_MATERIAL];
+}
+
+if (has_rotation && pnew_node->SolutionStepsDataHas(PARTICLE_ROTATION_DAMP_RATIO)) {
+pnew_node->FastGetSolutionStepValue(PARTICLE_ROTATION_DAMP_RATIO) = params[PARTICLE_ROTATION_DAMP_RATIO];"
+./81815495/create_and_destroy.cpp@391@CRITICAL@#pragma omp critical@"{
+r_modelpart.Elements().push_back(p_particle);
+if (spheric_p_particle->IsNot(BLOCKED)){
+mpAnalyticWatcher->Record(spheric_p_particle, r_modelpart);
+}
+}
+
+return spheric_p_particle;
+KRATOS_CATCH("""")
+}"
+./81815495/create_and_destroy.cpp@414@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+}
+
+pnew_node->FastGetSolutionStepValue(RADIUS) = radius;
+array_1d<double, 3 > null_vector = ZeroVector(3);
+pnew_node->FastGetSolutionStepValue(VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(ANGULAR_VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(PARTICLE_MATERIAL) = params[PARTICLE_MATERIAL];
+"
+./81815495/create_and_destroy.cpp@459@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+}
+
+array_1d<double, 3> null_vector = ZeroVector(3);
+pnew_node->FastGetSolutionStepValue(VELOCITY) = null_vector;
+pnew_node->FastGetSolutionStepValue(ANGULAR_VELOCITY) = null_vector;
+
+pnew_node->AddDof(VELOCITY_X);
+pnew_node->AddDof(VELOCITY_Y);"
+./81815495/create_and_destroy.cpp@522@CRITICAL@#pragma omp critical@"{
+r_modelpart.Elements().push_back(p_particle);
+}
+
+return spheric_p_particle;
+KRATOS_CATCH("""")
+}
+
+SphericParticle* ParticleCreatorDestructor::SphereCreatorForBreakableClusters(ModelPart& r_modelpart,
+Node ::Pointer& pnew_node,"
+./81815495/create_and_destroy.cpp@563@CRITICAL@#pragma omp critical@"{
+r_modelpart.Elements().push_back(p_particle);
+}
+return spheric_p_particle;
+KRATOS_CATCH("""")
+}
+
+Cluster3D* ParticleCreatorDestructor::ClusterCreatorWithPhysicalParameters(ModelPart& r_spheres_modelpart,
+ModelPart& r_clusters_modelpart,
+int r_Elem_Id,"
+./81815495/create_and_destroy.cpp@650@CRITICAL@#pragma omp critical@"{
+r_clusters_modelpart.Elements().push_back(p_new_cluster);
+}
+}
+else {
+p_cluster->GetGeometry()[0].Set(TO_ERASE);
+p_cluster->SetContinuumGroupToBreakableClusterSpheres(r_Elem_Id);
+double search_increment = 0.02 * radius;
+p_cluster->SetInitialNeighbours(search_increment);
+p_cluster->CreateContinuumConstitutiveLaws();"
+./81815495/create_and_destroy.cpp@768@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+r_modelpart.Elements().push_back(p_particle);
+}
+
+if (r_Elem_Id > (int) (mMaxNodeId)) mMaxNodeId = (unsigned int) (r_Elem_Id);
+
+return p_particle;
+}
+"
+./81815495/create_and_destroy.cpp@798@CRITICAL@#pragma omp critical@"{
+r_modelpart.Nodes().push_back(pnew_node);
+r_modelpart.Elements().push_back(p_particle);
+
+if (spheric_p_particle->IsNot(BLOCKED)){
+mpAnalyticWatcher->Record(spheric_p_particle, r_modelpart);
+}
+}
+if (r_Elem_Id > (int) (mMaxNodeId)) mMaxNodeId = (unsigned int) (r_Elem_Id);
+"
+./81815495/initial_stress_3D_utilities.hpp@178@CRITICAL@#pragma omp critical@"{
+ElementOldCellMatrix[k][l][s].push_back((*(itElemOld.base())));
+}
+}
+}
+}
+}
+
+const int NNodes = static_cast<int>(rCurrentModelPart.Nodes().size());
+ModelPart::NodesContainerType::iterator node_begin = rCurrentModelPart.NodesBegin();"
+./81815495/apply_chimera_process.cpp@367@CRITICAL@#pragma omp critical@"{
+mrMainModelPart.RemoveMasterSlaveConstraintFromAllLevels(constraint_id);
+removed_counter++;
+}
+}
+constrainIds_for_the_node.clear();
+return removed_counter;
+}
+
+template <int TDim>"
+./81815495/apply_chimera_process.cpp@546@CRITICAL@#pragma omp critical@"{
+mrMainModelPart.RemoveMasterSlaveConstraintFromAllLevels(constraint_id);
+}
+}
+constrainIds_for_the_node.clear();
+rNodeToFind.Set(VISITED, false);
+}
+
+return is_found;
+}"
+./81815495/explicit_solver_continuum.cpp@384@CRITICAL@#pragma omp critical@"{
+if (used_bonds_counter < (int) (*mpContact_model_part).Elements().size()) {
+add_new_bond = false;
+private_counter = used_bonds_counter;
+used_bonds_counter++;
+}
+}
+if (!add_new_bond) {
+Element::Pointer& p_old_contact_element = (*mpContact_model_part).Elements().GetContainer()[private_counter];
+p_old_contact_element->GetGeometry()(0) = mListOfSphericContinuumParticles[i]->GetGeometry()(0);"
+./81815495/explicit_solver_continuum.cpp@407@CRITICAL@#pragma omp critical@"{
+(*mpContact_model_part).Elements().push_back(p_new_contact_element);
+used_bonds_counter++;
+}
+ParticleContactElement* p_bond = dynamic_cast<ParticleContactElement*> (p_new_contact_element.get());
+mListOfSphericContinuumParticles[i]->mBondElements[j] = p_bond;
+}
+
+}
+}"
+./81815495/find_global_nodal_neighbours_for_entities_process.cpp@239@CRITICAL@#pragma omp critical@"{
+for (auto& r_gp : rOther.gp_vector.GetContainer()) {
+this->gp_vector.push_back(r_gp);
+}
+}
+}
+};
+
+GlobalPointersVector<NodeType> all_global_pointers =
+block_for_each<GlobalPointerAdder>(rNodes, [&](NodeType& rNode) {"
+./81815495/DEM_KDEM_soft_torque_with_noise_CL.cpp@16@CRITICAL@#pragma omp critical@"{
+if (!element1->Has(PERTURBED_TAU_ZERO)) {
+srand(element1->GetId());
+mPerturbedTauZero = rand_normal(DEM_KDEM::GetTauZero(element1), (*mpProperties)[KDEM_STANDARD_DEVIATION_TAU_ZERO]);
+}
+if (!element1->Has(PERTURBED_INTERNAL_FRICTION)) {
+srand(element1->GetId());
+mPerturbedInternalFriction = rand_normal(DEM_KDEM::GetInternalFricc(element1), (*mpProperties)[KDEM_STANDARD_DEVIATION_FRICTION]);
+}
+}"
+./81815495/mpc_contact_search_process.cpp@65@CRITICAL@#pragma omp critical@"{
+std::move(auxiliary_constraints_vector_buffer.begin(),auxiliary_constraints_vector_buffer.end(),back_inserter(auxiliary_constraints_vector));
+}
+}
+
+r_sub_contact_model_part.RemoveMasterSlaveConstraints(TO_ERASE);
+for (int i = 0; i < static_cast<int>(auxiliary_constraints_vector.size()); ++i) {
+auxiliary_constraints_vector[i]->SetId(total_number_constraints + i + 1);
+}
+ModelPart::MasterSlaveConstraintContainerType aux_conds;"
+./81815495/test_sparse_graph_serial.cpp@260@CRITICAL@#pragma omp critical@"{
+if(pAgraph == nullptr )
+pAgraph.swap(plocal_graph);
+else
+pAgraph->AddEntries(*plocal_graph);
+}
+}
+
+pAgraph->Finalize();
+return pAgraph;"
+./81815495/test_sparse_graph_serial.cpp@369@CRITICAL@#pragma omp critical@"{
+if(pAgraph == nullptr )
+pAgraph.swap(plocal_graph);
+else
+pAgraph->AddEntries(*plocal_graph);
+}
+}
+
+pAgraph->Finalize();
+"
+./81815495/sparse_matrix_multiplication_utility.h@224@CRITICAL@#pragma omp critical@max_row_width = std::max(max_row_width, my_max);
+./81815495/update_thermal_model_part_process.hpp@120@CRITICAL@#pragma omp critical@"{ ids.push_back(it_elem->Id()); }
+}
+
+rComputingModelPart.AddElements(ids, 0);
+}
+
+void UpdateConditions() const
+{
+for (ModelPart::SubModelPartIterator i_mp = rOriginModelPart.SubModelPartsBegin(); i_mp != rOriginModelPart.SubModelPartsEnd(); i_mp++) {
+if (i_mp->NumberOfConditions() && rDestinationModelPart.HasSubModelPart(i_mp->Name())) {"
+./81815495/cluster3D.cpp@161@CRITICAL@#pragma omp critical@"{
+(*p_max_Id)++;
+max_Id = *p_max_Id;
+}
+
+Kratos::SphericParticle* new_sphere;
+Node ::Pointer new_node;
+if (!breakable) {
+new_sphere = p_creator_destructor->SphereCreatorForClusters(dem_model_part,
+new_node,"
+./81815495/mixed_generic_criteria.h@338@CRITICAL@#pragma omp critical@"{
+for (int i = 0; i < mVariableSize; i++) {
+rDofsCount[i] += dofs_counter_reduction[i];
+rSolutionNormsVector[i] += var_solution_norm_reduction[i];
+rIncreaseNormsVector[i] += var_correction_norm_reduction[i];
+}
+}
+}
+}
+"
+./81815495/smoothed_aggr_emin.hpp@206@CRITICAL@#pragma omp critical@omega[ca] += v;
+./81815495/smoothed_aggr_emin.hpp@216@CRITICAL@#pragma omp critical@denum[c] += v * v;
+./81815495/rans_apply_exact_nodal_periodic_condition_process.cpp@170@CRITICAL@#pragma omp critical@"{
+condition_id++;
+auto p_condition = r_base_model_part.CreateNewCondition(
+""PeriodicCondition"", condition_id, node_id_list, p_properties);
+p_condition->Set(PERIODIC);
+rMasterNode.Set(PERIODIC);
+}
+}
+});
+"
+./81815495/pqmpm_partition_utilities.cpp@23@CRITICAL@#pragma omp critical@"KRATOS_ERROR << ""PartitionMasterMaterialPointsIntoSubPoints | Quadrature point geometry ID from the material point and ID of the quadrature point geometry to be attached are not equal!\n"";"
+./81815495/pqmpm_partition_utilities.cpp@165@CRITICAL@#pragma omp critical@"KRATOS_INFO(""MPMSearchElementUtility::Check"")"
+./81815495/graph_utilities.cpp@196@CRITICAL@#pragma omp critical@"{
+total_vol += vol;
+if (temp < particle_temp_min) particle_temp_min = temp;
+if (temp > particle_temp_max) particle_temp_max = temp;
+particle_temp_avg                += temp;
+particle_temp_dev                += temp * temp;
+model_temp_avg                   += temp * vol;
+
+total_energy_potential_gravity   += energy_potential_gravity;
+total_energy_potential_elastic   += energy_potential_elastic;"
+./81815495/graph_utilities.cpp@228@CRITICAL@#pragma omp critical@"{
+num_ratio_particles_flux++;
+particle_flux_conducdir_ratio_avg   += flux_conducdir   / flux_total;
+particle_flux_conducindir_ratio_avg += flux_conducindir / flux_total;
+particle_flux_rad_ratio_avg         += flux_rad         / flux_total;
+particle_flux_gen_ratio_avg         += flux_gen         / flux_total;
+particle_flux_conv_ratio_avg        += flux_conv        / flux_total;
+particle_flux_prescsurf_ratio_avg   += flux_prescsurf   / flux_total;
+particle_flux_prescvol_ratio_avg    += flux_prescvol    / flux_total;
+}"
+./81815495/graph_utilities.cpp@252@CRITICAL@#pragma omp critical@"{
+num_ratio_particles_gen++;
+particle_gen_slid_pp_ratio_avg += gen_slid_pp / gen_total;
+particle_gen_slid_pw_ratio_avg += gen_slid_pw / gen_total;
+particle_gen_roll_pp_ratio_avg += gen_roll_pp / gen_total;
+particle_gen_roll_pw_ratio_avg += gen_roll_pw / gen_total;
+particle_gen_damp_pp_ratio_avg += gen_damp_pp / gen_total;
+particle_gen_damp_pw_ratio_avg += gen_damp_pw / gen_total;
+}
+}"
+./105016937/openmp_compression.cpp@128@CRITICAL@#pragma omp critical@"{
+if(cluster.find(min_rgb_index)==cluster.end())
+{    vector<int> v;
+v.push_back(i);
+cluster.insert(make_pair(min_rgb_index,v));
+}
+else
+cluster[min_rgb_index].push_back(i);
+}
+}"
+./74558351/test_omp_random_number_generator.cpp@43@CRITICAL@#pragma omp critical@"{
+BOOST_TEST(0.0 <= real01_1);
+BOOST_TEST(real01_1 < 1.0);
+BOOST_TEST(0.0 <= real01_2);
+BOOST_TEST(real01_2 < 1.0);
+BOOST_TEST(real01_1 == real01_2);
+}
+}
+}
+}"
+./124574336/nvector_openmp.c@667@CRITICAL@#pragma omp critical@"{
+if (tmax > max)
+max = tmax;
+}
+}
+return(max);
+}
+
+
+"
+./124574336/nvector_openmp.c@718@CRITICAL@#pragma omp critical@"{
+if (tmin < min) min = tmin;
+}
+}
+}
+
+return(min);
+}
+
+"
+./124574336/nvector_openmp.c@901@CRITICAL@#pragma omp critical@"{
+if (tmin < min) min = tmin;
+}
+}
+}
+
+return(min);
+}
+
+"
+./124574336/nvector_openmp.c@1153@CRITICAL@#pragma omp critical@"{
+dotprods[i] += sum;
+}
+}
+}
+
+return(0);
+}
+
+"
+./124574336/nvector_openmp.c@1404@CRITICAL@#pragma omp critical@"{
+nrm[i] += sum;
+}
+}
+}
+
+for (i=0; i<nvec; i++) {
+nrm[i] = SUNRsqrt(nrm[i]/N);
+}
+"
+./124574336/nvector_openmp.c@1463@CRITICAL@#pragma omp critical@"{
+nrm[i] += sum;
+}
+}
+}
+
+for (i=0; i<nvec; i++) {
+nrm[i] = SUNRsqrt(nrm[i]/N);
+}
+"
+./345031193/main1.cpp@158@CRITICAL@#pragma omp critical@"{
+res = norm / normb;
+countIt++;
+
+if ((countIt > 100000 && lastres > res) || res == INFINITY) {
+if (tau < 0) {
+printf(""Does not converge\n"");
+res = 0;
+} else {
+tau = (-1)*parameter;"
+./316496740/Class.cpp@27@CRITICAL@#pragma omp critical@Classes[argmin_idx].emplace_back(i);
+./549299227/random_generator.cpp@16@CRITICAL@#pragma omp critical@"if (turn == current_thread && sum <= 1000)
+{
+int number = distribution(generator);
+sum += number;
+cout << ""Thread "" << current_thread << "" generated "" << number << "", ""
+<< ""Sum: "" << sum << endl;
+
+if (sum >= 1000)
+{
+cout << ""Thread "" << current_thread << "" wins!"" << endl;"
+./549299227/consumer_producer.cpp@20@CRITICAL@#pragma omp critical@"if (queue.size() < capacity)
+{
+int message = distribution(generator);
+queue.push(message);
+cout << ""Producer "" << current_thread << "" produced "" << message << endl;
+}
+}
+}
+
+"
+./549299227/consumer_producer.cpp@40@CRITICAL@#pragma omp critical@"if (queue.size() != 0)
+{
+message = queue.front();
+queue.pop();
+cout << ""Consumer "" << current_thread << "" consumed "" << message << endl;
+}
+
+sleep(message);
+}
+}"
+./361866782/parser.cpp@89@CRITICAL@#pragma omp critical@table[l][s][gram[j][0][0]] = true;
+./279765353/main.cpp@98@CRITICAL@#pragma omp critical@"std::cout << ""thread ""<<omp_get_thread_num()<<"" solve in "" << runtime << ""ms """
+./279765353/main.cpp@107@CRITICAL@#pragma omp critical@"{
+complete += 1;
+int finish = complete * 100.0 / subproblems.size();
+if (finish > percent) {
+double t = timeall.getRunTime(true);
+std::cerr << ""progress: "" <<finish << ""% remaining time: "" << t * 0.1 / finish - t * 0.001 << ""s"";
+std::cerr << std::string(15, ' ') << ""\r"";
+percent = finish;
+}
+}"
+./167942829/cluster.cpp@148@CRITICAL@#pragma omp critical@"{
+pointsChange += changedPoints;
+}
+
+}
+
+void cluster::getClusters(){
+
+if(mod == 0){
+int changedPoints = 0;"
+./202712923/atomic_detail.h@30@CRITICAL@#pragma omp critical@current = *address;
+./202712923/atomic_detail.h@39@CRITICAL@#pragma omp critical@*address = desired;
+./202712923/atomic_detail.h@48@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = desired;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T> || std::is_floating_point_v<T>)>
+STDGPU_DEVICE_ONLY T
+atomic_compare_exchange(T* address, const T expected, const T desired) noexcept"
+./202712923/atomic_detail.h@61@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = (old == expected) ? desired : old;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T> || std::is_floating_point_v<T>)>
+STDGPU_DEVICE_ONLY T
+atomic_fetch_add(T* address, const T arg) noexcept"
+./202712923/atomic_detail.h@77@CRITICAL@#pragma omp critical@"#endif
+{
+old = *address;
+*address += arg;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T> || std::is_floating_point_v<T>)>
+STDGPU_DEVICE_ONLY T"
+./202712923/atomic_detail.h@94@CRITICAL@#pragma omp critical@"#endif
+{
+old = *address;
+*address -= arg;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T>)>
+STDGPU_DEVICE_ONLY T"
+./202712923/atomic_detail.h@111@CRITICAL@#pragma omp critical@"#endif
+{
+old = *address;
+*address &= arg;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T>)>
+STDGPU_DEVICE_ONLY T"
+./202712923/atomic_detail.h@128@CRITICAL@#pragma omp critical@"#endif
+{
+old = *address;
+*address |= arg;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T>)>
+STDGPU_DEVICE_ONLY T"
+./202712923/atomic_detail.h@145@CRITICAL@#pragma omp critical@"#endif
+{
+old = *address;
+*address ^= arg;
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T> || std::is_floating_point_v<T>)>
+STDGPU_DEVICE_ONLY T"
+./202712923/atomic_detail.h@159@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = std::min(old, arg);
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_integral_v<T> || std::is_floating_point_v<T>)>
+STDGPU_DEVICE_ONLY T
+atomic_fetch_max(T* address, const T arg) noexcept"
+./202712923/atomic_detail.h@172@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = std::max(old, arg);
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_same_v<T, unsigned int>)>
+STDGPU_DEVICE_ONLY T
+atomic_fetch_inc_mod(T* address, const T arg) noexcept"
+./202712923/atomic_detail.h@185@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = (old >= arg) ? T(0) : old + T(1);
+}
+return old;
+}
+
+template <typename T, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(std::is_same_v<T, unsigned int>)>
+STDGPU_DEVICE_ONLY T
+atomic_fetch_dec_mod(T* address, const T arg) noexcept"
+./202712923/atomic_detail.h@198@CRITICAL@#pragma omp critical@"{
+old = *address;
+*address = (old == T(0) || old > arg) ? arg : old - T(1);
+}
+return old;
+}
+
+}
+
+#endif"
+./472427720/demo.hpp@21@CRITICAL@#pragma omp critical@"{
+std::cout << ""Thread "" << thread_ID << "" processing row - "" << idx_r_ptr << ""\n"";
+}
+
+double temp_val = 0.0;
+vec_b[idx_r_ptr] = beta * vec_b[idx_r_ptr];
+for (uint32_t idx_nz = mat_A.row_ptr[idx_r_ptr]; idx_nz < mat_A.row_ptr[idx_r_ptr + 1]; idx_nz++)
+{
+temp_val += (mat_A.col_and_val[idx_nz].val * vec_x[mat_A.col_and_val[idx_nz].idx]);
+}"
+./472427720/demo.hpp@52@CRITICAL@#pragma omp critical@"{
+std::cout << ""Thread "" << thread_ID << "" processing row - "" << idx_r_ptr << ""\n"";
+}
+
+double temp_val = 0.0;
+vec_b[idx_r_ptr] = beta * vec_b[idx_r_ptr];
+for (uint32_t idx_nz = mat_A.row_ptr[idx_r_ptr]; idx_nz < mat_A.row_ptr[idx_r_ptr + 1]; idx_nz++)
+{
+temp_val += (mat_A.col_and_val[idx_nz].val * vec_x[mat_A.col_and_val[idx_nz].idx]);
+}"
+./472427720/parallel_openmp_csr_Advanced.hpp@116@CRITICAL@#pragma omp critical@"{
+if (work_queue.empty() == true)
+{
+work_remained = false;
+}
+else
+{
+retrieved_work = work_queue.front();
+work_queue.pop();
+}"
+./472427720/parallel_openmp_csr_Advanced.hpp@170@CRITICAL@#pragma omp critical@"{
+if (global_start_p == queue_len)
+{
+work_remained = false;
+}
+else
+{
+local_start = global_start_p;
+local_end = local_start + work_chunk;
+global_start_p += work_chunk;"
+./289039618/critical2.c@29@CRITICAL@#pragma omp critical@"{
+if (thread == 0)
+{
+sleep(2);
+}
+if (thread == 1)
+{
+usleep(10);
+}
+if (thread == 2)"
+./289039618/critical1.c@10@CRITICAL@#pragma omp critical@"{
+x += omp_get_thread_num();
+}
+}
+
+printf(""x: %d\n"", x);
+}"
+./289039618/critical_multiple.c@10@CRITICAL@#pragma omp critical@"{
+x += omp_get_thread_num();
+}
+
+#pragma omp critical
+{
+x += 1;
+}
+}
+"
+./289039618/critical_multiple.c@15@CRITICAL@#pragma omp critical@"{
+x += 1;
+}
+}
+
+printf(""x: %d\n"", x);
+}"
+./403569896/IncrementalClusteringLibrary.h@62@CRITICAL@#pragma omp critical@"if(cluster[j].sf==s1 && cluster[j].ss==s2){return 1;}
+else{cluster[j].sf=s1; cluster[j].ss=s2;}
+}
+return 0;
+}
+}
+
+void add_point(double x,double y,vector<point> &all_points){
+point coordinate;
+coordinate.f=-1; coordinate.sf=x; coordinate.ss=y;"
+./84927230/summation.cpp@25@CRITICAL@#pragma omp critical@sum += i;
+./449282076/h5_problem2.c@35@CRITICAL@#pragma omp critical@ptr->idata++;
+./449282076/h5_problem2.c@49@CRITICAL@#pragma omp critical@"{
+if (q->tail == NULL) {
+q->head = _new;
+q->tail = _new;
+} else {
+q->tail->next = _new;
+q->tail = _new;
+}
+}
+}"
+./449282076/h5_problem2.c@65@CRITICAL@#pragma omp critical@"{
+if (q->head != NULL) {
+data = q->head->sdata;
+struct node *del = q->head;
+q->head = q->head->next;
+free(del);
+}
+if (q->head == NULL) {
+q->tail = NULL;
+}"
+./449282076/h5_problem2.c@123@CRITICAL@#pragma omp critical@"{
+if (lines->head == NULL) {
+val = 1;
+}
+}
+return val;
+}
+
+
+int main(int argc, char *argv[])"
+./41858660/testmp2.cpp@22@CRITICAL@#pragma omp critical@"{
+printf(""thread %d iter %d %p\n"", omp_get_thread_num() ,n,sinTable);
+}
+sinTable[n] = sin(2 * M_PI * n / size);
+}
+}
+#pragma omp taskwait
+}
+
+}"
+./23348486/cheb.h@48@CRITICAL@#pragma omp critical(NEW_NODES)@"if (!y[deg][dim].size()) {
+unsigned int d = deg + 1;
+
+std::vector<Real> x(d);
+Real scal = 1.0 / pvfmm::cos<Real>(0.5 * pvfmm::const_pi<Real>() / d);
+for (int i = 0; i < d; i++)
+x[i] =
+-pvfmm::cos<Real>((i + (Real)0.5) * pvfmm::const_pi<Real>() / d) *
+scal * 0.5 +
+0.5;"
+./73482458/variables.c@10@CRITICAL@#pragma omp critical(add_first)@var1++;
+./73482458/sum.cpp@33@CRITICAL@#pragma omp critical(dummy)@sum += vecA[i];
+./73482458/sum.cpp@48@CRITICAL@#pragma omp critical(par_sum)@sum += psum;
+./95812973/Event.cpp@130@CRITICAL@#pragma omp critical@"{
+this->updateMonteCarloSummary(teams, probability);
+}
+}
+
+void Event::updateSummary(
+std::vector<Team> &teams,
+double probability) {
+
+root.addChild(teams[0].getNumber(), 0);"
+./437699070/MandelbrotSetParallel.cpp@153@CRITICAL@#pragma omp critical@"{
+z.real = neg_X + ((float)x * scale_real);
+slave_colors[x + 1] = cal_pixel(z);
+}
+}
+}
+
+MPI_Send(slave_colors, dispWidth + 1, MPI_INT, 0, RESULT_TAG, MPI_COMM_WORLD);
+MPI_Recv(&row, 1, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+"
+./482460652/datarace.cpp@19@CRITICAL@#pragma omp critical@sum += a[i];
+./211799119/lemon-tc.cpp@33@CRITICAL@#pragma omp critical@actual_num_threads = actual_num_threads + 1;
+./402750164/main.cpp@74@CRITICAL@#pragma omp critical@"if(current_node->right == nullptr)
+{
+current_node->right = new node(arr[i], current_node);
+flag = false;
+}
+}
+}
+else if(arr[i].x < current_node->object.x)
+{
+if(current_node->left != nullptr)"
+./402750164/main.cpp@90@CRITICAL@#pragma omp critical@"if(current_node->left == nullptr)
+{
+current_node->left = new node(arr[i], current_node);
+flag = false;
+}
+}
+}
+}
+
+}"
+./607375912/Model.cpp@129@CRITICAL@#pragma omp critical@"{
+for (size_t j = 0; j < alphabet_size; ++j) {
+for (size_t k = 0; k < motif_width; ++k)
+nb_fg[k][j] += nb_fg_l[k][j];
+nb_bg[j] += nb_bg_l[j];
+}
+}
+}
+}
+"
+./607375912/Model.cpp@228@CRITICAL@#pragma omp critical@"{
+for (size_t j = 0; j < alphabet_size; ++j) {
+for (size_t k = 0; k < motif_width; ++k) {
+nb_fg_ss[k][j] += nb_fg_ss_l[k][j];
+nb_fg_ds[k][j] += nb_fg_ds_l[k][j];
+}
+nb_bg_ss[j] += nb_bg_ss_l[j];
+nb_bg_ds[j] += nb_bg_ds_l[j];
+}
+}"
+./607375912/zagros.cpp@186@CRITICAL@#pragma omp critical@"{
+best_kmers.push(kmer_info(kmer_info(kmer, expected, observed)));
+if (best_kmers.size() > n_top_kmers)
+best_kmers.pop();
+}
+}
+
+while (!best_kmers.empty()) {
+top_kmers.push_back(best_kmers.top());
+best_kmers.pop();"
+./89341144/parallel_swarm_search.cpp@89@CRITICAL@#pragma omp critical@"{
+#endif
+if (fitness_value <= result.fitness_value)
+{
+result.normalised_agent = positions.col(n);
+result.fitness_value = fitness_value;
+}
+#if defined(SUPPORT_OPENMP)
+}
+#endif"
+./89341144/parallel_swarm_search.cpp@234@CRITICAL@#pragma omp critical@"{
+#endif
+if (fitness_value < result.fitness_value)
+{
+result.normalised_agent = positions.col(n);
+result.fitness_value = fitness_value;
+randomize_topology = false;
+}
+
+#if defined(SUPPORT_OPENMP)"
+./215497623/checkerboard_openmp.cpp@118@CRITICAL@#pragma omp critical@result[pRowInd[i]+j] += tempResult[j];
+./215497623/columnStripe_openmp.cpp@79@CRITICAL@#pragma omp critical@result[i] += localResult;
+./127649281/pi_parallel.cpp@40@CRITICAL@#pragma omp critical@pi += sum;
+./355329433/Simulator.cpp@144@CRITICAL@#pragma omp critical@"{
+std::vector<Boid *> LocalBoids = F->Neighbourhood.GetBoids();
+AllBoids.insert(AllBoids.end(), LocalBoids.begin(), LocalBoids.end());
+}
+}
+#pragma omp barrier
+#pragma omp for schedule(dynamic)
+for (size_t i = 0; i < AllBoids.size(); i++)
+{
+AllBoids[i]->SenseAndPlan(omp_get_thread_num(), AllFlocks);"
+./355329433/Neighbourhood.cpp@195@CRITICAL@#pragma omp critical@"{
+BoidsGlobalData.at(BoidsGlobal[Idx].FlockID).Remove(B);
+BoidsGlobal[Idx].FlockID = FlockID;
+BoidsGlobalData.at(FlockID).Add(B);
+assert(IsValid());
+}
+}
+}
+}"
+./191530223/MainTable.cxx@431@CRITICAL@#pragma omp critical@"{
+h = GetEntropy(4, P);
+hx[0] = P[0] + P[1];
+hx[1] = 1. - hx[0];
+
+hy[0] = P[0] + P[2];
+hy[1] = 1. - hy[0];
+
+H = GetEntropy(2, hx, firstComponent) + GetEntropy(2, hy, secondComponent) - h;
+file  << H << endl;"
+./635173257/main.cpp@121@CRITICAL@#pragma omp critical@"{
+if (weight < minimalSplitWeight) {
+minimalSplitWeight = weight;
+copy(config, config + configLength, minimalSplitConfig);
+}
+}
+}
+return;
+}
+"
+./157382526/openmp_bellman_ford.cpp@107@CRITICAL@#pragma omp critical@has_change = true;
+./73549492/Shaders.cpp@58@CRITICAL@#pragma omp critical@"{
+Window::GetSingleton()->MakeContextCurrent();
+glShaderSource(mVertexShader, 1, &vertexSourcePtr, nullptr);
+}
+}
+
+#pragma omp section
+{
+std::ifstream fragmentFile(""Fragment.glsl"");
+if (!fragmentFile.is_open()) {"
+./73549492/Shaders.cpp@77@CRITICAL@#pragma omp critical@"{
+Window::GetSingleton()->MakeContextCurrent();
+glShaderSource(mFragmentShader, 1, &fragmentSourcePtr, nullptr);
+}
+}
+}
+
+glCompileShader(mVertexShader);
+glCompileShader(mFragmentShader);
+glAttachShader(mProgram, mVertexShader);"
+./73549492/Slave.cpp@42@CRITICAL@#pragma omp critical@MPI_Send(colorData, 4, MPI_FLOAT, 0, (int) MessageType::Color, MPI_COMM_WORLD);
+./171604653/omp_hello.cpp@25@CRITICAL@#pragma omp critical@"{
+if (thread_ID == 0)
+{
+cout << ""Threads are 0-indexed with the master thread as thread 0."" << endl;
+cout << ""Total number of threads: "" << total_threads << endl;
+}
+
+cout << ""Hello from "" << thread_ID << "" of "" << total_threads << ""."" << endl;
+}
+}"
+./3769753/MergePaths.cpp@284@CRITICAL@#pragma omp critical(gout)@"if (!edge(u, v, gout).second) {
+add_edge(u, v, gout);
+added = true;
+}
+return added;
+}
+
+
+static ContigPath
+getPath(const ContigPathMap& paths, ContigNode u)"
+./3769753/MergePaths.cpp@359@CRITICAL@#pragma omp critical(cout)@cout << get(g_contigNames, pivot) << '\t' << path2 << '\n' << '\t' << path << '\n';
+./3769753/MergePaths.cpp@379@CRITICAL@#pragma omp critical(cout)@"cout << ""\n* "" << seedPath << '\n'"
+./3769753/MergePaths.cpp@394@CRITICAL@#pragma omp critical(cout)@"cout << get(g_contigNames, seed2) << '\t' << path2 << '\n' << ""\tinvalid\n"";"
+./3769753/MergePaths.cpp@399@CRITICAL@#pragma omp critical(cout)@cout << get(g_contigNames, seed2) << '\t' << path2 << '\n' << '\t' << path << '\n';
+./3769753/MergePaths.cpp@432@CRITICAL@#pragma omp critical(out)@inserted = out.insert(*pathIt);
+./3769753/MergePaths.cpp@438@CRITICAL@#pragma omp critical(cout)@"cout << ""\n* "" << get(g_contigNames, id) << ""+\n"" << '\t' << path << '\n';"
+./3769753/MergePaths.cpp@449@CRITICAL@#pragma omp critical(cout)@"{
+cout << ""invalid\n"";
+for (deque<ContigNode>::const_iterator it = mergeQ.begin(); it != mergeQ.end(); ++it)
+cout << get(g_contigNames, *it) << '\t' << paths.find(it->contigIndex())->second
+<< '\n';
+}
+}
+}
+
+"
+./3769753/MergePaths.cpp@782@CRITICAL@#pragma omp critical(atomicInc)@out = it == last ? it : it++;
+./3769753/PopBubbles.cpp@204@CRITICAL@#pragma omp critical(cout)@"{
+cout << '""' << get(vertex_name, g, v) << ""\"" -> {"";
+for (vector<vertex_descriptor>::const_iterator it = sorted.begin(); it != sorted.end();
+++it)
+cout << "" \"""" << get(vertex_name, g, *it) << '""';
+cout << "" } -> \"""" << get(vertex_name, g, tail) << ""\""\n"";
+}
+#pragma omp critical(g_popped)
+transform(sorted.begin() + 1, sorted.end(), back_inserter(g_popped), [](const ContigNode& c) {
+return c.contigIndex();"
+./3769753/PopBubbles.cpp@212@CRITICAL@#pragma omp critical(g_popped)@"transform(sorted.begin() + 1, sorted.end(), back_inserter(g_popped), [](const ContigNode& c) {
+return c.contigIndex();
+});
+}
+
+static struct
+{
+unsigned bubbles;
+unsigned popped;
+unsigned scaffold;"
+./3769753/PopBubbles.cpp@334@CRITICAL@#pragma omp critical(cerr)@"{
+cerr << ""\n* "" << get(vertex_name, g, v) << "" ->"";
+for (adjacency_iterator it = adj.first; it != adj.second; ++it)
+cerr << ' ' << get(vertex_name, g, *it);
+cerr << "" -> "" << get(vertex_name, g, tail) << '\n';
+}
+
+if (nbranches > opt::maxBranches) {
+#pragma omp atomic
+g_count.tooMany++;"
+./3769753/PopBubbles.cpp@346@CRITICAL@#pragma omp critical(cerr)@"cerr << nbranches << "" paths (too many)\n"";"
+./3769753/PopBubbles.cpp@361@CRITICAL@#pragma omp critical(cerr)@"cerr << minLength << '\t' << maxLength << ""\t0\t(too long)\n"";"
+./3769753/PopBubbles.cpp@370@CRITICAL@#pragma omp critical(cerr)@cerr << minLength << '\t' << maxLength << '\t' << identity
+./3769753/konnector.h@240@CRITICAL@#pragma omp critical(cerr)@"std::cerr << ""error: name mismatch between paired end reads.\n"""
+./3769753/DistanceEst.cpp@241@CRITICAL@#pragma omp critical(cerr)@"cerr << PROGRAM "": warning: The observed fragment of """
+./3769753/DistanceEst.cpp@250@CRITICAL@#pragma omp critical(g_recMA)@g_recMA = min(g_recMA, ma);
+./3769753/DistanceEst.cpp@285@CRITICAL@#pragma omp critical(out)@"out << get(g_contigNames, e) << "" ["" << est << ""]\n"";"
+./3769753/DistanceEst.cpp@289@CRITICAL@#pragma omp critical(out)@"out << ""G\t*"""
+./3769753/DistanceEst.cpp@300@CRITICAL@#pragma omp critical(cerr)@"cerr << ""warning: "" << get(g_contigNames, e)"
+./3769753/DistanceEst.cpp@345@CRITICAL@#pragma omp critical(out)@out << ss.str() << '\n';
+./3769753/DistanceEst.cpp@632@CRITICAL@#pragma omp critical(in)@readPairs(it, last, records);
+./3769753/ParallelFilter.cpp@111@CRITICAL@#pragma omp critical(uFile)@"{
+good = static_cast<bool>(getline(uFile, hline));
+good = static_cast<bool>(getline(uFile, line));
+}
+if (good)
+loadSeqr(BloomFilterFilter, line);
+}
+uFile.close();
+}
+"
+./3769753/bloom-dbg.h@513@CRITICAL@#pragma omp critical(redundancyCheck)@"{
+
+if (seq.length() < params.k + fpLookAhead - 1) {
+
+if (contigEndKmers.find(v1) != contigEndKmers.end() &&
+contigEndKmers.find(v2) != contigEndKmers.end()) {
+redundant = true;
+} else {
+contigEndKmers.insert(v1);
+contigEndKmers.insert(v2);"
+./3769753/bloom-dbg.h@539@CRITICAL@#pragma omp critical(fasta)@"{
+rec.length = seq.length();
+rec.coverage = getSeqAbsoluteKmerCoverage(seq, solidKmerSet);
+
+
+printContig(seq, rec.length, rec.coverage, counters.contigID, rec.readID, params.k, streams.out);
+
+
+if (params.checkpointsEnabled())
+printContig(seq, rec.length, rec.coverage, counters.contigID, rec.readID, params.k, streams.checkpointOut);"
+./3769753/bloom-dbg.h@558@CRITICAL@#pragma omp critical(trace)@streams.traceOut << rec;
+./3769753/bloom-dbg.h@883@CRITICAL@#pragma omp critical(in)@"for (bufferSize = 0; bufferSize < SEQ_BUFFER_SIZE && readsUntilCheckpoint > 0;) {
+FastaRecord rec;
+good = in >> rec;
+if (!good)
+break;
+#pragma omp atomic
+readsUntilCheckpoint--;
+buffer.push_back(rec);
+bufferSize += rec.seq.length();
+}"
+./3769753/bloom-dbg.h@908@CRITICAL@#pragma omp critical(readsProgress)@"{
+++counters.readsProcessed;
+if (params.verbose && counters.readsProcessed % READS_PROGRESS_STEP == 0)
+readsProgressMessage(counters);
+}
+
+if (params.verbose)
+#pragma omp critical(basesProgress)
+{
+if (counters.basesAssembled >= basesProgressLine) {"
+./3769753/bloom-dbg.h@916@CRITICAL@#pragma omp critical(basesProgress)@"{
+if (counters.basesAssembled >= basesProgressLine) {
+basesProgressMessage(counters);
+while (counters.basesAssembled >= basesProgressLine)
+basesProgressLine += BASES_PROGRESS_STEP;
+}
+}
+
+if (!params.readLogPath.empty()) {
+#pragma omp critical(readLog)"
+./3769753/bloom-dbg.h@926@CRITICAL@#pragma omp critical(readLog)@streams.readLogOut << result;
+./3769753/MIBloomFilter.hpp@134@CRITICAL@#pragma omp critical(stderr)@"cerr << ""file \"""" << filterFilePath << ""\"" could not be read."" << endl;"
+./3769753/MIBloomFilter.hpp@141@CRITICAL@#pragma omp critical(stderr)@"cerr << ""Loading header..."" << endl;"
+./3769753/MIBloomFilter.hpp@144@CRITICAL@#pragma omp critical(stderr)@"cerr << ""Failed to Load header"" << endl;"
+./3769753/MIBloomFilter.hpp@153@CRITICAL@#pragma omp critical(stderr)@"cerr << ""Loaded header... magic: "" << magic << "" hlen: "" << header.hlen"
+./3769753/MIBloomFilter.hpp@205@CRITICAL@#pragma omp critical(stderr)@"cerr << ""Loading data vector"" << endl;"
+./3769753/MIBloomFilter.hpp@226@CRITICAL@#pragma omp critical(stderr)@"cerr << ""Loading sdsl interleaved bit vector from: "" << bvFilename << endl;"
+./3769753/MIBloomFilter.hpp@559@CRITICAL@#pragma omp critical@m_data[pos] |= s_mask;
+./3769753/BloomIO.h@55@CRITICAL@#pragma omp critical(in)@"for (; good && bufferSize < BUFFER_SIZE;) {
+std::string seq;
+good = in >> seq;
+if (good) {
+buffer.push_back(seq);
+bufferSize += seq.length();
+}
+}
+if (buffer.size() == 0)
+break;"
+./3769753/BloomIO.h@69@CRITICAL@#pragma omp critical(cerr)@"{
+readCount++;
+if (readCount % LOAD_PROGRESS_STEP == 0)
+std::cerr << ""Loaded "" << readCount << "" reads into Bloom filter\n"";
+}
+}
+}
+assert(in.eof());
+if (verbose) {
+std::cerr << ""Loaded "" << readCount << "" reads from `"" << path << ""` into Bloom filter\n"";"
+./3769753/RAlgorithmsShort.cpp@126@CRITICAL@#pragma omp critical(ReadSizes)@"{
+for (const auto& i : hist) {
+ReadSize* batch = nullptr;
+bool found = false;
+for (auto& b : ReadSize::readSizes) {
+if (b.size == i.first) {
+found = true;
+batch = &b;
+break;
+}"
+./3769753/RAlgorithmsShort.cpp@511@CRITICAL@#pragma omp critical(maxSupport)@"{
+if (unknown) {
+end = true;
+}
+}
+if (end) {
+break;
+}
+
+#pragma omp task firstprivate(head) shared(maxSupport, unknown)"
+./3769753/RAlgorithmsShort.cpp@525@CRITICAL@#pragma omp critical(maxSupport)@"{
+if (unknown) {
+end = true;
+}
+}
+if (end) {
+break;
+}
+
+auto support = testCombination(head, repeat, tail, requiredTests);"
+./3769753/RAlgorithmsShort.cpp@537@CRITICAL@#pragma omp critical(maxSupport)@"{
+if (support.unknown()) {
+unknown = true;
+end = true;
+maxSupport = support;
+} else if (support > maxSupport) {
+maxSupport = support;
+} else if (maxSupport.found == 0 && support.tests > maxSupport.tests) {
+maxSupport.tests = support.tests;
+}"
+./3769753/RAlgorithmsShort.cpp@695@CRITICAL@#pragma omp critical(cerr)@progressUpdate();
+./3769753/RAlgorithmsShort.cpp@705@CRITICAL@#pragma omp critical(resolution)@"{
+repeats++;
+inHistSample = (repeats <= HIST_SAMPLE_SIZE);
+skip = (repeats > REPEAT_CASES_LIMIT);
+}
+
+if (!skip) {
+auto supportMap = buildRepeatSupportMap(node);
+
+#pragma omp critical(resolution)"
+./3769753/RAlgorithmsShort.cpp@715@CRITICAL@#pragma omp critical(resolution)@"{
+resolution.repeatSupportMap[node.index()] = supportMap;
+updateStats(resolution, supports, supportMap, inHistSample);
+}
+}
+
+#pragma omp critical(cerr)
+progressUpdate();
+});
+"
+./3769753/RAlgorithmsShort.cpp@722@CRITICAL@#pragma omp critical(cerr)@progressUpdate();
+./3769753/RAlgorithmsShort.cpp@942@CRITICAL@#pragma omp critical(repeatInstancesMap)@"{
+repeatInstancesMap.emplace(repeat.index(), std::vector<RepeatInstance>());
+repeatInstancesMap.emplace((repeat ^ true).index(), std::vector<RepeatInstance>());
+}
+
+for (const auto& intigIdxAndOutigsSupp : supportMap) {
+const auto intig = ContigNode(intigIdxAndOutigsSupp.first);
+for (const auto& outigIdxAndSupp : intigIdxAndOutigsSupp.second) {
+const auto outig = ContigNode(outigIdxAndSupp.first);
+const auto& support = outigIdxAndSupp.second;"
+./3769753/RAlgorithmsShort.cpp@961@CRITICAL@#pragma omp critical(supportedPaths)@supportedPaths.insert(path);
+./3769753/RAlgorithmsShort.cpp@964@CRITICAL@#pragma omp critical(unsupportedPaths)@unsupportedPaths.insert(path);
+./3769753/RAlgorithmsShort.cpp@967@CRITICAL@#pragma omp critical(supportedPaths)@"{
+if (supportedPaths.find(path) != supportedPaths.end()) {
+supportedPaths.erase(path);
+}
+}
+}
+}
+}
+
+#pragma omp critical(cerr)"
+./3769753/RAlgorithmsShort.cpp@977@CRITICAL@#pragma omp critical(cerr)@progressUpdate();
+./3769753/RAlgorithmsShort.cpp@1116@CRITICAL@#pragma omp critical(edges2remove)@edges2remove.push_back(
+./3769753/RAlgorithmsShort.cpp@1125@CRITICAL@#pragma omp critical(edges2remove)@edges2remove.push_back(
+./3769753/RAlgorithmsShort.cpp@1130@CRITICAL@#pragma omp critical(vertices2add)@vertices2add.push_back(NewVertex(instance.original, instance.instance));
+./3769753/RAlgorithmsShort.cpp@1135@CRITICAL@#pragma omp critical(edges2add)@edges2add.push_back(NewEdge(
+./3769753/RAlgorithmsShort.cpp@1145@CRITICAL@#pragma omp critical(edges2add)@edges2add.push_back(NewEdge(
+./3769753/RAlgorithmsShort.cpp@1155@CRITICAL@#pragma omp critical(cerr)@progressUpdate();
+./3769753/Bloom.h@77@CRITICAL@#pragma omp critical(in)@"for (; good && bufferSize < taskIOBufferSize;) {
+std::string seq;
+good = in >> seq;
+if (good) {
+buffer.push_back(seq);
+bufferSize += seq.length();
+}
+}
+if (buffer.size() == 0)
+break;"
+./3769753/Bloom.h@91@CRITICAL@#pragma omp critical(cerr)@"{
+count++;
+if (count % LOAD_PROGRESS_STEP == 0)
+std::cerr << ""Loaded "" << count << "" reads into bloom filter\n"";
+}
+}
+}
+assert(in.eof());
+if (verbose) {
+std::cerr << ""Loaded "" << count << "" reads from `"""
+./3769753/nttest.cpp@223@CRITICAL@#pragma omp critical(uFile)@"#endif
+
+good = getSeq(uFile, line);
+if(good) {
+if(itm[opt::method]==""city"")
+loadSeqc(myFilter, line);
+else if(itm[opt::method]==""murmur"")
+loadSeqm(myFilter, line);
+else if(itm[opt::method]==""xxhash"")
+loadSeqx(myFilter, line);"
+./3769753/nttest.cpp@326@CRITICAL@#pragma omp critical(uFile)@"#endif
+good = getSeq(uFile, line);
+if(good) {
+if(itm[opt::method]==""city"")
+querySeqc(myFilter, line, fHit);
+else if(itm[opt::method]==""murmur"")
+querySeqm(myFilter, line, fHit);
+else if(itm[opt::method]==""xxhash"")
+querySeqx(myFilter, line, fHit);
+else if(itm[opt::method]==""ntbase"")"
+./6987353/distributed_matrix.hpp@1127@CRITICAL@#pragma omp critical@radius = std::max(radius, emax);
+./6987353/distributed_matrix.hpp@1162@CRITICAL@#pragma omp critical@b0_loc_norm += t_norm;
+./6987353/distributed_matrix.hpp@1213@CRITICAL@#pragma omp critical@"{
+b1_loc_norm += t_norm;
+loc_radius  += t_radi;
+}
+}
+
+radius = comm.reduce(MPI_SUM, loc_radius);
+
+if (++iter < power_iters) {
+scalar_type b1_norm;"
+./6987353/spgemm.hpp@374@CRITICAL@#pragma omp critical@max_row_width = std::max(max_row_width, my_max);
+./6987353/builtin.hpp@777@CRITICAL@#pragma omp critical@radius = std::max(radius, emax);
+./6987353/builtin.hpp@804@CRITICAL@#pragma omp critical@b0_norm += loc_norm;
+./6987353/builtin.hpp@842@CRITICAL@#pragma omp critical@"{
+b1_norm += loc_norm;
+radius  += loc_radi;
+}
+}
+
+if (++iter < power_iters) {
+b1_norm = 1 / sqrt(b1_norm);
+#pragma omp parallel for
+for(ptrdiff_t i = 0; i < n; ++i) {"
+./6987353/cuthill_mckee.hpp@41@CRITICAL@#pragma omp critical@"{
+maxDegree = std::max(maxDegree, maxd);
+}
+}
+
+std::vector<ptrdiff_t> firstWithDegree(maxDegree + 1, -1);
+std::vector<ptrdiff_t> nFirstWithDegree(maxDegree + 1);
+
+perm[0] = initialNode;
+ptrdiff_t currentLevelSet = 1;"
+./6987353/smoothed_aggr_emin.hpp@206@CRITICAL@#pragma omp critical@omega[ca] += v;
+./6987353/smoothed_aggr_emin.hpp@216@CRITICAL@#pragma omp critical@denum[c] += v * v;
+./240264505/vtk_import.cpp@377@CRITICAL@#pragma omp critical@merged_image_data = Importer::mergeImageData(merged_image_data, single_image_data);
+./340977445/simplyparallel.cpp@61@CRITICAL@#pragma omp critical@"{
+std::cout << ""I am thread "" << omp_get_thread_num() << ""/"" << omp_get_num_threads() << "" "";
+printAvailableCores();
+std::cout << std::endl;
+}
+
+#pragma omp barrier
+
+#pragma omp master
+std::cout << ""I am master, all threads done "" << omp_get_thread_num() << std::endl;"
+./188560468/R1ES_omp_alt.cpp@197@CRITICAL@#pragma omp critical@"if(func(x[i],num) < fbest){
+#pragma omp parallel for
+for(int n=0; n<N;n++){
+xbest[n] = x[i][n];
+}
+fbest = func(xbest,num);
+}
+}
+
+"
+./188560468/RmES_omp_alt.cpp@245@CRITICAL@#pragma omp critical@"if(func(x[i],num) < fbest){
+#pragma omp parallel for
+for(int n=0; n<N;n++){
+xbest[n] = x[i][n];
+}
+fbest = func(xbest,num);
+}
+
+}
+"
+./371900770/omp.cpp@49@CRITICAL@#pragma omp critical@"{
+max_sum = segment_max_sum;
+}
+}
+}
+
+#pragma omp for nowait
+for (int i = 0; i < 4; i++) {
+std::valarray<int> slice = arr[std::slice(i, 4, 4)];
+int segment_max_sum = 0;"
+./371900770/omp.cpp@70@CRITICAL@#pragma omp critical@"{
+max_sum = segment_max_sum;
+}
+}
+}
+}
+
+std::cout << ""Max Sum "" << max_sum << ""\n"";
+}"
+./479812853/kmeans_parakmeans.cpp@83@CRITICAL@#pragma omp critical@global_centers[i][j] += local_centers[i][j];
+./67013333/common.h@61@CRITICAL@#pragma omp critical@"{
+if(*ptr == old_val) {
+*ptr = new_val;
+}
+}
+return old;
+#endif
+#else
+T old = *ptr;
+if(*ptr == old_val) *ptr = new_val;"
+./160418114/bnb_openMP.cpp@37@CRITICAL@#pragma omp critical@"if (s.get_cost() > best.get_cost())
+best = s;
+}
+else
+{
+#pragma omp critical
+if (s.get_cost() < best.get_cost())
+best = s;
+}
+}"
+./160418114/bnb_openMP.cpp@43@CRITICAL@#pragma omp critical@"if (s.get_cost() < best.get_cost())
+best = s;
+}
+}
+else
+{
+if (p.get_goal())
+{
+if (s.get_bound() > best.get_cost())
+{"
+./160418114/bnb_openMP.cpp@55@CRITICAL@#pragma omp critical@"{
+for (int l = 0; l < ret.size(); l++)
+q.push(ret[l]);
+}
+}
+}
+else
+{
+if (s.get_bound() < best.get_cost())
+{"
+./160418114/bnb_openMP.cpp@67@CRITICAL@#pragma omp critical@"{
+for (int l = 0; l < ret.size(); l++)
+q.push(ret[l]);
+}
+}
+}
+}
+}
+}
+best.print_sol();"
+./160418114/bnb_hybrid.cpp@135@CRITICAL@#pragma omp critical@"if (sol.is_feasible())
+{
+fflush(stdout);
+pos = 0;
+pos += sprintf(buffer + pos, ""DONE "");
+pos += sol.to_str(buffer + pos);
+pos += sprintf(buffer + pos, "" \0"");
+fflush(stdout);
+MPI_Send(buffer, strlen(buffer) + 1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+fl = true;"
+./160418114/bnb_hybrid.cpp@153@CRITICAL@#pragma omp critical@"for (int i = 0; i < v.size(); i++)
+q.push(v[i]);
+}
+if (q.empty())
+break;
+
+sprintf(req, ""GET_SLAVES %d "", (int)q.size());
+MPI_Send(req, strlen(req), MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+req[0] = '\0';
+MPI_Recv(req, 200, MPI_CHAR, 0, 0, MPI_COMM_WORLD, &st);"
+./139841722/game_statistics.cpp@54@CRITICAL@#pragma omp critical(possession_update)@"{
+ball_possession.reduce(distances);
+};
+}
+
+accumulate_partial_statistics(ball_possession);
+
+if (batch.is_period_last_batch) {
+compute_partial_statistics();
+}"
+./510505991/Q1.cpp@89@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}else if(algo==2){
+if(Algorithm_2_Prime(itr))
+{
+#pragma omp critical"
+./510505991/Q1.cpp@99@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}else if(algo==3){
+if(Algorithm_3_Prime(itr))
+{
+#pragma omp critical"
+./510505991/Q1.cpp@109@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}
+}
+return Prime;
+}"
+./510505991/Q1.cpp@130@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}else if(algo==2){
+if(Algorithm_2_Prime(itr))
+{
+#pragma omp critical"
+./510505991/Q1.cpp@140@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}else if(algo==3){
+if(Algorithm_3_Prime(itr))
+{
+#pragma omp critical"
+./510505991/Q1.cpp@150@CRITICAL@#pragma omp critical@"{
+if(Prime<itr){
+Prime = itr;
+}
+}
+}
+}
+}
+return Prime;
+}"
+./23245147/DfOverlapX.cpp@580@CRITICAL@#pragma omp critical(DfOverlapX__getForce)@"{
+pForce->add(atomIndexA, X, coef * dSdA);
+pForce->add(atomIndexB, X, coef * dSdB);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;
+for (int stepQ = 0; stepQ < maxStepsQ; ++stepQ) {"
+./23245147/DfOverlapX.cpp@596@CRITICAL@#pragma omp critical(DfOverlapX__getForce)@"{
+pForce->add(atomIndexA, Y, coef * dSdA);
+pForce->add(atomIndexB, Y, coef * dSdB);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;
+for (int stepQ = 0; stepQ < maxStepsQ; ++stepQ) {"
+./23245147/DfOverlapX.cpp@612@CRITICAL@#pragma omp critical(DfOverlapX__getForce)@"{
+pForce->add(atomIndexA, Z, coef * dSdA);
+pForce->add(atomIndexB, Z, coef * dSdB);
+}
+++index;
+}
+}
+}
+}
+}"
+./23245147/DfCD_Parallel.cpp@970@CRITICAL@#pragma omp critical(DfCD_Parallel__calcCholeskyVectorsOnTheFlyA_updateL)@"{
+L.set(pivot_i, m, l_m_pi);
+global_diagonals[pivot_i] -= ll;
+}
+
+if (global_diagonals[pivot_i] > my_error) {
+my_error = global_diagonals[pivot_i];
+my_error_global_loc = reverse_pivot[pivot_i];
+my_error_local_loc = i;
+}"
+./23245147/DfCD_Parallel.cpp@983@CRITICAL@#pragma omp critical(DfCD_Parallel__calcCholeskyVectorsOnTheFlyA_update_error)@"{
+if (error < my_error) {
+error = my_error;
+error_global_loc = my_error_global_loc;
+error_local_loc = my_error_local_loc;
+}
+}
+}
+rComm.allReduce_MAXLOC(&error, &error_global_loc);
+global_diagonals[global_pivot[error_global_loc]] = error;"
+./23245147/DfGenerateGrid.cpp@719@CRITICAL@#pragma omp critical(DfGenerateGrid__generateGrid)@"{
+this->grdMat_.resize(numOfGrids + numOfAtomGrids,
+this->numOfColsOfGrdMat_);
+for (std::size_t i = 0; i < numOfAtomGrids; ++i) {
+this->grdMat_.set(numOfGrids, 0, coordX[i]);
+this->grdMat_.set(numOfGrids, 1, coordY[i]);
+this->grdMat_.set(numOfGrids, 2, coordZ[i]);
+this->grdMat_.set(numOfGrids, 3, weight[i]);
+this->grdMat_.set(numOfGrids, 4, atom);
+++numOfGrids;"
+./23245147/DfGenerateGrid_Parallel.cpp@79@CRITICAL@#pragma omp critical(DfGenerateGrid__generateGrid)@"{
+this->grdMat_.resize(numOfGrids + numOfAtomGrids, this->numOfColsOfGrdMat_);
+for (std::size_t i = 0; i < numOfAtomGrids; ++i) {
+this->grdMat_.set(numOfGrids, 0, coordX[i]);
+this->grdMat_.set(numOfGrids, 1, coordY[i]);
+this->grdMat_.set(numOfGrids, 2, coordZ[i]);
+this->grdMat_.set(numOfGrids, 3, weight[i]);
+this->grdMat_.set(numOfGrids, 4, atom);
+++numOfGrids;
+}"
+./23245147/tl_sparse_matrix.h@184@CRITICAL@#pragma omp critical(TlSparseMatrix__set)@"{ this->m_aMatrix[KeyType(row, col)] = value; }
+}
+
+inline void TlSparseMatrix::add(const index_type row, const index_type col,
+const double value) {
+assert((0 <= row) && (row < this->getNumOfRows()));
+assert((0 <= col) && (col < this->getNumOfCols()));
+
+#pragma omp critical(TlSparseMatrix__add)
+{ this->m_aMatrix[KeyType(row, col)] += value; }"
+./23245147/tl_sparse_matrix.h@193@CRITICAL@#pragma omp critical(TlSparseMatrix__add)@"{ this->m_aMatrix[KeyType(row, col)] += value; }
+}
+
+inline double TlSparseMatrix::get(const index_type row,
+const index_type col) const {
+assert((0 <= row) && (row < this->m_nRows));
+assert((0 <= col) && (col < this->m_nCols));
+
+double answer = 0.0;
+const_iterator p = this->m_aMatrix.find(KeyType(row, col));"
+./23245147/DfCD.cpp@1771@CRITICAL@#pragma omp critical(DfCD__calcCholeskyVectorsOnTheFlyA)@"{ L_xm[i] += l_m_pi; }
+diagonals[pivot_i] -= l_m_pi * l_m_pi;
+}
+}
+
+for (index_type i = 0; i < numOf_G_cols; ++i) {
+const index_type pivot_i = pivot[numOfCDVcts + 1 + i];
+L.set(pivot_i, numOfCDVcts, L_xm[i]);
+}
+"
+./23245147/DfCD.cpp@2237@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_1)@"{ pI2PQ->insert(pI2PQ->end(), local_I2PQ.begin(), local_I2PQ.end()); }
+#pragma omp critical(DfCD__calcDiagonals_kernel_2)
+{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonals_K_full_kernel(const TlOrbitalInfoObject& orbInfo,
+const std::vector<DfTaskCtrl::Task2>& taskList, TlSparseMatrix* pDiagonalMat,
+PQ_PairArray* pI2PR) {
+const index_type numOfAOs = orbInfo.getNumOfOrbitals();"
+./23245147/DfCD.cpp@2239@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_2)@"{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonals_K_full_kernel(const TlOrbitalInfoObject& orbInfo,
+const std::vector<DfTaskCtrl::Task2>& taskList, TlSparseMatrix* pDiagonalMat,
+PQ_PairArray* pI2PR) {
+const index_type numOfAOs = orbInfo.getNumOfOrbitals();
+pDiagonalMat->resize(numOfAOs, numOfAOs);
+"
+./23245147/DfCD.cpp@2306@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_1)@"{ pI2PR->insert(pI2PR->end(), local_I2PR.begin(), local_I2PR.end()); }
+#pragma omp critical(DfCD__calcDiagonals_kernel_2)
+{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonals_K_half_kernel(const TlOrbitalInfoObject& orbInfo,
+const std::vector<DfTaskCtrl::Task2>& taskList,
+TlSparseSymmetricMatrix* pDiagonalMat, PQ_PairArray* pI2PR) {
+const index_type numOfAOs = orbInfo.getNumOfOrbitals();"
+./23245147/DfCD.cpp@2308@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_2)@"{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonals_K_half_kernel(const TlOrbitalInfoObject& orbInfo,
+const std::vector<DfTaskCtrl::Task2>& taskList,
+TlSparseSymmetricMatrix* pDiagonalMat, PQ_PairArray* pI2PR) {
+const index_type numOfAOs = orbInfo.getNumOfOrbitals();
+pDiagonalMat->resize(numOfAOs);
+"
+./23245147/DfCD.cpp@2411@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_1)@"{ pI2PR->insert(pI2PR->end(), local_I2PR.begin(), local_I2PR.end()); }
+#pragma omp critical(DfCD__calcDiagonals_kernel_2)
+{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonalsA_kernel(const TlOrbitalInfoObject& orbInfo_p, const TlOrbitalInfoObject& orbInfo_q,
+const std::vector<DfTaskCtrl::Task2>& taskList, PQ_PairArray* pI2PQ,
+TlSparseMatrix* pSchwartzTable, TlSparseMatrix* pDiagonalMat) {
+const index_type numOfOrbs_p = orbInfo_p.getNumOfOrbitals();"
+./23245147/DfCD.cpp@2413@CRITICAL@#pragma omp critical(DfCD__calcDiagonals_kernel_2)@"{ pDiagonalMat->merge(local_diagMat); }
+}
+}
+
+void DfCD::calcDiagonalsA_kernel(const TlOrbitalInfoObject& orbInfo_p, const TlOrbitalInfoObject& orbInfo_q,
+const std::vector<DfTaskCtrl::Task2>& taskList, PQ_PairArray* pI2PQ,
+TlSparseMatrix* pSchwartzTable, TlSparseMatrix* pDiagonalMat) {
+const index_type numOfOrbs_p = orbInfo_p.getNumOfOrbitals();
+const index_type numOfOrbs_q = orbInfo_q.getNumOfOrbitals();
+pDiagonalMat->resize(numOfOrbs_p, numOfOrbs_q);"
+./23245147/DfCD.cpp@2482@CRITICAL@#pragma omp critical(DfCD__calcDiagonalsA_kernel_1)@"{ pI2PQ->insert(pI2PQ->end(), local_I2PQ.begin(), local_I2PQ.end()); }
+#pragma omp critical(DfCD__calcDiagonalsA_kernel_2)
+{ pDiagonalMat->merge(local_diagMat); }
+#pragma omp critical(DfCD__calcDiagonalsA_kernel_3)
+{ pSchwartzTable->merge(local_schwartzTable); }
+}
+}
+
+bool DfCD::isAliveBySchwartzCutoff(const index_type shellIndexP, const index_type shellIndexQ,
+const index_type shellIndexR, const index_type shellIndexS,"
+./23245147/DfCD.cpp@2484@CRITICAL@#pragma omp critical(DfCD__calcDiagonalsA_kernel_2)@"{ pDiagonalMat->merge(local_diagMat); }
+#pragma omp critical(DfCD__calcDiagonalsA_kernel_3)
+{ pSchwartzTable->merge(local_schwartzTable); }
+}
+}
+
+bool DfCD::isAliveBySchwartzCutoff(const index_type shellIndexP, const index_type shellIndexQ,
+const index_type shellIndexR, const index_type shellIndexS,
+const int shellQuartetType, const TlSparseMatrix& schwarzTable,
+const double threshold) {"
+./23245147/DfCD.cpp@2486@CRITICAL@#pragma omp critical(DfCD__calcDiagonalsA_kernel_3)@"{ pSchwartzTable->merge(local_schwartzTable); }
+}
+}
+
+bool DfCD::isAliveBySchwartzCutoff(const index_type shellIndexP, const index_type shellIndexQ,
+const index_type shellIndexR, const index_type shellIndexS,
+const int shellQuartetType, const TlSparseMatrix& schwarzTable,
+const double threshold) {
+bool answer = false;
+"
+./23245147/DfCD.cpp@2638@CRITICAL@#pragma omp critical(DfCD__getCalcList)@"{ calcSet.insert(index4); }
+}
+
+std::vector<IndexPair4S> calcList(calcSet.size());
+std::copy(calcSet.begin(), calcSet.end(), calcList.begin());
+
+return calcList;
+}
+
+std::vector<DfCD::IndexPair4A> DfCD::getCalcListA(const TlOrbitalInfoObject& orbInfo_p,"
+./23245147/DfCD.cpp@2669@CRITICAL@#pragma omp critical(DfCD__getCalcList)@"{ calcSet.insert(indexPair4); }
+}
+
+std::vector<IndexPair4A> calcList(calcSet.size());
+std::copy(calcSet.begin(), calcSet.end(), calcList.begin());
+
+return calcList;
+}
+
+void DfCD::calcERIs(const TlOrbitalInfoObject& orbInfo, const std::vector<IndexPair4S>& calcList) {"
+./23245147/DfCD.cpp@2722@CRITICAL@#pragma omp critical(DfCD__calcERIs)@"{ this->ERI_cache_.insert(local_cache.begin(), local_cache.end()); }
+}
+}
+
+void DfCD::calcERIsA(const TlOrbitalInfoObject& orbInfo_p, const TlOrbitalInfoObject& orbInfo_q,
+const std::vector<IndexPair4A>& calcList, const TlSparseMatrix& schwartzTable) {
+assert(orbInfo_p.getMaxShellType() == orbInfo_q.getMaxShellType());
+
+const int numOfList = calcList.size();
+#pragma omp parallel"
+./23245147/DfCD.cpp@2773@CRITICAL@#pragma omp critical(DfCD__calcERIs)@"{ this->ERI_cache_A_.insert(local_cache.begin(), local_cache.end()); }
+}
+}
+
+std::vector<double> DfCD::setERIs(const TlOrbitalInfoObject& orbInfo, const index_type G_row,
+const std::vector<index_type> G_col_list, const index_type start,
+const index_type end, const PQ_PairArray& I2PQ) {
+assert(0 <= start);
+assert(end <= static_cast<index_type>(G_col_list.size()));
+assert(start <= end);"
+./23245147/DfCD.cpp@2833@CRITICAL@#pragma omp critical(DfCD__setERIs)@"{
+assert(this->ERI_cache_A_.find(IndexPair4A(shellIndexP, shellIndexQ, shellIndexR, shellIndexS)) !=
+this->ERI_cache_A_.end());
+values = this->ERI_cache_A_[IndexPair4A(shellIndexP, shellIndexQ, shellIndexR, shellIndexS)];
+}
+
+assert(values.empty() != true);
+{
+const int basisTypeP = indexP - shellIndexP;
+const int basisTypeQ = indexQ - shellIndexQ;"
+./23245147/DfCD.cpp@2857@CRITICAL@#pragma omp critical(DfCD__setERIs_set_answer)@"{ answer[i] += values.at(index); }
+}
+}
+
+return answer;
+}
+
+TlDenseSymmetricMatrix_Lapack DfCD::getSuperMatrix(const TlOrbitalInfoObject& orbInfo, PQ_PairArray* pI2PQ) {
+
+PQ_PairArray I2PQ;"
+./23245147/DfCD.cpp@3203@CRITICAL@#pragma omp critical(DfCD__calcCholeskyVectors)@"{
+L_xm[i] += l_m_pi;
+d[pivot_i] -= l_m_pi * l_m_pi;
+}
+}
+for (index_type i = 0; i < numOf_G_cols; ++i) {
+const index_type pivot_i = pivot[m + 1 + i];
+L.set(pivot_i, m, L_xm[i]);
+}
+"
+./23245147/DfCD.cpp@3266@CRITICAL@#pragma omp critical(DfCD__getCalcList_K_full)@"{ calcSet.insert(index4); }
+}
+
+std::vector<IndexPair4S> calcList(calcSet.size());
+std::copy(calcSet.begin(), calcSet.end(), calcList.begin());
+
+return calcList;
+}
+
+std::vector<double> DfCD::setERIs_K_full(const TlOrbitalInfoObject& orbInfo, const index_type G_row,"
+./23245147/DfCD.cpp@3345@CRITICAL@#pragma omp critical(DfCD__getCalcList_K_half)@"{ calcSet.insert(index4); }
+if (indexP != indexR) {
+IndexPair4S index4(shellIndexP, shellIndexR, shellIndexP, shellIndexR);
+#pragma omp critical(DfCD__getCalcList_K_half)
+{ calcSet.insert(index4); }
+}
+} else {
+{
+IndexPair4S index4(shellIndexP, shellIndexQ, shellIndexR, shellIndexS);
+#pragma omp critical(DfCD__getCalcList_K_half)"
+./23245147/DfCD.cpp@3349@CRITICAL@#pragma omp critical(DfCD__getCalcList_K_half)@"{ calcSet.insert(index4); }
+}
+} else {
+{
+IndexPair4S index4(shellIndexP, shellIndexQ, shellIndexR, shellIndexS);
+#pragma omp critical(DfCD__getCalcList_K_half)
+{ calcSet.insert(index4); }
+}
+if (indexQ != indexS) {
+IndexPair4S index4(shellIndexP, shellIndexS, shellIndexR, shellIndexQ);"
+./23245147/DfCD.cpp@3355@CRITICAL@#pragma omp critical(DfCD__getCalcList_K_half)@"{ calcSet.insert(index4); }
+}
+if (indexQ != indexS) {
+IndexPair4S index4(shellIndexP, shellIndexS, shellIndexR, shellIndexQ);
+#pragma omp critical(DfCD__getCalcList_K_half)
+{ calcSet.insert(index4); }
+}
+}
+}
+"
+./23245147/DfCD.cpp@3360@CRITICAL@#pragma omp critical(DfCD__getCalcList_K_half)@"{ calcSet.insert(index4); }
+}
+}
+}
+
+std::vector<IndexPair4S> calcList(calcSet.size());
+std::copy(calcSet.begin(), calcSet.end(), calcList.begin());
+
+return calcList;
+}"
+./23245147/DfCD.cpp@3415@CRITICAL@#pragma omp critical(DfCD__calcERIs)@"{ this->ERI_cache_.insert(local_cache.begin(), local_cache.end()); }
+}
+}
+
+std::vector<double> DfCD::setERIs_K_half(const TlOrbitalInfoObject& orbInfo, const index_type G_row,
+const std::vector<index_type> G_col_list, const index_type start,
+const index_type end, const PQ_PairArray& I2PQ) {
+assert(0 <= start);
+assert(end <= static_cast<index_type>(G_col_list.size()));
+assert(start <= end);"
+./23245147/DfCD.cpp@3445@CRITICAL@#pragma omp critical(DfCD__setERIs_set_answer)@"{ value += coef * tmp; }
+} else {
+CnErr.abort(""not found value in cache1."");
+}
+}
+if (indexP != indexR) {
+if (this->getCachedValue(orbInfo, indexP, indexR, indexP, indexR, this->ERI_cache_, &tmp)) {
+const double coef = 2.0;
+#pragma omp critical(DfCD__setERIs_set_answer)
+{ value += coef * tmp; }"
+./23245147/DfCD.cpp@3454@CRITICAL@#pragma omp critical(DfCD__setERIs_set_answer)@"{ value += coef * tmp; }
+} else {
+CnErr.abort(""not found value in cache2."");
+}
+}
+} else {
+if (this->getCachedValue(orbInfo, indexP, indexQ, indexR, indexS, this->ERI_cache_, &tmp)) {
+const double coef = (indexP != indexR) ? 2.0 : 1.0;
+#pragma omp critical(DfCD__setERIs_set_answer)
+{ value += coef * tmp; }"
+./23245147/DfCD.cpp@3463@CRITICAL@#pragma omp critical(DfCD__setERIs_set_answer)@"{ value += coef * tmp; }
+} else {
+CnErr.abort(""not found value in cache3."");
+}
+
+if (indexQ != indexS) {
+if (this->getCachedValue(orbInfo, indexP, indexS, indexR, indexQ, this->ERI_cache_, &tmp)) {
+const double coef = (indexP != indexR) ? 2.0 : 1.0;
+#pragma omp critical(DfCD__setERIs_set_answer)
+{ value += coef * tmp; }"
+./23245147/DfCD.cpp@3472@CRITICAL@#pragma omp critical(DfCD__setERIs_set_answer)@"{ value += coef * tmp; }
+} else {
+CnErr.abort(""not found value in cache4."");
+}
+}
+}
+
+answer[i] = value;
+
+"
+./23245147/DfTaskCtrl.cpp@1251@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellArrayByDistribution_alive)@"{ ++(this->cutoffAlive_distribution_[shellPairType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__selectShellArrayByDistribution_all)
+{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+
+ShellArray(answer).swap(answer);
+
+return answer;"
+./23245147/DfTaskCtrl.cpp@1255@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellArrayByDistribution_all)@"{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+
+ShellArray(answer).swap(answer);
+
+return answer;
+}
+
+DfTaskCtrl::ShellArray DfTaskCtrl::selectShellArrayByDistribution(
+const ShellArray& inShellArray, const index_type companionShellIndex) {"
+./23245147/DfTaskCtrl.cpp@1322@CRITICAL@#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_alive)@"{ ++(this->cutoffAlive_distribution_[shellPairType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_all)
+{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+answer[indexI][shellTypeI].push_back(indexI);
+}
+
+for (int i = 0; i < orbListSize; ++i) {"
+./23245147/DfTaskCtrl.cpp@1326@CRITICAL@#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_all)@"{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+answer[indexI][shellTypeI].push_back(indexI);
+}
+
+for (int i = 0; i < orbListSize; ++i) {
+const index_type indexI = orbList[i];
+
+for (int j = 0; j < maxShellType + 1; ++j) {
+ShellArray(answer[indexI][j]).swap(answer[indexI][j]);"
+./23245147/DfTaskCtrl.cpp@1396@CRITICAL@#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_alive)@"{ ++(this->cutoffAlive_distribution_[shellPairType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_all)
+{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+}
+
+for (int i = 0; i < orbListSize1; ++i) {
+const index_type indexI = orbList1[i];"
+./23245147/DfTaskCtrl.cpp@1400@CRITICAL@#pragma omp critical(DfTaskCtrl__makeDistributedCutoffTable_all)@"{ ++(this->cutoffAll_distribution_[shellPairType]); }
+}
+}
+
+for (int i = 0; i < orbListSize1; ++i) {
+const index_type indexI = orbList1[i];
+
+for (int j = 0; j < maxShellType2 + 1; ++j) {
+ShellArray(answer[indexI][j]).swap(answer[indexI][j]);
+"
+./23245147/DfTaskCtrl.cpp@1582@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_alive)@"{ ++(this->cutoffAlive_density_[shellPairType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_all)
+{ ++(this->cutoffAll_density_[shellPairType]); }
+}
+
+ShellPairArray(tmp).swap(tmp);
+
+answer[shellPairType] = tmp;"
+./23245147/DfTaskCtrl.cpp@1586@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_all)@"{ ++(this->cutoffAll_density_[shellPairType]); }
+}
+
+ShellPairArray(tmp).swap(tmp);
+
+answer[shellPairType] = tmp;
+}
+
+return answer;
+}"
+./23245147/DfTaskCtrl.cpp@1687@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_alive)@"{ ++(this->cutoffAlive_density_[shellPairType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_all)
+{ ++(this->cutoffAll_density_[shellPairType]); }
+}
+
+ShellPairArray(tmp).swap(tmp);
+
+answer[shellPairType] = tmp;"
+./23245147/DfTaskCtrl.cpp@1691@CRITICAL@#pragma omp critical(DfTaskCtrl__selectShellPairArrayTableByDensity_add_all)@"{ ++(this->cutoffAll_density_[shellPairType]); }
+}
+
+ShellPairArray(tmp).swap(tmp);
+
+answer[shellPairType] = tmp;
+}
+
+return answer;
+}"
+./23245147/DfTaskCtrl.cpp@1773@CRITICAL@#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_alive)@"{ ++(this->cutoffAlive_schwarz_[shellQuartetType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_all)
+{ ++(this->cutoffAll_schwarz_[shellQuartetType]); }
+
+return answer;
+}
+
+bool DfTaskCtrl::isAliveBySchwarzCutoff("
+./23245147/DfTaskCtrl.cpp@1777@CRITICAL@#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_all)@"{ ++(this->cutoffAll_schwarz_[shellQuartetType]); }
+
+return answer;
+}
+
+bool DfTaskCtrl::isAliveBySchwarzCutoff(
+const index_type shellIndexP, const index_type shellIndexQ,
+const index_type shellIndexR, const index_type shellIndexS,
+const int shellQuartetType, const TlSparseSymmetricMatrix& schwarzTable_PQ,
+const TlSparseSymmetricMatrix& schwarzTable_RS, const double threshold) {"
+./23245147/DfTaskCtrl.cpp@1796@CRITICAL@#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_alive)@"{ ++(this->cutoffAlive_schwarz_[shellQuartetType]); }
+}
+
+#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_all)
+{ ++(this->cutoffAll_schwarz_[shellQuartetType]); }
+
+return answer;
+}
+
+void DfTaskCtrl::prescreeningReport() {"
+./23245147/DfTaskCtrl.cpp@1800@CRITICAL@#pragma omp critical(DfTaskCtrl__isAliveBySchwarzCutoff_all)@"{ ++(this->cutoffAll_schwarz_[shellQuartetType]); }
+
+return answer;
+}
+
+void DfTaskCtrl::prescreeningReport() {
+const int maxShellType = this->maxShellType_;
+
+
+bool hasCutoff_density = false;"
+./23245147/DfHpqX.cpp@242@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce_woX->add(atomIndexA, X, coef * dKin_dA);
+pForce_woX->add(atomIndexB, X, coef * dKin_dB);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;
+for (int stepQ = 0; stepQ < maxStepsQ; ++stepQ) {"
+./23245147/DfHpqX.cpp@259@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce_woX->add(atomIndexA, Y, coef * dKin_dA);
+pForce_woX->add(atomIndexB, Y, coef * dKin_dB);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;
+for (int stepQ = 0; stepQ < maxStepsQ; ++stepQ) {"
+./23245147/DfHpqX.cpp@276@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce_woX->add(atomIndexA, Z, coef * dKin_dA);
+pForce_woX->add(atomIndexB, Z, coef * dKin_dB);
+}
+++index;
+}
+}
+}
+
+for (index_type atomIndexC = 0; atomIndexC < numOfAtoms;"
+./23245147/DfHpqX.cpp@321@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce->add(atomIndexA, X, coef * gradA);
+pForce->add(atomIndexB, X, coef * gradB);
+pForce->add(atomIndexC, X, coef * gradC);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;"
+./23245147/DfHpqX.cpp@339@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce->add(atomIndexA, Y, coef * gradA);
+pForce->add(atomIndexB, Y, coef * gradB);
+pForce->add(atomIndexC, Y, coef * gradC);
+}
+++index;
+}
+}
+for (int stepP = 0; stepP < maxStepsP; ++stepP) {
+const index_type indexP = shellIndexP + stepP;"
+./23245147/DfHpqX.cpp@357@CRITICAL@#pragma omp critical(DfHpqX__getForce_partProc)@"{
+pForce->add(atomIndexA, Z, coef * gradA);
+pForce->add(atomIndexB, Z, coef * gradB);
+pForce->add(atomIndexC, Z, coef * gradC);
+}
+++index;
+}
+}
+}
+}"
+./23245147/DfHpqX.cpp@496@CRITICAL@#pragma omp critical(DfHpqX__getESP)@"{ (*pValues)[r] += esp; }
+}
+
+}
+}
+}"
+./23245147/TlCommunicate.cpp@118@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{
+if (this->nonBlockingCommParamTable_.find(key) !=
+this->nonBlockingCommParamTable_.end()) {
+const char isSendRecv =
+((param.property & NonBlockingCommParam::SEND) != 0) ? 'S'
+: 'R';
+this->log_.critical(TlUtils::format(
+""[%5d/%5d WARN] non-blocking table collision(%c) ""
+""found in TlCommunicate: tag=%d, line=%d"",
+this->getRank(), this->getNumOfProcs() - 1, isSendRecv,"
+./23245147/TlCommunicate.cpp@141@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{
+if (this->nonBlockingCommParamTable_.empty() == false) {
+answer = false;
+NonBlockingCommParamTableType::const_iterator itEnd =
+this->nonBlockingCommParamTable_.end();
+for (NonBlockingCommParamTableType::const_iterator it =
+this->nonBlockingCommParamTable_.begin();
+it != itEnd; ++it) {
+const char isSendRecv =
+((it->second.property & NonBlockingCommParam::SEND) != 0)"
+./23245147/TlCommunicate.cpp@565@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+#endif
+
+this->time_iallreduce_.stop();
+return answer;
+}
+
+int TlCommunicate::iAllReduce_SUM(const double* pSendBuf, double* pRecvBuf,
+int count) {"
+./23245147/TlCommunicate.cpp@1833@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+
+return answer;
+}
+
+int TlCommunicate::iSendData(const int& data, const int destination,
+const int tag) {
+return this->iSendData(data, MPI_INT, destination, tag);"
+./23245147/TlCommunicate.cpp@1920@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+
+return answer;
+}
+
+int TlCommunicate::iSendData(const std::vector<int>& data,
+const int destination, const int tag) {
+const std::size_t size = data.size();
+int answer = this->iSendData(size, destination, tag);
+this->wait(size);"
+./23245147/TlCommunicate.cpp@1971@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+return answer;
+}
+
+int TlCommunicate::iSendDataX(const int* pData, const std::size_t size,
+const int dest, const int tag) {
+return this->iSendDataX(pData, MPI_INT, 0, size, dest, tag);
+}"
+./23245147/TlCommunicate.cpp@2013@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+return err;
+}
+
+int TlCommunicate::iReceiveData(int& data, const int src, const int tag) {
+return this->iReceiveData(data, MPI_INT, src, tag);
+}
+"
+./23245147/TlCommunicate.cpp@2096@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+
+return answer;
+}
+
+int TlCommunicate::iReceiveData(std::vector<int>& data, const int src,
+const int tag) {
+std::size_t size = 0;
+this->iReceiveData(size, src, tag);
+this->wait(size);"
+./23245147/TlCommunicate.cpp@2141@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+return answer;
+}
+
+int TlCommunicate::iReceiveDataX(int* pData, const std::size_t size,
+const int src, const int tag) {
+return this->iReceiveDataX(pData, MPI_INT, 0, size, src, tag);
+}"
+./23245147/TlCommunicate.cpp@2227@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+return answer;
+}
+
+int TlCommunicate::iReceiveDataFromAnySourceX(int* pData,
+const std::size_t size,
+const int tag) {
+return this->iReceiveDataFromAnySourceX(pData, MPI_INT, 0, size, tag);"
+./23245147/TlCommunicate.cpp@2258@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{ this->nonBlockingCommParamTable_[key] = param; }
+}
+
+return answer;
+}
+
+int TlCommunicate::iReceiveDataFromAnySourceAnyTag(double* pData,
+const int count) {
+return this->iReceiveDataFromAnySourceAnyTag<double>(pData, MPI_DOUBLE, 0,
+count);"
+./23245147/TlCommunicate.cpp@2275@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{
+NonBlockingCommParamTableType::iterator it =
+this->nonBlockingCommParamTable_.find(key);
+if (it != this->nonBlockingCommParamTable_.end()) {
+bool isComplete = true;
+std::vector<uintptr_t>::iterator reqEnd = it->second.requests.end();
+for (std::vector<uintptr_t>::iterator req =
+it->second.requests.begin();
+req != reqEnd; ++req) {
+MPI_Request* pRequest = reinterpret_cast<MPI_Request*>(*req);"
+./23245147/TlCommunicate.cpp@2316@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{
+it = this->nonBlockingCommParamTable_.find(key);
+if (it != this->nonBlockingCommParamTable_.end()) {
+const NonBlockingCommParam& param = it->second;
+if ((param.property & NonBlockingCommParam::COMPLETE) != 0) {
+answer = true;
+if (pSrc != NULL) {
+*pSrc = param.source;
+}
+} else {"
+./23245147/TlCommunicate.cpp@2380@CRITICAL@#pragma omp critical(TlCommunicate_nonBlockingCommParamTable_update)@"{
+it = this->nonBlockingCommParamTable_.find(key);
+if (it != this->nonBlockingCommParamTable_.end()) {
+std::vector<uintptr_t>::iterator reqEnd = it->second.requests.end();
+for (std::vector<uintptr_t>::iterator req =
+it->second.requests.begin();
+req != reqEnd; ++req) {
+MPI_Request* pRequest = reinterpret_cast<MPI_Request*>(*req);
+
+int err = MPI_Wait(pRequest, &status);"
+./23245147/DfPopulation.cpp@57@CRITICAL@#pragma omp critical(DfPopulation__getGrossAtomPop)@"{ answer[atomIndex] += grossOrbPop[aoIndex]; }
+}
+
+return answer;
+}
+
+double DfPopulation::getCharge(int atomIndex) {
+const Fl_Geometry flGeom((*(this->pPdfParam_))[""coordinates""]);
+const double nucCharge = flGeom.getCharge(atomIndex);
+const double grossAtomPop = this->grossAtomPopA_[atomIndex];"
+./23245147/DfEriX.cpp@249@CRITICAL@#pragma omp critical(DfEriX__getJ_P_to_rho)@"{
+const int numOfAux = this->m_nNumOfAux;
+for (int i = 0; i < numOfAux; ++i) {
+pRho->add(i, local_rho[i]);
+}
+}
+#pragma omp barrier
+}
+
+}"
+./23245147/DfEriX.cpp@387@CRITICAL@#pragma omp critical(DfEriX__getJ_rho_to_J)@"{
+const int local_size = local_values.size();
+assert(local_size == static_cast<int>(local_indexP.size()));
+assert(local_size == static_cast<int>(local_indexQ.size()));
+for (int i = 0; i < local_size; ++i) {
+pJ->add(local_indexP[i], local_indexQ[i], local_values[i]);
+}
+}
+}
+"
+./23245147/DfEriX.cpp@667@CRITICAL@#pragma omp critical(DfEriX__getJ_integralDriven_part)@"{
+for (int i = 0; i < numOfThreadElements; ++i) {
+pIndexPairs[numOfElements * 2] = pThreadIndexPairs[i * 2];
+pIndexPairs[numOfElements * 2 + 1] =
+pThreadIndexPairs[i * 2 + 1];
+pValues[numOfElements] = pThreadValues[i];
+++numOfElements;
+}
+}
+"
+./23245147/DfEriX.cpp@1599@CRITICAL@#pragma omp critical(DfEriX__getK_integralDriven_part)@"{
+for (int i = 0; i < numOfThreadElements; ++i) {
+pIndexPairs[numOfElements * 2] = pThreadIndexPairs[i * 2];
+pIndexPairs[numOfElements * 2 + 1] =
+pThreadIndexPairs[i * 2 + 1];
+pValues[numOfElements] = pThreadValues[i];
+++numOfElements;
+}
+}
+"
+./23245147/TlDensField.cpp@32@CRITICAL@#pragma omp critical(TlDensField__makeDensFld)@"{ values[gridIndex] += rho; }
+}
+
+return values;
+}"
+./23245147/TlEspField.cpp@45@CRITICAL@#pragma omp critical(TlEspField__makeEspFld)@"{ values[gridIndex] += esp; }
+}
+}
+
+return values;
+}
+
+std::vector<double> TlEspField::makeEspFld(
+const std::vector<TlPosition>& grids) {
+const std::size_t numOfGrids = grids.size();"
+./23245147/TlEspField.cpp@75@CRITICAL@#pragma omp critical(TlEspField__makeEspFld)@"{ values[gridIndex] += esp; }
+}
+}
+
+return values;
+}"
+./116842157/sqs.cpp@275@CRITICAL@#pragma omp critical@"{
+BOOST_LOG_TRIVIAL(debug) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::iteration_start = "" << start_it;
+BOOST_LOG_TRIVIAL(debug) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::num_iterations = "" << (end_it - start_it);
+BOOST_LOG_TRIVIAL(debug) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::iteration_end = "" << end_it;
+}
+
+switch (settings.mode()) {
+case iteration_mode::random: {
+#pragma omp critical
+{"
+./116842157/sqs.cpp@284@CRITICAL@#pragma omp critical@"{
+
+auto current_time {std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count()};
+std::srand(current_time * (thread_id + 1));
+random_seed_local = std::rand() * (thread_id + 1);
+BOOST_LOG_TRIVIAL(trace) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::random_seed = "" << random_seed_local;
+}
+get_next_configuration = [&random_seed_local, &shuffling_bounds](configuration_t &c) {
+shuffle_configuration(c, &random_seed_local, shuffling_bounds);
+return true;"
+./116842157/sqs.cpp@314@CRITICAL@#pragma omp critical@"{
+int have_message;
+MPI_Request request;
+MPI_Status request_status;
+MPI_Iprobe(MPI_ANY_SOURCE, TAG_BETTER_OBJECTIVE, MPI_COMM_WORLD, &have_message, &request_status);
+while (have_message) {
+double global_best_objective;
+int source_rank = request_status.MPI_SOURCE;
+MPI_Irecv(&global_best_objective, 1, MPI_DOUBLE, source_rank, TAG_BETTER_OBJECTIVE, MPI_COMM_WORLD, &request);
+MPI_Wait(&request, &request_status);"
+./116842157/sqs.cpp@341@CRITICAL@#pragma omp critical@results.push_back(result);
+./116842157/sqs.cpp@345@CRITICAL@#pragma omp critical@best_objective = objective_local;
+./116842157/sqs.cpp@355@CRITICAL@#pragma omp critical@"{
+auto handle_count{0};
+MPI_Request req_notify[mpi_num_ranks - 1];
+for (int rank = 0; rank < mpi_num_ranks; rank++) {
+if (rank == mpi_rank) continue;
+MPI_Isend(&objective_local, 1, MPI_DOUBLE, rank, TAG_BETTER_OBJECTIVE, MPI_COMM_WORLD,
+&req_notify[handle_count++]);
+}
+}
+#endif"
+./116842157/sqs.cpp@369@CRITICAL@#pragma omp critical@"{
+BOOST_LOG_TRIVIAL(info) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::sigint_received = true"";
+BOOST_LOG_TRIVIAL(info) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::finished_iterations::"" << (i - start_it) << ""::out_of::"" << (end_it - start_it);
+}
+actual_iterations = i;
+break;
+}
+
+}
+rank_t actual_iterations_done = (do_shutdown && shutdown_requested.load()) ? actual_iterations - start_it : end_it - start_it;"
+./116842157/sqs.cpp@382@CRITICAL@#pragma omp critical@"{
+BOOST_LOG_TRIVIAL(debug) << ""do_pair_iterations::rank::"" << mpi_rank << ""::thread::"" << thread_id << ""::avg_loop_time = "" << avg_loop_time;
+thread_timings[mpi_rank][thread_id] = avg_loop_time;
+};
+}
+
+#if defined(_WIN32) || defined(_WIN64)
+signal(SIGINT, old_sigint_handler);
+signal(SIGABRT, old_sigabrt_handler);
+#else"
+./439055859/rescale_correlation.h@235@CRITICAL@#pragma omp critical@"#endif
+{
+full_xi_function.sum(&thread_xi_function);
+thread_xi_function.reset();
+}
+}
+
+free(prim_list);
+free(prim_ids);
+"
+./439055859/compute_integral.h@255@CRITICAL@#pragma omp critical@"#endif
+{
+if ((n_loops+1)%par->nthread==0){
+TotalTime.Stop();
+int current_runtime = TotalTime.Elapsed();
+int remaining_time = current_runtime/((n_loops+1)/par->nthread)*(par->max_loops/par->nthread-(n_loops+1)/par->nthread);
+fprintf(stderr,""\nFinished integral loop %d of %d after %d s. Estimated time left:  %2.2d:%2.2d:%2.2d hms, i.e. %d s.\n"",n_loops+1,par->max_loops, current_runtime,remaining_time/3600,remaining_time/60%60, remaining_time%60,remaining_time);
+
+TotalTime.Start();
+Float rmsrd_C4, maxrd_C4;"
+./250192223/OpenQR.cpp@643@CRITICAL@#pragma omp critical@"{
+squareContours.push_back(tmp);
+}
+}
+}
+}
+
+}
+void OpenQR::FindPositionPatterns()
+{"
+./250192223/OpenQR.cpp@684@CRITICAL@#pragma omp critical@"{
+positionPatterns.push_back(tmp);
+}
+}
+}
+}
+}
+}
+void OpenQR::FindQrcodesList()
+{"
+./250192223/OpenQR.cpp@737@CRITICAL@#pragma omp critical@"{
+expectedQrCodes.push_back(qrcode);
+}
+}
+}
+}
+}
+
+
+void OpenQR::Reset()"
+./250192223/OpenQR.cpp@808@CRITICAL@#pragma omp critical@"{
+qrcodes.push_back(tmp);
+}
+}
+}
+}
+
+
+void OpenQR::FindMarginPoint(const cv::Point& orient, const cv::Point& target, cv::Point& out)
+{"
+./250192223/OpenQR.cpp@874@CRITICAL@#pragma omp critical@"{
+qrcodes.push_back(tmp);
+}
+}
+}
+}
+
+void OpenQR::DetectAndDecodeQrcodeWithOpenCV()
+{
+#pragma omp parallel num_threads(threadNum)"
+./109846964/main.cpp@362@CRITICAL@#pragma omp critical(pCreatureDisplay)@"#endif
+{
+int nbTry1 = 0, nbTry3 = 0;
+
+#ifdef DISPLAY_ANIM
+if (thisTime - creatureTime > 2*(creatureID/5)+5) {
+creatureID++;
+if (creatureID < animCreature.size())
+{
+creatureTime = thisTime;"
+./109846964/main.cpp@454@CRITICAL@#pragma omp critical(pCreatureDisplay)@"#endif
+{
+if (pCreatureDisplay != NULL) delete pCreatureDisplay;
+pCreatureDisplay = sortedGeneration[0]->clone();
+#ifdef WITH_DISPLAY
+int nbTry1 = 0, nbTry3 = 0;
+pCreatureDisplay->animate(&nbTry1, &nbTry3);
+pCreatureDisplay->resetTime();
+#endif
+sprintf_s(numstr, ""%03d"", creatureID);"
+./106309967/dtc_openmp.cpp@106@CRITICAL@#pragma omp critical@"{
+if(classCount.find(classVal) == classCount.end()){
+classCount.insert(make_pair(classVal,1));
+}
+else{
+classCount[classVal]++;
+}
+}
+}
+for(it=classCount.begin();it!=classCount.end();it++){"
+./106309967/dtc_openmp.cpp@132@CRITICAL@#pragma omp critical@"{
+if(branchCount.find(branchVal) == branchCount.end()){
+branchCount.insert(make_pair(branchVal,1));
+vector <int> x;
+x.push_back(data[i]);
+dataElements.insert(make_pair(branchVal,x));
+}
+else{
+branchCount[branchVal]++;
+dataElements[branchVal].push_back(data[i]);"
+./106309967/dtc_openmp.cpp@155@CRITICAL@#pragma omp critical@"{
+if(subDataCounts.find(subDataValue) == subDataCounts.end()){
+subDataCounts.insert(make_pair(subDataValue,1));
+}
+else{
+subDataCounts[subDataValue]++;
+}
+}
+}
+vector <double> subDataCountsArr;"
+./106309967/dtc_openmp.cpp@204@CRITICAL@#pragma omp critical@"{
+if(dataCount.find(outputClass) == dataCount.end()){
+dataCount.insert(make_pair(outputClass,1));
+}
+else{
+dataCount[outputClass]++;
+}
+}
+}
+maxVal = INT_MIN;"
+./106309967/dtc_openmp.cpp@258@CRITICAL@#pragma omp critical@"{
+if(dividedData.find(attrVal) == dividedData.end()){
+vector <int> x;
+x.push_back(data[i]);
+dividedData.insert(make_pair(attrVal,x));
+}
+else{
+dividedData[attrVal].push_back(data[i]);
+}
+}"
+./75643695/Pi.hpp@50@CRITICAL@#pragma omp critical@integral += fa + fb;
+./93911911/Shared.h@187@CRITICAL@#pragma omp critical@"#endif
+for( std::size_t l_en = 0; l_en < l_nEns; l_en++ ) l_arr[l_en] = 0;
+
+#ifdef PP_USE_OMP
+#pragma omp barrier
+#endif
+}
+
+
+template< typename TL_T_LID,"
+./93911911/Internal.hpp@375@CRITICAL@#pragma omp critical@"#endif
+if( parallel::g_scratchMem == nullptr ) parallel::g_scratchMem = (t_scratchMem*) common::allocate( sizeof(t_scratchMem),
+ALIGNMENT.BASE.HEAP,
+m_memTypes.hbw.scratchMem,
+m_memTypes.huge.scratchMem );
+}
+
+#endif
+}
+"
+./93911911/Internal.hpp@854@CRITICAL@#pragma omp critical@"#endif
+if( parallel::g_scratchMem != nullptr ) common::release( parallel::g_scratchMem,
+m_memTypes.hbw.scratchMem,
+m_memTypes.huge.scratchMem );
+parallel::g_scratchMem = nullptr;
+}
+
+#endif
+}
+"
+./77227085/rstest.cpp@306@CRITICAL@#pragma omp critical(io)@"#endif
+cout << left << setw(55) << filename << "": hash ""
+<< (o.create ? ""exists"" : ""missing"") << "", skipping"" << endl;
+#endif
+return 0;
+}
+
+#if !defined(__has_feature) || !__has_feature(thread_sanitizer)
+#ifdef HAVE_OPENMP
+#pragma omp critical(io)"
+./77227085/rstest.cpp@316@CRITICAL@#pragma omp critical(io)@"#endif
+cout << left << setw(55) << filename << "": starting decoding ... "" << endl;
+#endif
+
+FileReader reader(filename.c_str());
+
+std::unique_ptr<std::vector<
+uint8_t, rawspeed::DefaultInitAllocatorAdaptor<
+uint8_t, rawspeed::AlignedAllocator<uint8_t, 16>>>>
+storage;"
+./77227085/rstest.cpp@346@CRITICAL@#pragma omp critical(io)@"#endif
+cout << left << setw(55) << filename << "": "" << internal << setw(3)
+<< buf.getSize() / 1000000 << "" MB / "" << setw(4) << time << "" ms""
+<< endl;
+#endif
+
+if (o.create) {
+ofstream f(hashfile);
+f << img_hash(raw, noSamples);
+if (o.dump)"
+./77227085/rstest.cpp@505@CRITICAL@#pragma omp critical(io)@"#endif
+{
+std::string msg = std::string(argv[i]) + "" failed: "" + e.what();
+#if !defined(__has_feature) || !__has_feature(thread_sanitizer)
+cerr << msg << endl;
+#endif
+failedTests.try_emplace(argv[i], msg);
+}
+}
+}"
+./166241939/par.hpp@49@CRITICAL@#pragma omp critical@"{
+reduction = lambda(reduction, priv_part);
+}
+}
+return reduction;
+}
+
+template<typename T>
+T *copy_vector(T *vector, long long length) {
+T *copy = new T[length];"
+./358055212/solve_BrasCPaccel.hpp@585@CRITICAL@#pragma omp critical@"{
+for (int mode = 0; mode < TNS_ORDER; mode++)
+{
+Factors[mode] += ratio*local_Factors[mode];
+Y_Factors[mode] += ratio*local_Y_Factors[mode];
+Factors_prev[mode] += ratio*local_Factors_prev[mode];
+}
+
+}
+"
+./358055212/solve_BrasCPaccel.hpp@894@CRITICAL@#pragma omp critical@"{
+for (int mode = 0; mode < TNS_ORDER; mode++)
+{
+Factors[mode] += ratio*local_Factors[mode];
+Y_Factors[mode] += ratio*local_Y_Factors[mode];
+Factors_prev[mode] += ratio*local_Factors_prev[mode];
+}
+
+}
+"
+./173993652/pi_mc.c@13@CRITICAL@#pragma omp critical@"printf("" %d threads "",omp_get_num_threads());"
+./88884801/odd_even_sort.c@143@CRITICAL@#pragma omp critical@i++;
+./88884801/trapezoidal_integral.cpp@22@CRITICAL@#pragma omp critical@integral += local_integral;
+./187437533/Fourier.cpp@23@CRITICAL@#pragma omp critical@"{
+Data.push_back(FourierElements(Sum, Freq, Phase, Amp));
+}
+}
+#pragma omp barrier
+if (TiD == 0)
+std::cout << ""Finished DFT computation"" << std::endl;
+}
+
+void FourierSeries::Sort(const size_t TiD)"
+./115201963/main.cpp@174@CRITICAL@#pragma omp critical@"{ if(!BFS_Q.empty()){
+}
+Node* current =  new Node (BFS_Q.front());
+
+BFS_Q.pop();
+
+hashSet.push_back(current->ToString());
+
+nodesExplored++;
+"
+./488716055/3_pi_spmd_sync.cpp@27@CRITICAL@#pragma omp critical@sum += sum_p;
+./457767085/ParallelFastLHE.cpp@105@CRITICAL@#pragma omp critical@"{
+
+all_luts[std::make_tuple(i, j)] = lut;
+}
+}
+}
+}
+}
+
+void ParallelFastLHE::ApplyLHEWithInterpolation(cv::Mat &base, cv::Mat img, int window)"
+./457767085/VideoCreator.cpp@32@CRITICAL@#pragma omp critical@"{
+cap >> img;
+}
+SerialLHE slhe;
+ParallelFastLHE pflhe;
+ParallelLHE plhe;
+cv::Mat base;
+if (w > img.cols || w > img.rows)
+{
+fprintf(stderr, ""Error: Window size should not be bigger than the image\n"");"
+./457767085/VideoCreator.cpp@63@CRITICAL@#pragma omp critical@"{
+writer << base;
+}
+}
+}
+writer.release();
+}
+catch (cv::Exception &e)
+{
+std::cout << ""error message exception: "" << e.msg << std::endl;"
+./170941811/openmp.cpp@205@CRITICAL@#pragma omp critical@"if (dmin < absmin) absmin = dmin;
+
+#pragma omp master
+if( fsave && (step%SAVEFREQ) == 0 )
+save( fsave, n, particles );
+}
+}
+}
+simulation_time = read_timer( ) - simulation_time;
+"
+./85618549/KalmanFilter.cpp@116@CRITICAL@#pragma omp critical@"{
+H_resampled.at<double>(counter, splinePart) = baseVals.at<double>(0,0);
+H_resampled.at<double>(counter, splinePart+1) = baseVals.at<double>(0,1);
+H_resampled.at<double>(counter, splinePart+2) = baseVals.at<double>(0,2);
+H_resampled.at<double>(counter, splinePart+3) = baseVals.at<double>(0,3);
+
+
+z_resampled.at<double>(counter, 0) = splineResampled.at<double>(i, 1);
+
+++counter;"
+./85618549/ObservationEquation.cpp@63@CRITICAL@#pragma omp critical@"{
+H.at<double>(counter, splinePart) = baseVals.at<double>(0,0)*imgsrc.at<float>(row, col);
+H.at<double>(counter, splinePart+1) = baseVals.at<double>(0,1)*imgsrc.at<float>(row, col);
+H.at<double>(counter, splinePart+2) = baseVals.at<double>(0,2)*imgsrc.at<float>(row, col);
+H.at<double>(counter, splinePart+3) = baseVals.at<double>(0,3)*imgsrc.at<float>(row, col);
+
+
+z.at<double>(counter, 0) = row*imgsrc.at<float>(row, col);
+
+++counter;"
+./85618549/RoadRepresentation.cpp@61@CRITICAL@#pragma omp critical@"{
+LUT_dispOfRow.at<int>(row, 0) = disp;
+}
+}
+
+for(int row=1; row<maxRow; ++row)
+{
+if(LUT_dispOfRow.at<int>(row, 0) == -1){
+LUT_dispOfRow.at<int>(row, 0) = LUT_dispOfRow.at<int>(row-1, 0);
+}"
+./69469951/vectorblocks.cpp@397@CRITICAL@#pragma omp critical@"{
+if( processModel.totalThreads() < 128 ||
+progressCounter % 16 == 0 )
+progress->setCurrentProgress( progressCounter );
+}
+}
+#endif
+}
+}
+else"
+./69469951/vectorblocks.cpp@472@CRITICAL@#pragma omp critical@"{
+if( resourceModel.totalCPUs() < 128 ||
+progressCounter % 16 == 0 )
+progress->setCurrentProgress( progressCounter );
+}
+}
+#endif
+}
+}
+}"
+./69469951/window.cpp@558@CRITICAL@#pragma omp critical@progress->setCurrentProgress( currentObject );
+./69469951/window.cpp@2256@CRITICAL@#pragma omp critical@paramProgress->setCurrentProgress( ++currentRow );
+./69469951/window.cpp@2388@CRITICAL@#pragma omp critical@"{
+progress->setCurrentProgress( currentTime - getWindowBeginTime() );
+}
+tmpLastTime = currentTime;
+}
+}
+}
+
+if( currentTime == myTrace->getEndTime() )
+currentTime += timeStep;"
+./69469951/khistogram.cpp@1273@CRITICAL@#pragma omp critical@progress->setCurrentProgress( currentRow );
+./69469951/khistogram.cpp@1374@CRITICAL@#pragma omp critical@"{
+progress->setCurrentProgress( progress->getCurrentProgress() );
+}
+}
+}
+else
+{
+if( windowCloneManager( currentWindow )->getEndTime( iRow ) - tmpLastTime >
+( toTime - fromTime ) / 50 )
+{"
+./69469951/khistogram.cpp@1385@CRITICAL@#pragma omp critical@"{
+progress->setCurrentProgress( windowCloneManager( currentWindow )->getEndTime( iRow ) - beginTime );
+}
+tmpLastTime = windowCloneManager( currentWindow )->getEndTime( iRow );
+}
+}
+}
+}
+
+if ( windowCloneManager( currentWindow )->getBeginTime( iRow ) < toTime )"
+./31732163/metric.cpp@154@CRITICAL@#pragma omp critical@field.complexity += phi;
+./31732163/rmat.cpp@72@CRITICAL@#pragma omp critical@"{
+if (deg.max < deg_max_local) {
+deg.max = deg_max_local;
+}
+deg.avg += deg_sum_local;
+}
+}
+
+deg.avg /= nb.nodes;
+"
+./31732163/matching.cpp@130@CRITICAL@#pragma omp critical@*count += local_matched;
+./31732163/matching.cpp@171@CRITICAL@#pragma omp critical@param.found |= found;
+./31732163/mesh.cpp@242@CRITICAL@#pragma omp critical@"{
+std::fprintf(stderr,
+""n: %d, t: %d [%d,%d,%d]"", t[0], i, t[0], t[1], t[2]
+);
+tools::display(topo.stenc[t[j]]);
+std::exit(EXIT_FAILURE);
+}
+#else
+assert(t[0] != t[1] and t[1] != t[2] and t[2] != t[0]);
+auto cur = t[j];"
+./31732163/mesh.cpp@631@CRITICAL@#pragma omp critical@"{
+quality[0] = std::min(quality[0], q_min);
+quality[1] = std::max(quality[1], q_max);
+quality[2] += q_tot;
+nb.activ_elem += count;
+}
+#pragma omp barrier
+#pragma omp single
+quality[2] /= nb.activ_elem;
+"
+./31732163/numeric.cpp@194@CRITICAL@#pragma omp critical@"{
+std::fprintf(stderr, ""result:(%.2f,%.2f,%.2f)\n"",
+result[0], result[1], result[2]);
+for(int i=0; i < nb; ++i) {
+std::fprintf(stderr, ""(%.2f,%.2f,%.2f), "",
+cache[i * 3], cache[i * 3 + 1], cache[i * 3 + 2]);
+}
+std::printf(""\nlog_mat:(%.2f,%.2f,%.2f,%.2f)"",
+log_mat[0], log_mat[1], log_mat[2], log_mat[3]);
+std::fprintf(stderr, ""\nmatrix:(%.2f,%.2f,%.2f,%.2f)"","
+./31732163/sync.cpp@74@CRITICAL@#pragma omp critical(resize)@"{
+size_t old = bucket[index].size();
+if (old <= chunk) {
+bucket[index].resize(old * 2);
+std::fill(bucket[index].begin() + old, bucket[index].end(), -1);
+if (verb)
+std::fprintf(stderr, ""warning: stenc[%d] was reallocated\n"", index);
+}
+}
+}"
+./31732163/partition.cpp@159@CRITICAL@#pragma omp critical@"if (nb.parts < nb_col) {
+nb.parts = nb_col;
+}
+#pragma omp barrier
+
+for (int j = 0; j < nb.parts; ++j) {
+sync::reduceTasks(task.subset[j], list + j, task.cardin + j, sync.offset);
+}
+
+delete[] list;"
+./189645273/ParallelNeedlemanWunsch.cpp@57@CRITICAL@#pragma omp critical@"{
+ii = i++;
+}
+int border = ii + 1;
+for(;ii<border; ii++)
+{
+for(int j=ii+1;j<15000; j++)
+{
+double score = NeedlemanWunsch(data, ii, j, baseSize, match, mismatch, gap);
+#pragma omp critical"
+./189645273/ParallelNeedlemanWunsch.cpp@67@CRITICAL@#pragma omp critical@"{
+addReport(ii, j, score);
+}
+}
+}
+}
+}
+auto t_after = chrono::steady_clock::now();
+auto t_diff = chrono::duration_cast<chrono::seconds>(t_after - t_before).count();
+cout << ""Zaman: "" << (double)t_diff/60.0 << endl;"
+./70791926/Attack.cpp@142@CRITICAL@#pragma omp critical@solutions.push_back(keysBackward);
+./82070754/task12.cpp@24@CRITICAL@#pragma omp critical@n++;
+./82070754/task10.cpp@29@CRITICAL@#pragma omp critical@"if (matrix[i][j] > max) {
+max = matrix[i][j];
+}
+}
+for (int j = 0; j < M; j++) {
+#pragma omp critical
+if (matrix[i][j] < min) {
+min = matrix[i][j];
+}
+}"
+./82070754/task10.cpp@35@CRITICAL@#pragma omp critical@"if (matrix[i][j] < min) {
+min = matrix[i][j];
+}
+}
+}
+printf(""Max is : %d, min is : %d\n"", max, min);
+}"
+./108110961/OpenMP_Report1.cpp@52@CRITICAL@#pragma omp critical@"{
+average += sum / Nelements;
+}
+
+}
+cout << ""<<<PARALLEL>>>"" << endl;
+cout << ""average = "" << average << endl;
+cout << ""Time= "" << omp_get_wtime() - time1 << endl;
+
+double time2 = omp_get_wtime();"
+./447856665/omp.h@93@CRITICAL@#pragma omp critical@"{
+res += local_sum;
+}
+}
+return (float)(res * dx);
+}
+
+float integrate_omp_mtx(float a, float b, f_t f)
+{
+float res = 0.0;"
+./389341661/main.cpp@46@CRITICAL@#pragma omp critical@"{
+MPI_Send(&search_num, 1, MPI_INT, dest, master_tag, MPI_COMM_WORLD);
+MPI_Send(&data_set1[ind], div, MPI_INT, dest, master_tag, MPI_COMM_WORLD);
+dest += 1;
+ind = ind + div;
+}
+}
+
+dest = 1;
+while(signal == 0){"
+./389341661/main.cpp@58@CRITICAL@#pragma omp critical@"{
+MPI_Send(&abort, 1, MPI_INT, dest, master_tag, MPI_COMM_WORLD);
+dest = dest + 1;
+}
+}
+dest = 1;
+MPI_Recv(&signal, 1, MPI_INT, MPI_ANY_SOURCE, worker_tag, MPI_COMM_WORLD, &status);
+#pragma omp critical
+{
+if(signal == 1){"
+./389341661/main.cpp@66@CRITICAL@#pragma omp critical@"{
+if(signal == 1){
+cout<<""Master Process: Process ""<<status.MPI_SOURCE<<"" has found the number""<<endl;
+cout<<""Informing all processes to abort""<<endl;
+dest = 1;
+abort = 1;
+while(dest < nprocs){
+MPI_Send(&abort, 1, MPI_INT, dest, master_tag, MPI_COMM_WORLD);
+dest = dest + 1;
+}"
+./389341661/main.cpp@102@CRITICAL@#pragma omp critical@"{
+MPI_Recv(&search_num, 1, MPI_INT, 0, master_tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+MPI_Recv(&recv_data[id], div, MPI_INT, 0, master_tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+sleep(1);
+cout<<""Process ""<<myrank<<"" has data input "";
+for(int i = 0; i < (div); i++){
+cout<<recv_data[i]<<"" "";
+}
+cout<<endl;
+sleep(2);"
+./449120470/main.cpp@105@CRITICAL@#pragma omp critical@"{
+int data = id;
+firstStage(id, keyValuePairVector, wordVector);
+}
+
+}
+
+#pragma omp parallel num_threads(3)
+{
+int id = omp_get_thread_num();"
+./449120470/main.cpp@118@CRITICAL@#pragma omp critical@"{
+int data = id;
+secondStage(id, keyValuePairVector, countedKeyValuePairsVector);
+}
+}
+
+sort(countedKeyValuePairsVector.begin(), countedKeyValuePairsVector.end(), [](auto &left, auto &right) {
+return left.second > right.second;
+});
+"
+./401825407/db_construction.cpp@173@CRITICAL@#pragma omp critical@"{
+int one = 1;
+MPI_Win_lock(MPI_LOCK_SHARED, 0, 0, win);
+MPI_Fetch_and_op(&one, &i, MPI_INT, 0, 0, MPI_SUM, win);
+MPI_Win_unlock(0, win);
+}
+break;
+default:
+#pragma omp atomic capture
+i = k++;"
+./401825407/db_construction.cpp@193@CRITICAL@#pragma omp critical@"{
+idx = j++;
+all_computed_names.push_back(names[indices[i]]);
+all_computed_sequences.push_back(sequences[indices[i]]);
+}
+
+raccess.Run(sequences[indices[i]], idx);
+} else {
+raccess.Run(sequences[indices[i]], indices[i]);
+}"
+./401825407/rna_interaction_search.cpp@128@CRITICAL@#pragma omp critical@"{
+int one = 1;
+MPI_Win_lock(MPI_LOCK_SHARED, 0, 0, win);
+MPI_Fetch_and_op(&one, &i, MPI_INT, 0, 1, MPI_SUM, win);
+MPI_Win_unlock(0, win);
+}
+break;
+default:
+#pragma omp atomic capture
+i = k++;"
+./144825443/openMP_Points2Tiles.cpp@112@CRITICAL@#pragma omp critical@vcPoints.push_back(tPoint);
+./144825443/openMP_Points2Tiles.cpp@127@CRITICAL@#pragma omp critical@vcPoints.push_back(tPoint);
+./40821917/muParserBase.cpp@1446@CRITICAL@#pragma omp critical@"{
+pThread[ct] = nThreadID;
+pIdx[ct] = i;
+ct++;
+}
+#endif
+}
+
+#ifdef DEBUG_OMP_STUFF
+FILE* pFile = fopen(""bulk_dbg.txt"", ""w"");"
+./62011740/rkmh.cpp@320@CRITICAL@#pragma omp critical@++read_hash_to_depth[ hashes[i][j] ];
+./62011740/rkmh.cpp@336@CRITICAL@#pragma omp critical@++ref_to_sample_depth[x];
+./62011740/rkmh.cpp@1156@CRITICAL@#pragma omp critical@"{
+cout << outre.str();
+outre.str("""");
+}
+}
+delete [] read_mins[i];
+
+
+}
+}"
+./62011740/rkmh.cpp@1421@CRITICAL@#pragma omp critical@"{
+for (int j = 0; j < read_hash_lens[i]; ++j){
+read_hash_to_depth[ read_hashes[i][j]] += 1;
+}
+}
+}
+}
+
+
+std::function<double(vector<int>)> avg = [](vector<int> n_list){"
+./62011740/rkmh.cpp@1592@CRITICAL@#pragma omp critical@"{
+stringstream sstream;
+sstream << ref_keys[i] << ""\t"" << pos << ""\t"" <<
+""."" << ""\t"" << orig << ""\t"" << x;
+string s = sstream.str();
+call_count[s] += 1;
+call_avg_depth[s] = max(avg_d, call_avg_depth[s]);
+call_orig_depth[s] = max(call_orig_depth[s], depth);
+if (alt_depth > call_max_depth[s]){
+call_max_depth[s] = alt_depth;"
+./62011740/equiv.hpp@389@CRITICAL@#pragma omp critical@"{
+if (matches.size() > max_shared){
+max_shared = matches.size();
+sample = ref_pairs[i].first;
+shared_intersection = matches.size();
+total_union = read_hashes.size();
+}
+}
+}
+return std::make_tuple(sample, shared_intersection, total_union);"
+./349078607/main.cpp@10@CRITICAL@#pragma omp critical@"{
+cout << i << endl;
+}
+}
+return 0;
+}"
+./36948145/buddhabrot_omp1.cpp@466@CRITICAL@#pragma omp critical@"{
+const size_t n = iCel;
+const double percent = (100.0 * n) / nCel;
+static char  sNumerator[ 32 ];
+itoaComma( n, sNumerator );
+
+printf( ""%6.2f%% = %s / %s%s"", percent, sNumerator, sDenominator, gaBackspace );
+fflush( stdout );
+}
+}"
+./87859189/mesh.cpp@210@CRITICAL@#pragma omp critical@"{
+addVertex(pt, i);
+
+}
+}
+
+std::cout << ""finished reading verts\n"";
+do {
+getline(objfile, token);
+}"
+./285634219/cuBool_gpu.h@372@CRITICAL@#pragma omp critical(kiss)@seed = fast_kiss32(state);
+./285634219/cuBool_gpu.h@374@CRITICAL@#pragma omp critical(kiss)@config_i.seed = fast_kiss32(state);
+./285634219/cuBool_gpu.h@376@CRITICAL@#pragma omp critical(cout)@"std::cout << ""Starting run "" << i << "" in slot "" << id << "" with seed "" << config_i.seed << std::endl;"
+./285634219/cuBool_gpu.h@547@CRITICAL@#pragma omp critical@"if(*handler.distance_ < *bestFactors.distance_) {
+if(config.verbosity > 0) {
+out << ""\tResult is better than previous best. Copying to host."" << std::endl;
+}
+
+*bestFactors.distance_ = *handler.distance_;
+bestFactors.lineSize_ = handler.lineSize_;
+bestFactors.factorDim_ = handler.factorDim_;
+
+size_t lineBytes = sizeof(factor_t) * handler.lineSize_;"
+./285634219/cuBool_gpu.h@575@CRITICAL@#pragma omp critical@std::cout << out.str();
+./285634219/cpu_voxelizer.cpp@12@CRITICAL@#pragma omp critical@"{
+voxel_table[int_location] = (voxel_table[int_location] | mask);
+}
+}
+
+uint64_t mortonEncode_LUT(unsigned int x, unsigned int y, unsigned int z) {
+uint64_t answer = 0;
+answer = host_morton256_z[(z >> 16) & 0xFF] |
+host_morton256_y[(y >> 16) & 0xFF] |
+host_morton256_x[(x >> 16) & 0xFF];"
+./285634219/cpu_voxelizer.cpp@166@CRITICAL@#pragma omp critical@"{
+voxel_table[int_location] = (voxel_table[int_location] ^ mask);
+}
+}
+
+bool TopLeftEdge(glm::vec2 v0, glm::vec2 v1) {
+return ((v1.y < v0.y) || (v1.y == v0.y && v0.x > v1.x));
+}
+
+bool checkCCW(glm::vec2 v0, glm::vec2 v1, glm::vec2 v2) {"
+./589215327/optimization.cpp@246@CRITICAL@#pragma omp critical@"{
+factor += curr_factor;
+next_factor += new_factor;
+}
+
+#pragma omp barrier
+
+#pragma omp single
+{
+#pragma omp critical"
+./589215327/optimization.cpp@256@CRITICAL@#pragma omp critical@"{
+counter++;
+if (next_factor < factor)
+{
+all_shops = moved;
+factor = next_factor;
+next_factor = 0;
+}
+else
+{"
+./537831675/bfs.cpp@56@CRITICAL@#pragma omp critical@"{
+memcpy(new_frontier->vertices + new_frontier->count, local_frontier, sizeof(int) * local_count);
+new_frontier->count += local_count;
+}
+
+delete[] local_frontier;
+}
+}
+
+void bfs_top_down(Graph graph, solution *sol)"
+./537831675/bfs.cpp@143@CRITICAL@#pragma omp critical@"{
+memcpy(new_frontier->vertices + new_frontier->count, local_frontier, sizeof(int) * local_count);
+new_frontier->count += local_count;
+}
+
+delete[] local_frontier;
+}
+}
+
+void bfs_bottom_up(Graph graph, solution *sol)"
+./417862355/quids.hpp@165@CRITICAL@#pragma omp critical@avg += local_avg;
+./153533248/block_chain.cpp@55@CRITICAL@#pragma omp critical@"{
+_modified_hash = true;
+}
+_hash = local_hash;
+}
+}
+};
+
+const auto thread_num = _thread_num;
+cout << ""Running using "" << thread_num << "" threads"" << endl;"
+./153533248/block_chain.cpp@76@CRITICAL@#pragma omp critical@"{ ss << _index << _time << _data << ++_nonce << prev_hash; }
+return sha256(ss.str());
+}
+
+block_chain::block_chain() : _difficulty(1), _max_difficulty(1) {
+_chain.emplace_back(block(0, ""Genesis Block""));
+}
+
+block_chain::block_chain(uint32_t difficulty, uint32_t max_difficulty)
+: _difficulty(difficulty), _max_difficulty(max_difficulty) {"
+./500140678/HeightTesting.h@27@CRITICAL@#pragma omp critical@"{
+max_values = std::vector<double>(omp_get_max_threads());
+}
+
+#pragma omp parallel
+{
+int thread = omp_get_thread_num();
+#pragma omp for
+for (int i = 0; i < layer.ntotal; ++i) {
+double current_x = layer.r(i).x;"
+./500140678/GridFind.cpp@86@CRITICAL@#pragma omp critical@"{
+printlog(""neighbour_id: "")(neighbour_id)("" / "")(params.max_neighbours)();
+printlog(""j: "")(j)("" / "")(ntotal)();
+printlog(""x: "")(r(j).x)();
+printlog(""y: "")(r(j).y)();
+printlog(""cell: "")(center_cell_idx)();
+printlog(""cell_x: "")(get_cell_x(center_cell_idx))();
+printlog(""cell_y: "")(get_cell_y(center_cell_idx))();
+err = true;
+}"
+./410821171/Practice7.cpp@74@CRITICAL@#pragma omp critical(MAXVALUE)@"{
+if (max < data1[i]) {
+max = data1[i];
+}
+}
+}
+printf(""ִ밪: %.3f\n"", max);
+delete data1;
+return 0;
+}"
+./148962559/rabbit_order.hpp@446@CRITICAL@#pragma omp critical@"{
+npend = pends.size();
+for (const vint v : pends) {
+const vint u = merge(v, &nbrs, &g);
+if (u == v) tops.push_back(v);
+assert(u != vmax);
+}
+topss[tid] = std::move(tops);
+}
+}"
+./148962559/edge_list_to_csr_performance_measure.cpp@197@CRITICAL@#pragma omp critical@"log_info(""edge incorrect: %s, %d, %d"", FormatWithCommas(i).c_str(), verify_g.edge_dst[i], adj_lst[i]);
+}
+assert(verify_g.edge_dst[i] == adj_lst[i]);
+}
+log_info(""Correct"");
+
+#ifdef OUTPUT_TO_FILE
+string reorder_deg_file_path = dir + ""/"" + ""raw"" + ""/"" + ""b_degree.bin"";
+string reorder_adj_file_path = dir + ""/"" + ""raw"" + ""/"" + ""b_adj.bin"";
+string cmd = string(""mkdir -p "") + dir + ""/"" + ""raw"";"
+./148962559/edge_list_to_csr_performance_measure_deg_descending.cpp@282@CRITICAL@#pragma omp critical@"log_info(""edge incorrect: %s, %d, %d"", FormatWithCommas(i).c_str(), verify_g.edge_dst[i],
+new_neighbors[i]);
+err_cnt++;
+}
+assert(verify_g.edge_dst[i] == new_neighbors[i]);
+}
+}
+if (err_cnt == 0)
+log_info(""Correct"");
+else"
+./438852969/scalar_product.cpp@60@CRITICAL@#pragma omp critical@scalar_product = scalar_product + prod;
+./438852969/scalar_product.cpp@124@CRITICAL@#pragma omp critical@"{
+total[i] = scalar_product;
+}
+}
+}
+}
+}
+auto end = chrono::system_clock::now();
+long int total_time = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+print_data(vectors, total);"
+./117122510/matrix_kernels.cpp@125@CRITICAL@#pragma omp critical@"{
+non_local_cols.insert(thread_non_local_cols.begin(),
+thread_non_local_cols.end());
+}
+#pragma omp barrier
+#pragma omp single
+{
+size_type local{};
+size_type non_local{};
+for (size_type thread = 0; thread < num_threads; ++thread) {"
+./354506695/main.cpp@107@CRITICAL@#pragma omp critical@"{
+TopTen.TableN[NN + 1] = make_pair(i, temp);
+TopTen.TSort();
+}
+}
+}
+}
+
+global_t1 = steady_clock::now();
+global_dur = global_t1 - global_t0;"
+./304078613/min_max.cpp@43@CRITICAL@#pragma omp critical@nxv.insert(nxv.end(), nxv_private.begin(), nxv_private.end());
+./304078613/knn.cpp@127@CRITICAL@#pragma omp critical(updateNearestPoints)@"{
+nearestPoints.insert(nearestPoints.begin() + j, vector<double>{temp, learn[i][3]});
+nearestPoints.pop_back();
+flgFound = true;
+}
+}
+}
+}
+bencher->end_op(id);
+"
+./304078613/standard_scaler.cpp@42@CRITICAL@#pragma omp critical@nxv.insert(nxv.end(), nxv_private.begin(), nxv_private.end());

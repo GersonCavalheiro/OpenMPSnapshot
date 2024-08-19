@@ -1,0 +1,74 @@
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma once
+
+#define PASS_VERSION_MAJOR 1
+#define PASS_VERSION_MINOR 10
+#define PASS_VERSION_PATCH 0
+
+
+
+
+
+
+#include <pass_bits/config.hpp>
+
+
+#include <pass_bits/analyser/problem_evaluation_time.hpp>
+#include <pass_bits/analyser/adaptive_parameter_search.hpp>
+#include <pass_bits/analyser/openmp.hpp>
+
+
+#include <pass_bits/helper/random.hpp>
+#include <pass_bits/helper/evaluation_time_stall.hpp>
+#include <pass_bits/helper/search_space_constraint.hpp>
+#include <pass_bits/helper/stopwatch.hpp>
+#include <pass_bits/helper/prime_numbers.hpp>
+#include <pass_bits/helper/seed.hpp>
+#include <pass_bits/helper/regression.hpp>
+
+
+#include <pass_bits/problem.hpp>
+
+
+#include <pass_bits/problem/optimisation_benchmark/ackley_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/de_jong_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/griewank_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/rastrigin_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/rosenbrock_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/schwefel_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/styblinski_tang_function.hpp>
+#include <pass_bits/problem/optimisation_benchmark/sum_of_different_powers_function.hpp>
+
+
+#include <pass_bits/optimiser.hpp>
+#include <pass_bits/optimiser/parallel_swarm_search.hpp>
+#include <pass_bits/optimiser/particle_swarm_optimisation.hpp>
+#include <pass_bits/optimiser/random_search.hpp>
+
+
+#include <pass_bits/problem/space_mission/cassini1.hpp>
+#include <pass_bits/problem/space_mission/gtoc1.hpp>
+#include <pass_bits/problem/space_mission/messenger_full.hpp>
+#include <pass_bits/problem/space_mission/rosetta.hpp>
+#include <pass_bits/helper/astro_problems/astro_functions.hpp>
+#include <pass_bits/helper/astro_problems/astro_helpers.hpp>
+#include <pass_bits/helper/astro_problems/constants.hpp>
+#include <pass_bits/helper/astro_problems/lambert.hpp>
+#include <pass_bits/helper/astro_problems/mga_dsm.hpp>
+#include <pass_bits/helper/astro_problems/mga.hpp>
+#include <pass_bits/helper/astro_problems/pl_eph_an.hpp>
+#include <pass_bits/helper/astro_problems/pow_swing_by_inv.hpp>
+#include <pass_bits/helper/astro_problems/propagate_kep.hpp>
+#include <pass_bits/helper/astro_problems/vector3d_helpers.hpp>
+#include <pass_bits/helper/astro_problems/zero_finder.hpp>

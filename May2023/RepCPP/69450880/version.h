@@ -1,0 +1,38 @@
+
+
+
+
+#pragma once
+
+
+
+#define HYDRA_THRUST_VERSION 100907
+
+
+#define HYDRA_THRUST_MAJOR_VERSION     (HYDRA_THRUST_VERSION / 100000)
+
+
+#define HYDRA_THRUST_MINOR_VERSION     (HYDRA_THRUST_VERSION / 100 % 1000)
+
+
+#define HYDRA_THRUST_SUBMINOR_VERSION  (HYDRA_THRUST_VERSION % 100)
+
+
+#define HYDRA_THRUST_PATCH_NUMBER 0
+
+
+
+
+namespace hydra_thrust
+{
+
+}
+
+#ifndef HYDRA_THRUST_BEGIN_NS
+#define HYDRA_THRUST_BEGIN_NS namespace hydra_thrust {
+#endif
+
+#ifndef HYDRA_THRUST_END_NS
+#define HYDRA_THRUST_END_NS }
+#endif
+

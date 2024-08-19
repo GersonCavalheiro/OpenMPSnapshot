@@ -1,0 +1,32 @@
+#pragma omp       @ 1.0 @ 14814
+parallel          @ 1.0 @ 1870
+parallel for      @ 1.0 @ 5546
+for               @ 1.0 @ 1486
+parallel sections @ 1.0 @ 49
+sections          @ 1.0 @ 48
+section           @ 1.0 @ 21
+barrier           @ 1.0 @ 495
+critical          @ 1.0 @ 768
+master            @ 1.0 @ 271
+single            @ 1.0 @ 476
+flush             @ 2.0 @ 29
+ordered           @ 2.0 @ 21
+threadprivate     @ 2.0 @ 27
+atomic            @ 2.0 @ 515
+target            @ 4.0 @ 1469
+simd              @ 4.0 @ 546
+task              @ 3.0 @ 438
+taskwait          @ 3.0 @ 109
+teams             @ 4.5 @ 99
+distribute        @ 4.5 @ 22
+requires          @ 4.5 @ 0
+loop              @ 5.0 @ 0
+allocate          @ 5.0 @ 0
+depobj            @ 5.0 @ 0
+metadirective     @ 5.0 @ 0
+declare           @ 5.0 @ 182
+mask              @ 5.1 @ 0
+scope             @ 5.1 @ 0
+assume            @ 5.1 @ 0
+tile              @ 5.1 @ 0
+error             @ 5.1 @ 0

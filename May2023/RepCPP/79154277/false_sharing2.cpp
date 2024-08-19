@@ -1,0 +1,35 @@
+
+#include <cstdlib>
+
+#include <omp.h>
+#define MAX_NUM_THREADS 64
+
+
+int main(int argc, char ** argv)
+{
+long DIM = 10000;
+
+int odds=0;
+int *matrix = new int[DIM*DIM]; 
+for (long i=0; i<DIM*DIM; ++i)
+matrix[i] = rand();
+
+#pragma omp parallel
+{
+int odds_mine = 0;
+#pragma omp for
+for( long i = 0; i < DIM; ++i )
+{
+for (long k = 0; k<100; ++k)
+for( long j = 0; j < DIM; ++j )
+if( matrix[i*DIM + j] % 2 != 0 )
+++odds_mine;
+}
+
+#pragma omp atomic
+odds += odds_mine;
+}
+
+
+
+}

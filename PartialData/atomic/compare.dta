@@ -1,0 +1,5 @@
+extracao_004/tcc_dados/161696083/test_atomic_compare.c:#pragma omp atomic compare
+extracao_004/tcc_dados/161696083/test_atomic_compare_device.c:#pragma omp atomic compare
+extracao_004/tcc_dados/161696083/test_atomic_fail_acquire.c:#pragma omp atomic compare seq_cst fail(acquire)
+extracao_004/tcc_dados/161696083/test_atomic_fail_relaxed.c:#pragma omp atomic compare fail(relaxed)
+extracao_004/tcc_dados/161696083/test_atomic_fail_seq_cst.c:#pragma omp atomic compare acquire fail(seq_cst)

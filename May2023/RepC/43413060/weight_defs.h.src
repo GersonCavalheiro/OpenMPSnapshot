@@ -1,0 +1,7 @@
+#pragma once
+#include <stdint.h>
+typedef struct
+{
+DOUBLE *weights[MAX_NUM_WEIGHTS];  
+int64_t num_weights;
+} weight_struct_DOUBLE;

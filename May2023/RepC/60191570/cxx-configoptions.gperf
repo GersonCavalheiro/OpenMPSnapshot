@@ -1,0 +1,34 @@
+%{
+#include "cxx-driver.h"
+#include "cxx-configfile.h"
+#include <string.h>
+%}
+struct configuration_directive_t
+%%
+language, config_set_language
+options, config_set_options
+preprocessor_name, config_set_preprocessor_name
+preprocessor_options, config_set_preprocessor_options
+prescanner_options, config_set_prescanner_options
+preprocessor_uses_stdout, config_set_preprocessor_uses_stdout
+compiler_name, config_set_compiler_name
+compiler_options, config_set_compiler_options
+linker_name, config_set_linker_name
+linker_options_pre, config_set_linker_options_pre
+linker_options, config_set_linker_options
+linker_options_post, config_set_linker_options_post
+compiler_phase, config_add_compiler_phase
+codegen_phase, config_set_codegen_phase
+pragma_prefix, config_add_preprocessor_prefix
+environment, config_set_environment
+environ, config_set_environment
+fortran_arrayd-descriptor, config_set_fortran_array_descriptor
+target_options, config_set_target_options
+compiler_dto, config_set_compiler_dto
+fortran_preprocessor_name, config_set_fortran_preprocessor_name
+fortran_preprocessor_options, config_set_fortran_preprocessor_options
+target_objcopy, config_set_target_objcopy
+target_objdump, config_set_target_objdump
+target_ar, config_set_target_ar
+error, config_set_error_message
+%%

@@ -1,0 +1,6 @@
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if not have_feature
+    if not have_mpi_support

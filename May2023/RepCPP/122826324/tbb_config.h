@@ -1,0 +1,371 @@
+
+
+#ifndef __TBB_tbb_config_H
+#define __TBB_tbb_config_H
+
+
+
+#define __TBB_GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
+
+#if __clang__
+#define __TBB_CLANG_VERSION (__clang_major__ * 10000 + __clang_minor__ * 100 + __clang_patchlevel__)
+#endif
+
+
+
+#if __INTEL_COMPILER == 9999 && __INTEL_COMPILER_BUILD_DATE == 20110811
+
+#undef __INTEL_COMPILER
+#define __INTEL_COMPILER 1210
+#endif
+
+#if (__TBB_GCC_VERSION >= 40400) && !defined(__INTEL_COMPILER)
+
+#define __TBB_GCC_WARNING_SUPPRESSION_PRESENT 1
+#endif
+
+
+
+#if __INTEL_COMPILER
+
+#define __TBB_CPP11_VARIADIC_TEMPLATES_PRESENT __GXX_EXPERIMENTAL_CXX0X__ && __VARIADIC_TEMPLATES
+#define __TBB_CPP11_RVALUE_REF_PRESENT         (__GXX_EXPERIMENTAL_CXX0X__ || _MSC_VER >= 1600) && (__INTEL_COMPILER >= 1200)
+#if  _MSC_VER >= 1600
+#define __TBB_EXCEPTION_PTR_PRESENT        __INTEL_COMPILER > 1300                                                  \
+\
+|| (__INTEL_COMPILER == 1300 && __INTEL_COMPILER_BUILD_DATE >= 20120530) \
+|| (__INTEL_COMPILER == 1210 && __INTEL_COMPILER_BUILD_DATE >= 20120410)
+
+#elif (__TBB_GCC_VERSION >= 40404) && (__TBB_GCC_VERSION < 40600)
+#define __TBB_EXCEPTION_PTR_PRESENT        __GXX_EXPERIMENTAL_CXX0X__ && __INTEL_COMPILER >= 1200
+#else
+#define __TBB_EXCEPTION_PTR_PRESENT        0
+#endif
+#define __TBB_MAKE_EXCEPTION_PTR_PRESENT       (_MSC_VER >= 1700 || (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_GCC_VERSION >= 40600))
+#define __TBB_STATIC_ASSERT_PRESENT            __GXX_EXPERIMENTAL_CXX0X__ || (_MSC_VER >= 1600)
+#define __TBB_CPP11_TUPLE_PRESENT              (_MSC_VER >= 1600) || ((__GXX_EXPERIMENTAL_CXX0X__) && (__TBB_GCC_VERSION >= 40300))
+
+#define __TBB_INITIALIZER_LISTS_PRESENT        0
+#elif __clang__
+#define __TBB_CPP11_VARIADIC_TEMPLATES_PRESENT (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_CLANG_VERSION >= 20900)
+#define __TBB_CPP11_RVALUE_REF_PRESENT         (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_CLANG_VERSION >= 20900)
+#define __TBB_EXCEPTION_PTR_PRESENT            __GXX_EXPERIMENTAL_CXX0X__
+#define __TBB_MAKE_EXCEPTION_PTR_PRESENT       (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_CLANG_VERSION > 30100)
+#define __TBB_STATIC_ASSERT_PRESENT            (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_CLANG_VERSION >= 20900)
+#define __TBB_CPP11_TUPLE_PRESENT              ((__GXX_EXPERIMENTAL_CXX0X__) && (__TBB_GCC_VERSION >= 40300))
+#define __TBB_INITIALIZER_LISTS_PRESENT        0
+#elif __GNUC__
+#define __TBB_CPP11_VARIADIC_TEMPLATES_PRESENT __GXX_EXPERIMENTAL_CXX0X__
+#define __TBB_CPP11_RVALUE_REF_PRESENT         __GXX_EXPERIMENTAL_CXX0X__
+
+#define __TBB_EXCEPTION_PTR_PRESENT            (__GXX_EXPERIMENTAL_CXX0X__ && (__TBB_GCC_VERSION >= 40404) && __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
+#define __TBB_MAKE_EXCEPTION_PTR_PRESENT       (__GXX_EXPERIMENTAL_CXX0X__ && __TBB_GCC_VERSION >= 40600)
+#define __TBB_STATIC_ASSERT_PRESENT            ((__TBB_GCC_VERSION >= 40300) && (__GXX_EXPERIMENTAL_CXX0X__))
+#define __TBB_CPP11_TUPLE_PRESENT              ((__GXX_EXPERIMENTAL_CXX0X__) && (__TBB_GCC_VERSION >= 40300))
+#define __TBB_INITIALIZER_LISTS_PRESENT        ((__GXX_EXPERIMENTAL_CXX0X__) && (__TBB_GCC_VERSION >= 40400))
+#elif _MSC_VER
+#define __TBB_CPP11_VARIADIC_TEMPLATES_PRESENT 0
+#define __TBB_CPP11_RVALUE_REF_PRESENT         0
+#define __TBB_EXCEPTION_PTR_PRESENT            (_MSC_VER >= 1600)
+#define __TBB_STATIC_ASSERT_PRESENT            (_MSC_VER >= 1600)
+#define __TBB_MAKE_EXCEPTION_PTR_PRESENT       (_MSC_VER >= 1700)
+#define __TBB_CPP11_TUPLE_PRESENT              (_MSC_VER >= 1600)
+#define __TBB_INITIALIZER_LISTS_PRESENT        0
+#else
+#define __TBB_CPP11_VARIADIC_TEMPLATES_PRESENT 0
+#define __TBB_CPP11_RVALUE_REF_PRESENT         0
+#define __TBB_EXCEPTION_PTR_PRESENT            0
+#define __TBB_STATIC_ASSERT_PRESENT            0
+#define __TBB_MAKE_EXCEPTION_PTR_PRESENT       0
+#define __TBB_CPP11_TUPLE_PRESENT              0
+#define __TBB_INITIALIZER_LISTS_PRESENT        0
+#endif
+
+#if __INTEL_COMPILER && __GNUC__ && __TBB_EXCEPTION_PTR_PRESENT && !defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
+#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 1
+#endif
+
+#if __MINGW32__ && __TBB_EXCEPTION_PTR_PRESENT && !defined(_GLIBCXX_ATOMIC_BUILTINS_4)
+#define _GLIBCXX_ATOMIC_BUILTINS_4
+#endif
+
+#if __GNUC__ || __SUNPRO_CC || __IBMCPP__
+
+#define __TBB_ATTRIBUTE_ALIGNED_PRESENT 1
+#elif _MSC_VER && (_MSC_VER >= 1300 || __INTEL_COMPILER)
+#define __TBB_DECLSPEC_ALIGN_PRESENT 1
+#endif
+
+
+
+#if (__TBB_GCC_VERSION >= 40306) || (__INTEL_COMPILER >= 1200)
+
+#define __TBB_GCC_BUILTIN_ATOMICS_PRESENT 1
+#endif
+
+#if (__INTEL_COMPILER >= 1210)
+
+#define __TBB_ICC_BUILTIN_ATOMICS_PRESENT 1
+#endif
+
+
+
+#ifndef TBB_USE_DEBUG
+#ifdef TBB_DO_ASSERT
+#define TBB_USE_DEBUG TBB_DO_ASSERT
+#else
+#ifdef _DEBUG
+#define TBB_USE_DEBUG _DEBUG
+#else
+#define TBB_USE_DEBUG 0
+#endif
+#endif 
+#endif 
+
+#ifndef TBB_USE_ASSERT
+#ifdef TBB_DO_ASSERT
+#define TBB_USE_ASSERT TBB_DO_ASSERT
+#else 
+#define TBB_USE_ASSERT TBB_USE_DEBUG
+#endif 
+#endif 
+
+#ifndef TBB_USE_THREADING_TOOLS
+#ifdef TBB_DO_THREADING_TOOLS
+#define TBB_USE_THREADING_TOOLS TBB_DO_THREADING_TOOLS
+#else 
+#define TBB_USE_THREADING_TOOLS TBB_USE_DEBUG
+#endif 
+#endif 
+
+#ifndef TBB_USE_PERFORMANCE_WARNINGS
+#ifdef TBB_PERFORMANCE_WARNINGS
+#define TBB_USE_PERFORMANCE_WARNINGS TBB_PERFORMANCE_WARNINGS
+#else 
+#define TBB_USE_PERFORMANCE_WARNINGS TBB_USE_DEBUG
+#endif 
+#endif 
+
+#if __MIC__ || __MIC2__
+#define __TBB_DEFINE_MIC 1
+#endif
+
+#if !defined(__EXCEPTIONS) && !defined(_CPPUNWIND) && !defined(__SUNPRO_CC) || defined(_XBOX)
+#if TBB_USE_EXCEPTIONS
+#error Compilation settings do not support exception handling. Please do not set TBB_USE_EXCEPTIONS macro or set it to 0.
+#elif !defined(TBB_USE_EXCEPTIONS)
+#define TBB_USE_EXCEPTIONS 0
+#endif
+#elif !defined(TBB_USE_EXCEPTIONS)
+#if __TBB_DEFINE_MIC
+#define TBB_USE_EXCEPTIONS 0
+#else
+#define TBB_USE_EXCEPTIONS 1
+#endif
+#elif TBB_USE_EXCEPTIONS && __TBB_DEFINE_MIC
+#error Please do not set TBB_USE_EXCEPTIONS macro or set it to 0.
+#endif
+
+#ifndef TBB_IMPLEMENT_CPP0X
+
+#if __GNUC__==4 && __GNUC_MINOR__>=4 && __GXX_EXPERIMENTAL_CXX0X__
+#define TBB_IMPLEMENT_CPP0X 0
+#else
+#define TBB_IMPLEMENT_CPP0X 1
+#endif
+#endif 
+
+
+#ifndef TBB_USE_CAPTURED_EXCEPTION
+
+#if __TBB_EXCEPTION_PTR_PRESENT && !defined(__GNUC__)
+#define TBB_USE_CAPTURED_EXCEPTION 0
+#else
+#define TBB_USE_CAPTURED_EXCEPTION 1
+#endif
+#else 
+#if !TBB_USE_CAPTURED_EXCEPTION && !__TBB_EXCEPTION_PTR_PRESENT
+#error Current runtime does not support std::exception_ptr. Set TBB_USE_CAPTURED_EXCEPTION and make sure that your code is ready to catch tbb::captured_exception.
+#endif
+#endif 
+
+
+#if (TBB_USE_GCC_BUILTINS && !__TBB_GCC_BUILTIN_ATOMICS_PRESENT)
+#error "GCC atomic built-ins are not supported."
+#endif
+
+
+
+
+#define __TBB_WEAK_SYMBOLS_PRESENT !_WIN32 && !__APPLE__ && !__sun && ((__TBB_GCC_VERSION >= 40000) || defined(__INTEL_COMPILER))
+
+
+#ifndef __TBB_DYNAMIC_LOAD_ENABLED
+#define __TBB_DYNAMIC_LOAD_ENABLED 1
+#endif
+
+
+#if (_WIN32||_WIN64) && __TBB_SOURCE_DIRECTLY_INCLUDED
+#define __TBB_NO_IMPLICIT_LINKAGE 1
+#define __TBBMALLOC_NO_IMPLICIT_LINKAGE 1
+#endif
+
+#ifndef __TBB_COUNT_TASK_NODES
+#define __TBB_COUNT_TASK_NODES TBB_USE_ASSERT
+#endif
+
+#ifndef __TBB_TASK_GROUP_CONTEXT
+#define __TBB_TASK_GROUP_CONTEXT 1
+#endif 
+
+#ifndef __TBB_SCHEDULER_OBSERVER
+#define __TBB_SCHEDULER_OBSERVER 1
+#endif 
+
+#if !defined(TBB_PREVIEW_TASK_ARENA) && __TBB_BUILD
+#define TBB_PREVIEW_TASK_ARENA __TBB_CPF_BUILD
+#endif 
+#define __TBB_TASK_ARENA TBB_PREVIEW_TASK_ARENA
+#if TBB_PREVIEW_TASK_ARENA
+#define TBB_PREVIEW_LOCAL_OBSERVER 1
+#define __TBB_NO_IMPLICIT_LINKAGE 1
+#define __TBB_TASK_PRIORITY 0 
+#if !__TBB_SCHEDULER_OBSERVER
+#error TBB_PREVIEW_TASK_ARENA requires __TBB_SCHEDULER_OBSERVER to be enabled
+#endif
+#endif 
+
+#if !defined(TBB_PREVIEW_LOCAL_OBSERVER) && __TBB_BUILD && __TBB_SCHEDULER_OBSERVER
+#define TBB_PREVIEW_LOCAL_OBSERVER 1
+#endif 
+
+#if TBB_USE_EXCEPTIONS && !__TBB_TASK_GROUP_CONTEXT
+#error TBB_USE_EXCEPTIONS requires __TBB_TASK_GROUP_CONTEXT to be enabled
+#endif
+
+#ifndef __TBB_TASK_PRIORITY
+#define __TBB_TASK_PRIORITY __TBB_TASK_GROUP_CONTEXT
+#endif 
+
+#if __TBB_TASK_PRIORITY && !__TBB_TASK_GROUP_CONTEXT
+#error __TBB_TASK_PRIORITY requires __TBB_TASK_GROUP_CONTEXT to be enabled
+#endif
+
+#if !defined(__TBB_SURVIVE_THREAD_SWITCH) && \
+(_WIN32 || _WIN64 || __APPLE__ || (__linux__ && !__ANDROID__))
+#define __TBB_SURVIVE_THREAD_SWITCH 1
+#endif 
+
+#ifndef __TBB_DEFAULT_PARTITIONER
+#if TBB_DEPRECATED
+
+#define __TBB_DEFAULT_PARTITIONER tbb::simple_partitioner
+#else
+
+#define __TBB_DEFAULT_PARTITIONER tbb::auto_partitioner
+#endif 
+#endif 
+
+#ifdef _VARIADIC_MAX
+#define __TBB_VARIADIC_MAX _VARIADIC_MAX
+#else
+#if _MSC_VER >= 1700
+#define __TBB_VARIADIC_MAX 5  
+#else
+#define __TBB_VARIADIC_MAX 10
+#endif
+#endif
+
+
+
+#if __ANDROID__ && __TBB_GCC_VERSION <= 40403 && !__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 
+
+#define __TBB_GCC_64BIT_ATOMIC_BUILTINS_BROKEN 1
+#endif
+
+#if __GNUC__ && __TBB_x86_64 && __INTEL_COMPILER == 1200
+#define __TBB_ICC_12_0_INL_ASM_FSTCW_BROKEN 1
+#endif
+
+#if _MSC_VER && __INTEL_COMPILER && (__INTEL_COMPILER<1110 || __INTEL_COMPILER==1110 && __INTEL_COMPILER_BUILD_DATE < 20091012)
+
+#define __TBB_DEFAULT_DTOR_THROW_SPEC_BROKEN 1
+#endif
+
+#if defined(_MSC_VER) && _MSC_VER < 1500 && !defined(__INTEL_COMPILER)
+
+#define __TBB_TEMPLATE_FRIENDS_BROKEN 1
+#endif
+
+#if __GLIBC__==2 && __GLIBC_MINOR__==3 || __MINGW32__ || (__APPLE__ && __INTEL_COMPILER==1200 && !TBB_USE_DEBUG)
+
+#define __TBB_THROW_ACROSS_MODULE_BOUNDARY_BROKEN 1
+#else
+#define __TBB_THROW_ACROSS_MODULE_BOUNDARY_BROKEN 0
+#endif
+
+#if (_WIN32||_WIN64) && __INTEL_COMPILER == 1110
+
+#define __TBB_ICL_11_1_CODE_GEN_BROKEN 1
+#endif
+
+#if __clang__ || (__GNUC__==3 && __GNUC_MINOR__==3 && !defined(__INTEL_COMPILER))
+
+#define __TBB_PROTECTED_NESTED_CLASS_BROKEN 1
+#endif
+
+#if __MINGW32__ && (__GNUC__<4 || __GNUC__==4 && __GNUC_MINOR__<2)
+
+#define __TBB_SSE_STACK_ALIGNMENT_BROKEN 1
+#else
+#define __TBB_SSE_STACK_ALIGNMENT_BROKEN 0
+#endif
+
+#if __GNUC__==4 && __GNUC_MINOR__==3 && __GNUC_PATCHLEVEL__==0
+
+#define __TBB_GCC_OPTIMIZER_ORDERING_BROKEN 1
+#endif
+
+#if __FreeBSD__
+
+#define __TBB_PRIO_INHERIT_BROKEN 1
+
+
+#define __TBB_PLACEMENT_NEW_EXCEPTION_SAFETY_BROKEN 1
+#endif 
+
+#if (__linux__ || __APPLE__) && __i386__ && defined(__INTEL_COMPILER)
+
+#define __TBB_ICC_ASM_VOLATILE_BROKEN 1
+#endif
+
+#if !__INTEL_COMPILER && (_MSC_VER || __GNUC__==3 && __GNUC_MINOR__<=2)
+
+#define __TBB_ALIGNOF_NOT_INSTANTIATED_TYPES_BROKEN 1
+#endif
+
+#if __INTEL_COMPILER
+#define __TBB_CPP11_STD_FORWARD_BROKEN 1
+#else
+#define __TBB_CPP11_STD_FORWARD_BROKEN 0
+#endif
+
+#if __TBB_DEFINE_MIC
+
+#define __TBB_MAIN_THREAD_AFFINITY_BROKEN 1
+#endif
+
+#if defined(WINAPI_FAMILY) && WINAPI_FAMILY == WINAPI_FAMILY_APP
+#define __TBB_WIN8UI_SUPPORT 1
+#else
+#define __TBB_WIN8UI_SUPPORT 0
+#endif
+
+#if !defined(__EXCEPTIONS) && __GNUC__==4 && (__GNUC_MINOR__==4 ||__GNUC_MINOR__==5 || (__INTEL_COMPILER==1300 && __TBB_GCC_VERSION>=40600 && __TBB_GCC_VERSION<=40700)) && defined(__GXX_EXPERIMENTAL_CXX0X__)
+
+#define __TBB_LIBSTDCPP_EXCEPTION_HEADERS_BROKEN 1
+#else
+#define __TBB_LIBSTDCPP_EXCEPTION_HEADERS_BROKEN 0
+#endif
+
+#endif 

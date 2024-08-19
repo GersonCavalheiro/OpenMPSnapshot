@@ -1,0 +1,379 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <signal.h>
+#include <unistd.h>
+#include <gsl/gsl_rng.h>
+#include "countspheres_impl_DOUBLE.h" 
+#include "vpf_kernels_DOUBLE.c" 
+#include "defs.h"
+#include "utils.h" 
+#include "progressbar.h" 
+#include "cellarray_DOUBLE.h" 
+#include "cpu_features.h"
+#include "gridlink_impl_DOUBLE.h"
+#include "gridlink_utils_DOUBLE.h" 
+int interrupt_status_vpf_DOUBLE=EXIT_SUCCESS;
+void interrupt_handler_vpf_DOUBLE(int signo)
+{
+fprintf(stderr,"Received signal = `%s' (signo = %d). Aborting \n",strsignal(signo), signo);
+interrupt_status_vpf_DOUBLE = EXIT_FAILURE;
+}
+vpf_func_ptr_DOUBLE vpf_driver_DOUBLE(const struct config_options *options)
+{
+static vpf_func_ptr_DOUBLE function = NULL;
+static isa old_isa = (isa) -1;
+if(old_isa == options->instruction_set) {
+return function;
+}
+vpf_func_ptr_DOUBLE allfunctions[] = {
+vpf_fallback_DOUBLE,
+#ifdef __SSE4_2__
+vpf_sse_intrinsics_DOUBLE,
+#endif
+#ifdef __AVX__
+vpf_avx_intrinsics_DOUBLE,
+#endif
+#ifdef __AVX512F__
+vpf_avx512_intrinsics_DOUBLE,
+#endif
+};
+const int num_functions = sizeof(allfunctions)/sizeof(void *);
+const int fallback_index = 0;
+#if defined(__AVX512F__) || defined(__AVX__) || defined(__SSE4_2__)
+const int highest_isa = get_max_usable_isa();
+#endif
+int curr_index = 0;
+int sse_index = curr_index;
+#ifdef __SSE4_2__
+curr_index++;
+if(highest_isa >= SSE42) sse_index = curr_index;
+#endif
+int avx_index = curr_index;
+#ifdef __AVX__
+curr_index++;
+if(highest_isa >= AVX) avx_index = curr_index;
+#endif
+int avx512_index = curr_index;
+#ifdef __AVX512F__
+curr_index++;
+if(highest_isa >= AVX512F) avx512_index = curr_index;
+#endif
+if( curr_index != num_functions-1) {
+fprintf(stderr,"ERROR: Bug in code (current index = %d *should equal* num_functions-1 = %d-1)\n",
+curr_index, num_functions);
+return NULL;
+}
+int function_dispatch = num_functions-1;  
+if(options->instruction_set >= 0) {
+switch(options->instruction_set) {
+case(AVX512F):function_dispatch=avx512_index;break;
+case(AVX2):
+case(AVX):function_dispatch=avx_index;break;
+case(SSE42):function_dispatch=sse_index;break;
+default:function_dispatch=fallback_index;break;
+}
+}
+if(function_dispatch >= num_functions) {
+fprintf(stderr,"In %s> ERROR: Could not resolve the correct function.\n Function index = %d must lie between [0, %d)\n",
+__FUNCTION__, function_dispatch, num_functions);
+return NULL;
+}
+function = allfunctions[function_dispatch];
+old_isa = options->instruction_set;
+if(options->verbose){
+if(function_dispatch == fallback_index){
+fprintf(stderr,"Using fallback kernel\n");
+} else if(function_dispatch == sse_index){
+fprintf(stderr,"Using SSE kernel\n");
+} else if(function_dispatch == avx_index){
+fprintf(stderr,"Using AVX kernel\n");
+} else if(function_dispatch == avx512_index){
+fprintf(stderr,"Using AVX512 kernel\n");
+} else {
+fprintf(stderr,"Unknown kernel!\n");
+return NULL;
+}
+}
+return function;
+}
+int countspheres_DOUBLE(const int64_t np, DOUBLE * restrict X, DOUBLE * restrict Y, DOUBLE * restrict Z,
+const double rmax, const int nbin, const int nc,
+const int num_pN,
+unsigned long seed,
+results_countspheres *results,
+struct config_options *options,
+struct extra_options *extra)
+{
+if(options->float_type != sizeof(DOUBLE)) {
+fprintf(stderr,"ERROR: In %s> Can only handle arrays of size=%zu. Got an array of size = %zu\n",
+__FUNCTION__, sizeof(DOUBLE), options->float_type);
+return EXIT_FAILURE;
+}
+struct extra_options dummy_extra;
+if(extra == NULL){
+weight_method_t dummy_method = NONE;
+dummy_extra = get_extra_options(dummy_method);
+extra = &dummy_extra;
+}
+if( ! (rmax > 0.0 && nbin > 0 && nc > 0 && num_pN > 0)) {
+fprintf(stderr,"Error: Invalid input parameters. Expected rmax > 0, number of bins > 0, number of random spheres > 0, number of pN's to calculate > 0.\n"
+"Found rmax = %lf, nbin = %d nspheres = %d num_pN = %d\n", rmax, nbin, nc, num_pN);
+return EXIT_FAILURE;
+}
+struct timeval t0;
+if(options->c_api_timer) {
+gettimeofday(&t0, NULL);
+}
+if(options->max_cells_per_dim == 0) {
+fprintf(stderr,"Warning: Max. cells per dimension is set to 0 - resetting to `NLATMAX' = %d\n", NLATMAX);
+options->max_cells_per_dim = NLATMAX;
+}
+for(int i=0;i<3;i++) {
+if(options->bin_refine_factors[i] < 1) {
+fprintf(stderr,"Warning: bin refine factor along axis = %d *must* be >=1. Instead found bin refine factor =%d\n",
+i, options->bin_refine_factors[i]);
+reset_bin_refine_factors(options);
+break;
+}
+}
+SETUP_INTERRUPT_HANDLERS(interrupt_handler_vpf_DOUBLE);
+const gsl_rng_type * T = gsl_rng_mt19937;
+gsl_rng *rng = gsl_rng_alloc (T);
+gsl_rng_set(rng, seed);
+int **pN = (int **) matrix_calloc(sizeof(**pN), nbin, num_pN);
+if(pN == NULL) {
+gsl_rng_free(rng);
+return EXIT_FAILURE;
+}
+DOUBLE xmin,xmax,ymin,ymax,zmin,zmax;
+xmin = ymin = zmin = MAX_POSITIVE_FLOAT;
+xmax = ymax = zmax = -MAX_POSITIVE_FLOAT;
+get_max_min_DOUBLE(np, X, Y, Z, &xmin, &ymin, &zmin, &xmax, &ymax, &zmax);
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
+if(options->periodic && options->boxsize == BOXSIZE_NOTGIVEN){
+fprintf(stderr, "boxsize = %g must be specified with periodic wrap. Please specify a non-zero boxsize, or zero to detect the particle extent, or -1 to make a dimension non-periodic.\n",
+options->boxsize);
+return EXIT_FAILURE;
+}
+const double boxsize_y = options->boxsize_y == BOXSIZE_NOTGIVEN ? options->boxsize : options->boxsize_y;
+const double boxsize_z = options->boxsize_z == BOXSIZE_NOTGIVEN ? options->boxsize : options->boxsize_z;
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+const int periodic_x = options->periodic && options->boxsize_x >= 0;
+const int periodic_y = options->periodic && boxsize_y >= 0;
+const int periodic_z = options->periodic && boxsize_z >= 0;
+const DOUBLE xwrap = (options->periodic && options->boxsize_x > 0) ? options->boxsize_x : (xmax-xmin);
+const DOUBLE ywrap = (options->periodic && boxsize_y > 0) ? boxsize_y : (ymax-ymin);
+const DOUBLE zwrap = (options->periodic && boxsize_z > 0) ? boxsize_z : (zmax-zmin);
+if(options->verbose) {
+if(periodic_x) {
+fprintf(stderr,"Running with points in [xmin,xmax] = %lf,%lf with periodic wrapping = %lf\n",xmin,xmax,xwrap);
+} else {
+fprintf(stderr,"Running with points in [xmin,xmax] = %lf,%lf (non-periodic)\n",xmin,xmax);
+}
+if(periodic_y) {
+fprintf(stderr,"Running with points in [ymin,ymax] = %lf,%lf with periodic wrapping = %lf\n",ymin,ymax,ywrap);
+} else {
+fprintf(stderr,"Running with points in [ymin,ymax] = %lf,%lf (non-periodic)\n",ymin,ymax);
+}
+if(periodic_z) {
+fprintf(stderr,"Running with points in [zmin,zmax] = %lf,%lf with periodic wrapping = %lf\n",zmin,zmax,zwrap);
+} else {
+fprintf(stderr,"Running with points in [zmin,zmax] = %lf,%lf (non-periodic)\n",zmin,zmax);
+}
+}
+int nmesh_x=0,nmesh_y=0,nmesh_z=0;
+cellarray_DOUBLE *lattice = gridlink_DOUBLE(np, X, Y, Z, &(extra->weights0),
+xmin, xmax, ymin, ymax, zmin, zmax,
+rmax, rmax, rmax,
+xwrap, ywrap, zwrap,
+options->bin_refine_factors[0],
+options->bin_refine_factors[1],
+options->bin_refine_factors[2],
+&nmesh_x, &nmesh_y, &nmesh_z, options);
+if(lattice == NULL) {
+return EXIT_FAILURE;
+}
+int64_t totncells = (int64_t) nmesh_x * (int64_t) nmesh_y * (int64_t) nmesh_z;
+const DOUBLE inv_xwrap = ((DOUBLE) 1.0)/xwrap;
+const DOUBLE inv_ywrap = ((DOUBLE) 1.0)/ywrap;
+const DOUBLE inv_zwrap = ((DOUBLE) 1.0)/zwrap;
+vpf_func_ptr_DOUBLE vpf_function_DOUBLE = vpf_driver_DOUBLE(options);
+if(vpf_function_DOUBLE == NULL) {
+free_cellarray_DOUBLE(lattice, totncells);
+return EXIT_FAILURE;
+}
+int interrupted=0;
+if(options->verbose) {
+init_my_progressbar(nc,&interrupted);
+}
+int ic=0;
+while(ic < nc && interrupt_status_vpf_DOUBLE == EXIT_SUCCESS) {
+if(options->verbose) {
+my_progressbar(ic,&interrupted);
+}
+const DOUBLE xc = xwrap*gsl_rng_uniform (rng) + xmin;
+const DOUBLE yc = ywrap*gsl_rng_uniform (rng) + ymin;
+const DOUBLE zc = zwrap*gsl_rng_uniform (rng) + zmin;
+if( ! options->periodic) {
+if((xc - xmin) < rmax || (xmax - xc) < rmax ||
+(yc - ymin) < rmax || (ymax - yc) < rmax ||
+(zc - zmin) < rmax || (zmax - zc) < rmax) {
+continue;
+}
+}
+ic++;
+int ix = (int)(nmesh_x*(xc-xmin)*inv_xwrap);
+int iy = (int)(nmesh_y*(yc-ymin)*inv_ywrap);
+int iz = (int)(nmesh_z*(zc-zmin)*inv_zwrap);
+if(ix > nmesh_x-1) ix--;
+if(iy > nmesh_y-1) iy--;
+if(iz > nmesh_z-1) iz--;
+XRETURN(ix >= 0 && ix < nmesh_x,
+EXIT_FAILURE,
+"ERROR: x-position = %lf with index = %d should be in [0, %d) \n",
+xc, ix, nmesh_x);
+XRETURN(iy >= 0 && iy < nmesh_y,
+EXIT_FAILURE,
+"ERROR: y-position = %lf with index = %d should be in [0, %d) \n",
+yc, iy, nmesh_y);
+XRETURN(iz >= 0 && iz < nmesh_z,
+EXIT_FAILURE,
+"ERROR: z-position = %lf with index = %d should be in [0, %d) \n",
+zc, iz, nmesh_z);
+int counts_pN[nbin];
+for(int ibin=0;ibin<nbin;ibin++) {
+counts_pN[ibin]=0;
+}
+for(int8_t iix=-options->bin_refine_factors[0];iix<=options->bin_refine_factors[0];iix++) {
+int iiix;
+DOUBLE off_xwrap=0.0;
+if(options->periodic) {
+if(ix + iix >= nmesh_x) {
+off_xwrap = -xwrap;
+} else if (ix + iix < 0) {
+off_xwrap = xwrap;
+}
+iiix=(ix+iix+nmesh_x)%nmesh_x;
+} else {
+iiix = iix+ix;
+if(iiix < 0 || iiix >= nmesh_x) {
+continue;
+}
+}
+const DOUBLE newxpos = xc + off_xwrap;
+for(int8_t iiy=-options->bin_refine_factors[1];iiy<=options->bin_refine_factors[1];iiy++) {
+int iiiy;
+DOUBLE off_ywrap = 0.0;
+if(options->periodic) {
+if(iy + iiy >= nmesh_y) {
+off_ywrap = -ywrap;
+} else if (iy + iiy < 0) {
+off_ywrap = ywrap;
+}
+iiiy=(iy+iiy+nmesh_y)%nmesh_y;
+} else {
+iiiy = iiy+iy;
+if(iiiy < 0 || iiiy >= nmesh_y) {
+continue;
+}
+}
+const DOUBLE newypos = yc + off_ywrap;
+for(int8_t iiz=-options->bin_refine_factors[2];iiz<=options->bin_refine_factors[2];iiz++) {
+int iiiz;
+DOUBLE off_zwrap = 0.0;
+if(options->periodic) {
+if(iz + iiz >= nmesh_z) {
+off_zwrap = -zwrap;
+} else if (iz + iiz < 0) {
+off_zwrap = zwrap;
+}
+iiiz=(iz+iiz+nmesh_z)%nmesh_z;
+} else {
+iiiz = iiz+iz;
+if(iiiz < 0 || iiiz >= nmesh_z) {
+continue;
+}
+}
+const DOUBLE newzpos = zc + off_zwrap;
+const int64_t index=iiix*nmesh_y*nmesh_z + iiiy*nmesh_z + iiiz;
+const cellarray_DOUBLE *first = &(lattice[index]);
+DOUBLE *x2 = first->x;
+DOUBLE *y2 = first->y;
+DOUBLE *z2 = first->z;
+int status = vpf_function_DOUBLE(first->nelements, x2, y2, z2,
+newxpos, newypos, newzpos,
+rmax, nbin,
+counts_pN);
+if(status != EXIT_SUCCESS) {
+matrix_free((void **) pN, nbin);
+return status;
+}
+}
+}
+}
+for(int ibin=1;ibin<nbin;ibin++){
+counts_pN[ibin]+=counts_pN[ibin-1];
+}
+for(int ibin=0;ibin<nbin;ibin++) {
+for(int i=0;i<num_pN;i++) {
+if(counts_pN[ibin] == i) {
+pN[ibin][i]++;
+}
+}
+}
+}
+gsl_rng_free (rng);
+if(options->copy_particles == 0) {
+int64_t *original_index = lattice[0].original_index;
+int status = reorder_particles_back_into_original_order_DOUBLE(np, original_index, X, Y, Z, &(extra->weights0));
+if(status != EXIT_SUCCESS) {
+return status;
+}
+}
+free_cellarray_DOUBLE(lattice, totncells);
+if(interrupt_status_vpf_DOUBLE != EXIT_SUCCESS) {
+matrix_free((void **) pN, nbin);
+return interrupt_status_vpf_DOUBLE;
+}
+if(options->verbose) {
+finish_myprogressbar(&interrupted);
+}
+results->rmax = rmax;
+results->nbin = nbin;
+results->nc   = nc;
+results->num_pN = num_pN;
+results->pN = (double **) matrix_malloc(sizeof(double), nbin, num_pN);
+if(results->pN == NULL) {
+matrix_free((void **) pN, nbin);
+free_results_countspheres(results);
+return EXIT_FAILURE;
+}
+const DOUBLE inv_nc = ((DOUBLE) 1.0)/(DOUBLE) nc;
+for(int i=0;i<num_pN;i++) {
+for(int ibin=0;ibin<nbin;ibin++) {
+if( pN[ibin][i] > nc) {
+fprintf(stderr,"ERROR: Number of spheres = %d containing i=%d points can not be larger than the total number of spheres = %d\n",
+pN[ibin][i], num_pN, nc);
+matrix_free((void **) pN, nbin);
+return EXIT_FAILURE;
+}
+(results->pN)[ibin][i] = pN[ibin][i] * inv_nc;
+}
+}
+matrix_free((void **) pN, nbin);
+RESET_INTERRUPT_HANDLERS();
+reset_bin_refine_factors(options);
+if(options->c_api_timer) {
+struct timeval t1;
+gettimeofday(&t1, NULL);
+options->c_api_time = ADD_DIFF_TIME(t0, t1);
+}
+return EXIT_SUCCESS;
+}

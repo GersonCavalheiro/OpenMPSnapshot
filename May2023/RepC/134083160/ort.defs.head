@@ -1,0 +1,8 @@
+#ifndef __RUNTIME_DEFS__
+#define __RUNTIME_DEFS__
+char *rtlib_onoff =      
+"\
+int   ort_initialize(int*, char***, int, int, ...);\
+void  ort_finalize(int);\
+";
+char *rtlib_defs =       

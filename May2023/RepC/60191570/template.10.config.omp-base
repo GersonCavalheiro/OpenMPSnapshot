@@ -1,0 +1,214 @@
+# OpenMP + Nanos
+[omp-base-common]
+options = --native-vendor=gnu
+{openmp|ompss} options = --openmp
+{debug} options = -g
+preprocessor_name = @GCC@
+preprocessor_options = -E
+compiler_name = @GCC@
+compiler_options =
+linker_name = @GCC@
+# Generic CUDA stuff
+{cuda} preprocessor_options = -D__CUDABE__ -D__CUDA_LIBDEVICE__ -I${CUDA_HOME}/include
+{cuda} linker_options = -D__CUDABE__ -D__CUDA_LIBDEVICE__ -L${CUDA_HOME}/lib64 -lcudart
+# Transparent Checkpoint Mechanism
+{checkpoint} pragma_prefix = chk
+{checkpoint} compiler_phase = libtlcheckpoint-base.so
+{checkpoint, !@TCL_GATE@} error = "Flag --checkpoint passed but Mercurium was built without support for TCL"
+# OpenMP & OmpSs (runtime independent)
+{openmp,omp-dry-run} options = --variable=omp_dry_run:1
+{openmp} compiler_phase = libtlomp-base.so
+{openmp} preprocessor_options = -D_OPENMP=200805
+{openmp} fortran_preprocessor_options = -D_OPENMP=200805
+{ompss} preprocessor_options = -D_OMPSS=1
+{ompss} fortran_preprocessor_options = -D_OMPSS=1
+{openmp|ompss} options = --variable=taskloop_as_loop_of_tasks:1
+{ompss, !@NANOX_GATE@} error = "Flag --ompss passed but Mercurium was built without support for OmpSs"
+{openmp,!@NANOX_GATE@} error = "Flag --openmp passed but Mercurium was built without support for OpenMP"
+{ompss} options = --variable=ompss_mode:1
+##  In OmpSs copy_deps is enabled by default, so we have to change the default behavior of OpenMP::Core
+{ompss,!?copy-deps|copy-deps} options = --variable=copy_deps_by_default:1
+##  In OmpSs tasks are untied by default, so we have to change the default behavior of OpenMP::Core
+{ompss,!?untied-tasks|untied-tasks} options = --variable=untied_tasks_by_default:1
+# OmpSsv2 (runtime independent)
+{ompss-2} compiler_phase = libtlomp-base.so
+{ompss-2} pragma_prefix = oss
+{ompss-2,openmp-compatibility} pragma_prefix = omp
+{ompss-2} preprocessor_options = -D_OMPSS_2=1
+{ompss-2} fortran_preprocessor_options = -D_OMPSS_2=1
+{ompss-2} options = --variable=ompss_mode:1 --variable=untied_tasks_by_default:1
+{ompss-2,openmp-compatibility} options = --variable=taskloop_as_loop_of_tasks:1
+{ompss-2,!@NANOS6_GATE@} error = "Flag --ompss-2 passed but Mercurium was built without support for OmpSs-2"
+#Analysis
+{analysis} compiler_phase = libtest_analysis.so
+{analysis-verbose} options = --debug-flags=analysis_verbose
+{pcfg} options = --variable=pcfg_enabled:1
+{use-def} options = --variable=use_def_enabled:1
+{liveness} options = --variable=liveness_enabled:1
+{reaching-defs} options = --variable=reaching_defs_enabled:1
+{induction-vars} options = --variable=induction_vars_enabled:1
+{task-sync-tune} options = --variable=task_sync_tune_enabled:1
+{range} options = --variable=range_analysis_enabled:1
+{complexity} options = --variable=cyclomatic_complexity_enabled:1
+{auto-scope} compiler_phase = libtlomp_auto_scope.so
+{auto-scope} options = --variable=auto_scope_enabled:1
+{tdg} options = --variable=tdg_enabled:1
+{etdg} options = --variable=etdg_enabled:1
+{analysis-check} pragma_prefix = analysis_check
+{analysis-check} compiler_phase = libanalysis_check.so
+{(openmp|ompss), (openmp-lint|task-correctness), !analysis-check} compiler_phase = libtlomp-lint.so
+{(openmp|ompss), (openmp-lint|task-correctness)} options = --variable=correctness_log_dir:@CORRECTNESS_LOG_DIR@
+{openmp-lint} options = --variable=lint_deprecated_flag:1
+{ompss-2, (oss-lint|oss-lint-tasks)} compiler_phase = libtloss-lint.so
+{(oss-lint|oss-lint-tasks), !ompss-2} error = "Either flag --oss-lint or --oss-lint-tasks passed, but flag --ompss-2 is missing"
+{oss-lint-tasks} options = --variable=oss_lint_only_tasks:1
+#simd
+{svml} preprocessor_options = -include math.h
+{simd, !(mmic|knl|avx2|neon|romol)} preprocessor_options = @SIMD_INCLUDES@ @SIMD_FLAGS@
+{simd, !(mmic|knl|avx2|neon|romol)} compiler_options = @SIMD_FLAGS@
+{simd} options = --variable=simd_enabled:1
+{svml} options = --variable=svml_enabled:1
+{svml} linker_options = -lsvml
+{mmic} linker_options = -mmic
+{knl} preprocessor_options = -xMIC-AVX512
+{knl} compiler_options = -xMIC-AVX512
+{knl} linker_options = -xMIC-AVX512 -lifcore -limf -lirng -lintlc
+{fast-math} options = --variable=fast_math_enabled:1
+{simd, knl} options = --variable=knl_enabled:1
+{simd, mmic} options = --variable=mic_enabled:1
+{simd, avx2} options = --variable=avx2_enabled:1
+{simd, neon} options = --variable=neon_enabled:1
+{simd, (romol|valib)} options = --variable=romol_enabled:1
+{simd, (romol|valib)} preprocessor_options = -I @PKGDATADIR@/romol -include valib.h
+{simd, (romol|valib), valib-sim} preprocessor_options = -DVALIB_HIDE_DECLS
+{simd, (romol|valib), valib-sim} options = --variable=valib_sim_header:1
+{(mmic|knl)} preprocessor_options = -include immintrin.h
+{simd, avx2} preprocessor_options = -O -mavx2 -include immintrin.h
+{simd, avx2} compiler_options = -mavx2
+{simd,neon} preprocessor_options = -mfpu=neon -include arm_neon.h
+{simd,neon} compiler_options = -mfpu=neon
+{simd,neon} linker_options = -mfpu=neon
+{neon} options = --vector-flavor=neon
+{romol} options = --vector-flavor=romol
+{!(neon|romol)} options = --vector-flavor=gnu
+{prefer-gather-scatter} options = --variable=prefer_gather_scatter:1
+{prefer-mask-gather-scatter} options = --variable=prefer_mask_gather_scatter:1
+{only-adjacent-accesses} options = --variable=only_adjacent_accesses:1
+{only-aligned-accesses} options = --variable=only_aligned_accesses:1
+{overlap-in-place} options = --variable=overlap_in_place:1
+{openmp, simd} compiler_phase = libtlomp-simd.so
+{openmp, simd} compiler_phase = libtlvector-lowering.so
+# Transparent Checkpoint Mechanism
+{@TCL_GATE@,checkpoint} preprocessor_options = -I@TCL_INCLUDES@ -include tcl.h
+{@TCL_GATE@,checkpoint} compiler_phase = libtlcheckpoint-lowering.so
+{@TCL_GATE@,checkpoint} linker_options = -L@TCL_LIB@/performance -ltcl
+# Nanos++
+{@NANOX_GATE@,openmp} pragma_prefix = nanos
+{@NANOX_GATE@,openmp} compiler_phase = libtlnanos-version.so
+{@NANOX_GATE@,cluster} options = --variable=nanos_main_enabled:1
+{@NANOX_GATE@,openmp,!do-not-lower-omp} compiler_phase = libtlnanox-lowering.so
+{@NANOX_GATE@,openmp,!do-not-lower-omp} compiler_phase = libtlnanox-smp.so
+{@NANOX_GATE@,openmp,!do-not-lower-omp} compiler_phase = libtlnanox-nanosmain.so
+# Nanos++ & CUDA
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} compiler_phase = libtlnanox-cuda.so
+# Nanos++ & OpenCL
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} compiler_phase = libtlnanox-opencl.so
+# Force ompss for Nanos 6 (unless explicitly disabled)
+{@NANOS6_GATE@,ompss-2,!do-not-lower-omp} compiler_phase = libtlnanos6-lowering.so
+# dlb
+{dlb} fortran_preprocessor_options = -I${DLB_HOME}/include
+{dlb} preprocessor_options = -I${DLB_HOME}/include
+{dlb} linker_options = -L${DLB_HOME}/lib -ldlb  -Xlinker @RPATH_PARAMETER@ -Xlinker ${DLB_HOME}/lib
+[omp-base : omp-base-common]
+linker_options =
+linker_options = -Xlinker --enable-new-dtags
+#Nanos++
+{@NANOX_GATE@,openmp,debug} options = --variable=nanos-debug:1
+{@NANOX_GATE@,openmp,(instrument|instrumentation)} options = --variable=instrument:1
+{@NANOX_GATE@,openmp,!mmic} preprocessor_options = -I@NANOX_INCLUDES@ -include nanos.h -include nanos_omp.h
+{@NANOX_GATE@,openmp,mmic} preprocessor_options = -I@NANOX_MIC_INCLUDES@ -include nanos.h -include nanos_omp.h
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,!(instrument|instrumentation),!mmic} linker_options = -L@NANOX_LIBS@/performance -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_LIBS@/performance
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,!(instrument|instrumentation),!mmic} linker_options = -L@NANOX_LIBS@/debug -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_LIBS@/debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,(instrument|instrumentation),!mmic} linker_options = -L@NANOX_LIBS@/instrumentation -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_LIBS@/instrumentation
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,(instrument|instrumentation),!mmic} linker_options = -L@NANOX_LIBS@/instrumentation-debug -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_LIBS@/instrumentation-debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,!(instrument|instrumentation),mmic} linker_options = -L@NANOX_MIC_LIBS@/performance -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_MIC_LIBS@/performance
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,!(instrument|instrumentation),mmic} linker_options = -L@NANOX_MIC_LIBS@/debug -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_MIC_LIBS@/debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,(instrument|instrumentation),mmic} linker_options = -L@NANOX_MIC_LIBS@/instrumentation -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_MIC_LIBS@/instrumentation
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,(instrument|instrumentation),mmic} linker_options = -L@NANOX_MIC_LIBS@/instrumentation-debug -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOX_MIC_LIBS@/instrumentation-debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!ompss} linker_options = -Xlinker --no-as-needed -lnanox-omp   -lnanox-c -lnanox -lpthread -lrt
+{@NANOX_GATE@,openmp,!omp-dry-run,ompss}  linker_options = -Xlinker --no-as-needed -lnanox-ompss -lnanox-c -lnanox -lpthread -lrt
+# used by XL
+{@NANOX_GATE@,openmp,!omp-dry-run} linker_options = @NANOX_GNU_LDFLAGS@
+# needed for the new link mechanism
+{@NANOX_GATE@,@NANOX_DYNAMIC_LIST@,openmp} linker_options = -Xlinker --dynamic-list=@PKGDATADIR@/nanos/nanos-exports.def
+# Nanos++ & CUDA
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} preprocessor_options = -include nanos-gpu.h
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} linker_options = -lnanox-gpu-api
+# Nanos++ & OpenCL
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} preprocessor_options = -include nanos-opencl.h -D_MERCURIUM_OPENCL_
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} linker_options = -lnanox-opencl-api
+#Nanos6
+{@NANOS6_GATE@,ompss-2,nanos6-by-env} preprocessor_options = -I${NANOS6_INCLUDE} -include nanos6.h
+{@NANOS6_GATE@,ompss-2,nanos6-by-env} linker_options = ${NANOS6_LIB}/nanos6-main-wrapper.o -L${NANOS6_LIB} -Wl,-z,lazy -lnanos6 -ldl -Xlinker @RPATH_PARAMETER@ -Xlinker ${NANOS6_LIB}
+{@NANOS6_GATE@,ompss-2,!nanos6-by-env,!?default-nanos6-inc|default-nanos6-inc} preprocessor_options = -I@NANOS6_INCLUDES@ -include nanos6.h
+{@NANOS6_GATE@,ompss-2,!nanos6-by-env,!?default-nanos6-lib|default-nanos6-lib} linker_options = @NANOS6_LIB@/nanos6-main-wrapper.o -L@NANOS6_LIB@ -Wl,-z,lazy -lnanos6 -ldl -Xlinker @RPATH_PARAMETER@ -Xlinker @NANOS6_LIB@
+# Nanos6 + CUDA
+{@NANOS6_GATE@,ompss-2,cuda} preprocessor_options = -DNANOS6_CUDA
+# Nanos6 + OpenCL
+{@NANOS6_GATE@,ompss-2,opencl} preprocessor_options = -DNANOS6_OPENCL
+# Nanos6 + OpenACC
+{@NANOS6_GATE@,ompss-2,openacc} preprocessor_options = -DNANOS6_OPENACC
+{@NANOS6_GATE@,ompss-2,openacc} compiler_phase = libtl-nanos6-openacc-functions.so
+# TCL
+{@TCL_GATE@, checkpoint} linker_options = -Xlinker @RPATH_PARAMETER@ -Xlinker @TCL_LIB@/performance
+[omp-base-ibm : omp-base-common]
+linker_options =
+#Nanos++
+{@NANOX_GATE@,openmp} preprocessor_options = -I@NANOX_INCLUDES@ -qinclude=nanos.h -qinclude=nanos_omp.h
+linker_options = -Wl,--enable-new-dtags
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,!(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/performance -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/performance
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,!(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/debug -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/instrumentation -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/instrumentation
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/instrumentation-debug -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/instrumentation-debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!ompss} linker_options = -Wl,--no-as-needed -lnanox-omp   -lnanox-c -lnanox -lpthread -lrt
+{@NANOX_GATE@,openmp,!omp-dry-run,ompss}  linker_options = -Wl,--no-as-needed -lnanox-ompss -lnanox-c -lnanox -lpthread -lrt
+# used by XL
+{@NANOX_GATE@,openmp,!omp-dry-run} linker_options = @NANOX_IBM_LDFLAGS@
+# needed for the new link mechanism
+{@NANOX_GATE@,@NANOX_DYNAMIC_LIST@,openmp} linker_options = -Wl,--dynamic-list=@PKGDATADIR@/nanos/nanos-exports.def
+# Nanos++ & CUDA
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} preprocessor_options = -qinclude nanos-gpu.h
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} linker_options = -lnanox-gpu-api
+# Nanos++ & OpenCL
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} preprocessor_options = -qinclude nanos-opencl.h -D_MERCURIUM_OPENCL_
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} linker_options = -lnanox-opencl-api
+[omp-base-cray : omp-base-common]
+linker_options =
+#Nanos++
+{@NANOX_GATE@,openmp,!(gnu|intel)} preprocessor_options = -I@NANOX_INCLUDES@ -Wp,-include,nanos.h,-include,nanos_omp.h
+{@NANOX_GATE@,openmp, (gnu|intel)} preprocessor_options = -I@NANOX_INCLUDES@ -include nanos.h -include nanos_omp.h
+linker_options = -dynamic -Wl,--enable-new-dtags
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,!(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/performance -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/performance
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,!(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/debug -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!debug,(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/instrumentation -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/instrumentation
+{@NANOX_GATE@,openmp,!omp-dry-run,debug,(instrument|instrumentation)} linker_options = -L@NANOX_LIBS@/instrumentation-debug -Wl,@RPATH_PARAMETER@,@NANOX_LIBS@/instrumentation-debug
+{@NANOX_GATE@,openmp,!omp-dry-run,!ompss} linker_options = -Wl,--no-as-needed -lnanox-omp   -lnanox-c -lnanox -lpthread -lrt
+{@NANOX_GATE@,openmp,!omp-dry-run,ompss}  linker_options = -Wl,--no-as-needed -lnanox-ompss -lnanox-c -lnanox -lpthread -lrt
+# needed for the new link mechanism
+{@NANOX_GATE@,@NANOX_DYNAMIC_LIST@,openmp} linker_options = -Wl,--dynamic-list=@PKGDATADIR@/nanos/nanos-exports.def
+# Nanos++ & CUDA
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda,!(gnu|intel)} preprocessor_options = -Wp,-include,nanos-gpu.h
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda, (gnu|intel)} preprocessor_options = -include nanos-gpu.h
+{@NANOX_GATE@,@ENABLE_CUDA@,ompss,cuda} linker_options = -lnanox-gpu-api
+# Nanos++ & OpenCL
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl,!(gnu|intel)} preprocessor_options = -Wp,-include,nanos-opencl.h -D_MERCURIUM_OPENCL_
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl, (gnu|intel)} preprocessor_options = -include nanos-opencl.h -D_MERCURIUM_OPENCL_
+{@NANOX_GATE@,@ENABLE_OPENCL@,ompss,opencl} linker_options = -lnanox-opencl-api
+#Nanos 6
+{@NANOS6_GATE@,ompss-2,!(gnu|intel)} preprocessor_options = -I@NANOS6_INCLUDES@ -Wp,-include,nanos6.h
+{@NANOS6_GATE@,ompss-2,(gnu|intel)} preprocessor_options = -I@NANOS6_INCLUDES@ -include nanos6.h
+{@NANOS6_GATE@,ompss-2} linker_options = @NANOS6_LIB@/nanos6-main-wrapper.o -L@NANOS6_LIB@ -lnanos6 -ldl -Wl,@RPATH_PARAMETER@,@NANOS6_LIB@
+# Nanos6 + CUDA
+{@NANOS6_GATE@,ompss-2,cuda} preprocessor_options = -DNANOS6_CUDA
+# Nanos6 + OpenCL
+{@NANOS6_GATE@,ompss-2,opencl} preprocessor_options = -DNANOS6_OPENCL

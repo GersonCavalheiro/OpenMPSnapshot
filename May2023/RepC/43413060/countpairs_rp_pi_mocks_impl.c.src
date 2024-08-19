@@ -1,0 +1,689 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h>
+#include <gsl/gsl_interp.h>
+#include "defs.h"
+#include "utils.h"
+#include "cosmology_params.h"
+#include "set_cosmo_dist.h"
+#include "cpu_features.h"
+#include "progressbar.h"
+#if defined(_OPENMP)
+#include <omp.h>
+#endif
+#include "countpairs_rp_pi_mocks_impl_DOUBLE.h"
+#include "countpairs_rp_pi_mocks_kernels_DOUBLE.c" 
+#include "gridlink_utils_DOUBLE.h"
+#include "gridlink_mocks_impl_DOUBLE.h"
+int interrupt_status_DDrppi_mocks_DOUBLE=EXIT_SUCCESS;
+void interrupt_handler_countpairs_rp_pi_mocks_DOUBLE(int signo)
+{
+fprintf(stderr,"Received signal = `%s' (signo = %d). Aborting \n",strsignal(signo), signo);
+interrupt_status_DDrppi_mocks_DOUBLE = EXIT_FAILURE;
+}
+int check_ra_dec_cz_DOUBLE(const int64_t N, DOUBLE *phi, DOUBLE *theta, DOUBLE *cz, const uint8_t is_comoving_dist)
+{
+if(N==0) {
+return EXIT_SUCCESS;
+}
+if(phi == NULL || theta == NULL || cz == NULL) {
+fprintf(stderr,"Input arrays can not be NULL. Have RA = %p DEC = %p cz = %p\n", phi, theta, cz);
+return EXIT_FAILURE;
+}
+int fix_cz  = 0;
+int fix_ra  = 0;
+int fix_dec = 0;
+const DOUBLE max_cz_threshold = 10.0;
+DOUBLE max_cz = 0.0;
+for(int64_t i=0;i<N;i++) {
+if(cz[i] > max_cz) max_cz = cz[i];
+if(phi[i] < 0.0) {
+fix_ra = 1;
+}
+if(theta[i] > 90.0) {
+fix_dec = 1;
+}
+if(theta[i] > 180) {
+fprintf(stderr,"theta[%"PRId64"] = %"REAL_FORMAT"should be less than 180 deg\n", i, theta[i]);
+return EXIT_FAILURE;
+}
+}
+if((max_cz < max_cz_threshold) && (is_comoving_dist == 0)) fix_cz = 1; 
+if(fix_cz==1 || fix_ra == 1 || fix_dec == 1) {
+if(fix_ra == 1) {
+fprintf(stderr,"%s> Out of range values found for ra. Expected ra to be in the range [0.0,360.0]. Found ra values in [-180,180] -- fixing that\n", __FUNCTION__);
+}
+if(fix_dec == 1) {
+fprintf(stderr,"%s> Out of range values found for dec. Expected dec to be in the range [-90.0,90.0]. Found dec values in [0,180] -- fixing that\n", __FUNCTION__);
+}
+if(fix_cz == 1)  {
+fprintf(stderr,"%s> Out of range values found for cz. Expected input to be `cz' but found `z' instead. max_cz (found in input) = %"REAL_FORMAT" threshold "
+"= %"REAL_FORMAT"\n",__FUNCTION__,max_cz,max_cz_threshold);
+}
+for(int64_t i=0;i<N;i++) {
+if(fix_ra==1) {
+phi[i] += (DOUBLE) 180.0;
+}
+if(fix_dec==1) {
+theta[i] -= (DOUBLE) 90.0;
+}
+if(fix_cz == 1) {
+cz[i] *= (DOUBLE) SPEED_OF_LIGHT;
+}
+}
+}
+return EXIT_SUCCESS;
+}
+countpairs_mocks_func_ptr_DOUBLE countpairs_rp_pi_mocks_driver_DOUBLE(const struct config_options *options)
+{
+static countpairs_mocks_func_ptr_DOUBLE function = NULL;
+static isa old_isa = (isa) -1;
+if(old_isa == options->instruction_set) {
+return function;
+}
+countpairs_mocks_func_ptr_DOUBLE allfunctions[] = {
+countpairs_rp_pi_mocks_fallback_DOUBLE,
+#ifdef __SSE4_2__
+countpairs_rp_pi_mocks_sse_intrinsics_DOUBLE,
+#endif
+#ifdef __AVX__
+countpairs_rp_pi_mocks_avx_intrinsics_DOUBLE,
+#endif
+#ifdef __AVX512F__
+countpairs_rp_pi_mocks_avx512_intrinsics_DOUBLE,
+#endif
+};
+const int num_functions = sizeof(allfunctions)/sizeof(void *);
+const int fallback_index = 0;
+#if defined(__AVX512F__) || defined(__AVX__) || defined(__SSE4_2__)
+const int highest_isa = get_max_usable_isa();
+#endif
+int curr_index = 0;
+int sse_index = curr_index;
+#ifdef __SSE4_2__
+curr_index++;
+if(highest_isa >= SSE42) sse_index = curr_index;
+#endif
+int avx_index = curr_index;
+#ifdef __AVX__
+curr_index++;
+if(highest_isa >= AVX) avx_index = curr_index;
+#endif
+int avx512_index = curr_index;
+#ifdef __AVX512F__
+curr_index++;
+if(highest_isa >= AVX512F) avx512_index = curr_index;
+#endif
+if( curr_index != num_functions-1) {
+fprintf(stderr,"ERROR: Bug in code (current index = %d *should equal* num_functions-1 = %d-1)\n",
+curr_index, num_functions);
+return NULL;
+}
+int function_dispatch = num_functions-1;  
+if(options->instruction_set >= 0) {
+switch(options->instruction_set) {
+case(AVX512F):function_dispatch=avx512_index;break;
+case(AVX2):
+case(AVX):function_dispatch=avx_index;break;
+case(SSE42):function_dispatch=sse_index;break;
+default:function_dispatch=fallback_index;break;
+}
+}
+if(function_dispatch >= num_functions) {
+fprintf(stderr,"In %s> ERROR: Could not resolve the correct function.\n Function index = %d must lie between [0, %d)\n",
+__FUNCTION__, function_dispatch, num_functions);
+return NULL;
+}
+function = allfunctions[function_dispatch];
+old_isa = options->instruction_set;
+if(options->verbose){
+if(function_dispatch == fallback_index){
+fprintf(stderr,"Using fallback kernel\n");
+} else if(function_dispatch == sse_index){
+fprintf(stderr,"Using SSE kernel\n");
+} else if(function_dispatch == avx_index){
+fprintf(stderr,"Using AVX kernel\n");
+} else if(function_dispatch == avx512_index){
+fprintf(stderr,"Using AVX512 kernel\n");
+} else {
+fprintf(stderr,"Unknown kernel!\n");
+return NULL;
+}
+}
+return function;
+}
+int countpairs_mocks_DOUBLE(const int64_t ND1, DOUBLE *ra1, DOUBLE *dec1, DOUBLE *czD1,
+const int64_t ND2, DOUBLE *ra2, DOUBLE *dec2, DOUBLE *czD2,
+const int numthreads,
+const int autocorr,
+const char *binfile,
+const DOUBLE pimax,
+const int cosmology,
+results_countpairs_mocks *results,
+struct config_options *options, struct extra_options *extra)
+{
+if(options->float_type != sizeof(DOUBLE)) {
+fprintf(stderr,"ERROR: In %s> Can only handle arrays of size=%zu. Got an array of size = %zu\n",
+__FUNCTION__, sizeof(DOUBLE), options->float_type);
+return EXIT_FAILURE;
+}
+struct extra_options dummy_extra;
+if(extra == NULL){
+weight_method_t dummy_method = NONE;
+dummy_extra = get_extra_options(dummy_method);
+extra = &dummy_extra;
+}
+int need_weightavg = extra->weight_method != NONE;
+options->sort_on_z = 1;
+struct timeval t0;
+if(options->c_api_timer) {
+gettimeofday(&t0, NULL);
+}
+if(options->fast_divide_and_NR_steps >= MAX_FAST_DIVIDE_NR_STEPS) {
+fprintf(stderr, ANSI_COLOR_MAGENTA"Warning: The number of requested Newton-Raphson steps = %u is larger than max. allowed steps = %u."
+" Switching to a standard divide"ANSI_COLOR_RESET"\n",
+options->fast_divide_and_NR_steps, MAX_FAST_DIVIDE_NR_STEPS);
+options->fast_divide_and_NR_steps = 0;
+}
+if(ND1 == 0 || (autocorr == 0 && ND2 == 0)) {
+return EXIT_SUCCESS;
+}
+int status1 = check_ra_dec_cz_DOUBLE(ND1, ra1, dec1, czD1, options->is_comoving_dist);
+if(status1 != EXIT_SUCCESS) {
+return status1;
+}
+if(autocorr==0) {
+int status2 = check_ra_dec_cz_DOUBLE(ND2, ra2, dec2, czD2, options->is_comoving_dist);
+if(status2 != EXIT_SUCCESS) {
+return status2;
+}
+}
+#if defined(_OPENMP)
+omp_set_num_threads(numthreads);
+#else
+(void) numthreads;
+#endif
+if(options->max_cells_per_dim == 0) {
+fprintf(stderr,"Warning: Max. cells per dimension is set to 0 - resetting to `NLATMAX' = %d\n", NLATMAX);
+options->max_cells_per_dim = NLATMAX;
+}
+for(int i=0;i<3;i++) {
+if(options->bin_refine_factors[i] < 1) {
+fprintf(stderr,"Warning: bin refine factor along axis = %d *must* be >=1. Instead found bin refine factor =%d\n",
+i, options->bin_refine_factors[i]);
+reset_bin_refine_factors(options);
+break;
+}
+}
+const int npibin = (int) pimax;
+SETUP_INTERRUPT_HANDLERS(interrupt_handler_countpairs_rp_pi_mocks_DOUBLE);
+{
+int status = init_cosmology(cosmology);
+if(status != EXIT_SUCCESS) {
+return status;
+}
+}
+double *rupp;
+int nrpbin ;
+double rpmin,rpmax;
+setup_bins(binfile,&rpmin,&rpmax,&nrpbin,&rupp);
+if( ! (rpmin > 0.0 && rpmax > 0.0 && rpmin < rpmax && nrpbin > 0)) {
+fprintf(stderr,"Error: Could not setup with R bins correctly. (rmin = %lf, rmax = %lf, with nbins = %d). Expected non-zero rmin/rmax with rmax > rmin and nbins >=1 \n",
+rpmin, rpmax, nrpbin);
+return EXIT_FAILURE;
+}
+const DOUBLE sqr_max_sep = rpmax*rpmax + pimax*pimax;
+const DOUBLE max_sep = SQRT(sqr_max_sep);
+DOUBLE *D1 = NULL, *D2 = NULL;
+if(options->is_comoving_dist == 0) {
+D1 = my_malloc(sizeof(*D1),ND1);
+D2 = autocorr == 0 ? my_malloc(sizeof(*D2),ND2):D1;
+} else {
+D1 = czD1;
+D2 = autocorr == 0 ? czD2:czD1;
+}
+if(D1 == NULL || D2 == NULL) {
+free(D1);free(D2);
+return EXIT_FAILURE;
+}
+if(options->is_comoving_dist == 0) {
+DOUBLE czmax = 0.0;
+const DOUBLE inv_speed_of_light = 1.0/SPEED_OF_LIGHT;
+get_max_DOUBLE(ND1, czD1, &czmax);
+if(autocorr == 0) {
+get_max_DOUBLE(ND2, czD2, &czmax);
+}
+const double zmax = czmax * inv_speed_of_light + 0.01;
+const int workspace_size = 10000;
+double *interp_redshift  = my_calloc(sizeof(*interp_redshift), workspace_size);
+double *interp_comoving_dist = my_calloc(sizeof(*interp_comoving_dist),workspace_size);
+int Nzdc = set_cosmo_dist(zmax, workspace_size, interp_redshift, interp_comoving_dist, cosmology);
+if(Nzdc < 0) {
+free(interp_redshift);free(interp_comoving_dist);
+return EXIT_FAILURE;
+}
+gsl_interp *interpolation;
+gsl_interp_accel *accelerator;
+accelerator =  gsl_interp_accel_alloc();
+interpolation = gsl_interp_alloc (gsl_interp_linear,Nzdc);
+gsl_interp_init(interpolation, interp_redshift, interp_comoving_dist, Nzdc);
+for(int64_t i=0;i<ND1;i++) {
+D1[i] = gsl_interp_eval(interpolation, interp_redshift, interp_comoving_dist, czD1[i]*inv_speed_of_light, accelerator);
+}
+if(autocorr==0) {
+for(int64_t i=0;i<ND2;i++) {
+D2[i] = gsl_interp_eval(interpolation, interp_redshift, interp_comoving_dist, czD2[i]*inv_speed_of_light, accelerator);
+}
+}
+free(interp_redshift);free(interp_comoving_dist);
+gsl_interp_free(interpolation);
+gsl_interp_accel_free(accelerator);
+}
+DOUBLE *X1 = my_malloc(sizeof(*X1), ND1);
+DOUBLE *Y1 = my_malloc(sizeof(*Y1), ND1);
+DOUBLE *Z1 = my_malloc(sizeof(*Z1), ND1);
+if(X1 == NULL || Y1 == NULL || Z1 == NULL) {
+free(X1);free(Y1);free(Z1);
+return EXIT_FAILURE;
+}
+for(int64_t i=0;i<ND1;i++) {
+X1[i] = D1[i]*COSD(dec1[i])*COSD(ra1[i]);
+Y1[i] = D1[i]*COSD(dec1[i])*SIND(ra1[i]);
+Z1[i] = D1[i]*SIND(dec1[i]);
+}
+DOUBLE *X2,*Y2,*Z2;
+if(autocorr==0) {
+X2 = my_malloc(sizeof(*X2), ND2);
+Y2 = my_malloc(sizeof(*Y2), ND2);
+Z2 = my_malloc(sizeof(*Z2), ND2);
+for(int64_t i=0;i<ND2;i++) {
+X2[i] = D2[i]*COSD(dec2[i])*COSD(ra2[i]);
+Y2[i] = D2[i]*COSD(dec2[i])*SIND(ra2[i]);
+Z2[i] = D2[i]*SIND(dec2[i]);
+}
+} else {
+X2 = X1;
+Y2 = Y1;
+Z2 = Z1;
+}
+DOUBLE sqr_rpmin = rpmin*rpmin;
+DOUBLE sqr_rpmax = rpmax*rpmax;
+DOUBLE rupp_sqr[nrpbin];
+rupp_sqr[0] = sqr_rpmin;
+for(int i=0;i<nrpbin;i++) {
+rupp_sqr[i] = rupp[i]*rupp[i];
+}
+DOUBLE xmin, xmax, ymin, ymax, zmin, zmax;
+xmin = ymin = zmin = MAX_POSITIVE_FLOAT;
+xmax = ymax = zmax = -MAX_POSITIVE_FLOAT;
+get_max_min_DOUBLE(ND1, X1, Y1, Z1, &xmin, &ymin, &zmin, &xmax, &ymax, &zmax);
+if(autocorr==0) {
+get_max_min_DOUBLE(ND2, X2, Y2, Z2, &xmin, &ymin, &zmin, &xmax, &ymax, &zmax);
+}
+const DOUBLE xdiff = xmax-xmin;
+const DOUBLE ydiff = ymax-ymin;
+const DOUBLE zdiff = zmax-zmin;
+if(get_bin_refine_scheme(options) == BINNING_DFL) {
+if(max_sep < 0.05*xdiff) {
+options->bin_refine_factors[0] = 1;
+}
+if(max_sep < 0.05*ydiff) {
+options->bin_refine_factors[1] = 1;
+}
+if(max_sep < 0.05*zdiff) {
+options->bin_refine_factors[2] = 1;
+}
+}
+int nmesh_x=0,nmesh_y=0,nmesh_z=0;
+cellarray_mocks_DOUBLE *lattice1 = gridlink_mocks_DOUBLE(ND1, X1, Y1, Z1, &(extra->weights0),
+xmin, xmax,
+ymin, ymax,
+zmin, zmax,
+max_sep, max_sep, max_sep,
+options->bin_refine_factors[0],
+options->bin_refine_factors[1],
+options->bin_refine_factors[2],
+&nmesh_x, &nmesh_y, &nmesh_z,
+options);
+if(lattice1 == NULL) {
+return EXIT_FAILURE;
+}
+const double avg_np1 = ((double)ND1)/(nmesh_x*nmesh_y*nmesh_z);
+const double avg_np2 = ((double)ND2)/(nmesh_x*nmesh_y*nmesh_z);
+const double avg_np = avg_np1 > avg_np2 ? avg_np1:avg_np2;
+const int max_nmesh = fmax(nmesh_x, fmax(nmesh_y, nmesh_z));
+if((max_nmesh <= BOOST_CELL_THRESH || avg_np >= BOOST_NUMPART_THRESH)
+&& max_nmesh < options->max_cells_per_dim) {
+if(options->verbose) {
+fprintf(stderr,"%s> gridlink seems inefficient. nmesh = (%d, %d, %d); avg_np = %.3g. ", __FUNCTION__, nmesh_x, nmesh_y, nmesh_z, avg_np);
+}
+if(get_bin_refine_scheme(options) == BINNING_DFL) {
+if(options->verbose) {
+fprintf(stderr,"Boosting bin refine factor - should lead to better performance\n");
+}
+for(int i=0;i<2;i++) {
+options->bin_refine_factors[i] += BOOST_BIN_REF;
+}
+free_cellarray_mocks_DOUBLE(lattice1, nmesh_x * (int64_t) nmesh_y * nmesh_z);
+lattice1 = gridlink_mocks_DOUBLE(ND1, X1, Y1, Z1, &(extra->weights0),
+xmin, xmax,
+ymin, ymax,
+zmin, zmax,
+max_sep, max_sep, max_sep,
+options->bin_refine_factors[0],
+options->bin_refine_factors[1],
+options->bin_refine_factors[2],
+&nmesh_x, &nmesh_y, &nmesh_z,
+options);
+if(lattice1 == NULL) {
+return EXIT_FAILURE;
+}
+} else {
+if(options->verbose) {
+fprintf(stderr,"Boosting bin refine factor could have helped. However, since custom bin refine factors "
+"= (%d, %d, %d) are being used - continuing with inefficient mesh\n", options->bin_refine_factors[0],
+options->bin_refine_factors[1], options->bin_refine_factors[2]);
+}
+}
+}
+cellarray_mocks_DOUBLE *lattice2 = NULL;
+if(autocorr==0) {
+int ngrid2_x=0,ngrid2_y=0,ngrid2_z=0;
+lattice2 = gridlink_mocks_DOUBLE(ND2, X2, Y2, Z2, &(extra->weights1),
+xmin, xmax,
+ymin, ymax,
+zmin, zmax,
+max_sep, max_sep, max_sep,
+options->bin_refine_factors[0],
+options->bin_refine_factors[1],
+options->bin_refine_factors[2],
+&ngrid2_x, &ngrid2_y, &ngrid2_z, options);
+if(lattice2 == NULL) {
+return EXIT_FAILURE;
+}
+if( ! (nmesh_x == ngrid2_x && nmesh_y == ngrid2_y && nmesh_z == ngrid2_z) ) {
+fprintf(stderr,"Error: The two sets of 3-D lattices do not have identical bins. First has dims (%d, %d, %d) while second has (%d, %d, %d)\n",
+nmesh_x, nmesh_y, nmesh_z, ngrid2_x, ngrid2_y, ngrid2_z);
+return EXIT_FAILURE;
+}
+} else {
+lattice2 = lattice1;
+}
+if(options->copy_particles) {
+free(X1);free(Y1);free(Z1);
+if(autocorr == 0) {
+free(X2);free(Y2);free(Z2);
+}
+}
+if(options->is_comoving_dist == 0) {
+free(D1);
+if(autocorr == 0) {
+free(D2);
+}
+}
+const int64_t totncells = (int64_t) nmesh_x * (int64_t) nmesh_y * (int64_t) nmesh_z;
+int64_t num_cell_pairs = 0;
+struct cell_pair_DOUBLE *all_cell_pairs = generate_cell_pairs_mocks_DOUBLE(lattice1, lattice2, totncells,
+&num_cell_pairs,
+options->bin_refine_factors[0],
+options->bin_refine_factors[1],
+options->bin_refine_factors[2],
+nmesh_x, nmesh_y, nmesh_z,
+max_sep,
+options->enable_min_sep_opt,
+autocorr);
+if(all_cell_pairs == NULL) {
+free_cellarray_mocks_DOUBLE(lattice1, totncells);
+if(autocorr == 0) {
+free_cellarray_mocks_DOUBLE(lattice2, totncells);
+}
+free(rupp);
+return EXIT_FAILURE;
+}
+const int totnbins = (nrpbin+1)*(npibin+1);
+#if defined(_OPENMP)
+uint64_t **all_npairs = (uint64_t **) matrix_calloc(sizeof(uint64_t), numthreads, totnbins);
+DOUBLE **all_rpavg = NULL;
+if(options->need_avg_sep){
+all_rpavg = (DOUBLE **) matrix_calloc(sizeof(DOUBLE),numthreads,totnbins);
+}
+DOUBLE **all_weightavg = NULL;
+if(need_weightavg) {
+all_weightavg = (DOUBLE **) matrix_calloc(sizeof(DOUBLE),numthreads,totnbins);
+}
+#else 
+uint64_t npairs[totnbins];
+DOUBLE rpavg[totnbins], weightavg[totnbins];
+for(int i=0; i <totnbins;i++) {
+npairs[i] = 0;
+if(options->need_avg_sep) {
+rpavg[i] = ZERO;
+}
+if(need_weightavg) {
+weightavg[i] = ZERO;
+}
+}
+#endif 
+countpairs_mocks_func_ptr_DOUBLE countpairs_rp_pi_mocks_function_DOUBLE = countpairs_rp_pi_mocks_driver_DOUBLE(options);
+if(countpairs_rp_pi_mocks_function_DOUBLE == NULL) {
+return EXIT_FAILURE;
+}
+int interrupted=0,numdone=0, abort_status=EXIT_SUCCESS;
+if(options->verbose) {
+init_my_progressbar(num_cell_pairs, &interrupted);
+}
+#if defined(_OPENMP)
+#pragma omp parallel shared(numdone, abort_status, interrupt_status_DDrppi_mocks_DOUBLE)
+{
+const int tid = omp_get_thread_num();
+uint64_t npairs[totnbins];
+DOUBLE rpavg[totnbins], weightavg[totnbins];
+for(int i=0;i<totnbins;i++) {
+npairs[i] = 0;
+if(options->need_avg_sep) {
+rpavg[i] = ZERO;
+}
+if(need_weightavg) {
+weightavg[i] = ZERO;
+}
+}
+#pragma omp for  schedule(dynamic)
+#endif
+for(int64_t icellpair=0;icellpair<num_cell_pairs;icellpair++) {
+#if defined(_OPENMP)
+#pragma omp flush (abort_status, interrupt_status_DDrppi_mocks_DOUBLE)
+#endif
+if(abort_status == EXIT_SUCCESS && interrupt_status_DDrppi_mocks_DOUBLE == EXIT_SUCCESS) {
+if(options->verbose) {
+#if defined(_OPENMP)
+if (omp_get_thread_num() == 0)
+#endif
+my_progressbar(numdone,&interrupted);
+#if defined(_OPENMP)
+#pragma omp atomic
+#endif
+numdone++;
+}
+struct cell_pair_DOUBLE *this_cell_pair = &all_cell_pairs[icellpair];
+DOUBLE *this_rpavg = options->need_avg_sep ? rpavg:NULL;
+DOUBLE *this_weightavg = need_weightavg ? weightavg:NULL;
+const int64_t icell = this_cell_pair->cellindex1;
+const int64_t icell2 = this_cell_pair->cellindex2;
+const cellarray_mocks_DOUBLE *first = &lattice1[icell];
+const cellarray_mocks_DOUBLE *second = &lattice2[icell2];
+const int status = countpairs_rp_pi_mocks_function_DOUBLE(first->nelements, first->x, first->y, first->z, &(first->weights),
+second->nelements, second->x, second->y, second->z, &(second->weights),
+this_cell_pair->same_cell,
+options->fast_divide_and_NR_steps,
+sqr_rpmax, sqr_rpmin, nrpbin, npibin, rupp_sqr, pimax,
+this_cell_pair->min_dx, this_cell_pair->min_dy, this_cell_pair->min_dz,
+this_cell_pair->closest_x1, this_cell_pair->closest_y1, this_cell_pair->closest_z1,
+this_rpavg, npairs,
+this_weightavg, extra->weight_method);
+abort_status |= status;
+}
+}
+#if defined(_OPENMP)
+for(int i=0;i<totnbins;i++) {
+all_npairs[tid][i] = npairs[i];
+if(options->need_avg_sep) {
+all_rpavg[tid][i] = rpavg[i];
+}
+if(need_weightavg) {
+all_weightavg[tid][i] = weightavg[i];
+}
+}
+}
+#endif
+free(all_cell_pairs);
+if(options->copy_particles == 0) {
+free(X1);free(Y1);free(Z1);
+int64_t *original_index = lattice1[0].original_index;
+int status = reorder_particles_mocks_back_into_original_order_DOUBLE(ND1, original_index, &(extra->weights0));
+if(status != EXIT_SUCCESS) {
+return status;
+}
+if(autocorr == 0) {
+free(X2);free(Y2);free(Z2);
+original_index = lattice2[0].original_index;
+status = reorder_particles_mocks_back_into_original_order_DOUBLE(ND2, original_index, &(extra->weights1));
+if(status != EXIT_SUCCESS) {
+return status;
+}
+}
+}
+free_cellarray_mocks_DOUBLE(lattice1,totncells);
+if(autocorr == 0) {
+free_cellarray_mocks_DOUBLE(lattice2,totncells);
+}
+if(abort_status != EXIT_SUCCESS || interrupt_status_DDrppi_mocks_DOUBLE != EXIT_SUCCESS) {
+free(rupp);
+#if defined(_OPENMP)
+matrix_free((void **) all_npairs, numthreads);
+if(options->need_avg_sep) {
+matrix_free((void **) all_rpavg, numthreads);
+}
+if(need_weightavg) {
+matrix_free((void **) all_weightavg, numthreads);
+}
+#endif
+return EXIT_FAILURE;
+}
+if(options->verbose) {
+finish_myprogressbar(&interrupted);
+}
+#if defined(_OPENMP)
+uint64_t npairs[totnbins];
+DOUBLE rpavg[totnbins], weightavg[totnbins];
+for(int i=0;i<totnbins;i++) {
+npairs[i] = 0;
+if(options->need_avg_sep) {
+rpavg[i] = ZERO;
+}
+if(need_weightavg) {
+weightavg[i] = ZERO;
+}
+}
+for(int i=0;i<numthreads;i++) {
+for(int j=0;j<totnbins;j++) {
+npairs[j] += all_npairs[i][j];
+if(options->need_avg_sep) {
+rpavg[j] += all_rpavg[i][j];
+}
+if(need_weightavg) {
+weightavg[j] += all_weightavg[i][j];
+}
+}
+}
+matrix_free((void **) all_npairs, numthreads);
+if(options->need_avg_sep) {
+matrix_free((void **) all_rpavg, numthreads);
+}
+if(need_weightavg) {
+matrix_free((void **) all_weightavg, numthreads);
+}
+#endif 
+if(autocorr == 1) {
+const uint64_t int_fac = 2;
+const DOUBLE dbl_fac = (DOUBLE) 2.0;
+for(int i=0;i<totnbins;i++) {
+npairs[i] *= int_fac;
+if(options->need_avg_sep) {
+rpavg[i] *= dbl_fac;
+}
+if(need_weightavg) {
+weightavg[i] *= dbl_fac;
+}
+}
+if(rupp[0] <= 0.0) {
+npairs[1] += ND1; 
+if(need_weightavg){
+weight_func_t_DOUBLE weight_func = get_weight_func_by_method_DOUBLE(extra->weight_method);
+pair_struct_DOUBLE pair = {.num_weights = extra->weights0.num_weights,
+.dx.d=0., .dy.d=0., .dz.d=0.,  
+.parx.d=0., .pary.d=0., .parz.d=0.};
+for(int64_t j = 0; j < ND1; j++){
+for(int w = 0; w < pair.num_weights; w++){
+pair.weights0[w].d = ((DOUBLE *) extra->weights0.weights[w])[j];
+pair.weights1[w].d = ((DOUBLE *) extra->weights0.weights[w])[j];
+}
+weightavg[1] += weight_func(&pair);
+}
+}
+}
+}
+for(int i=0;i<totnbins;i++) {
+if(npairs[i] > 0) {
+if(options->need_avg_sep) {
+rpavg[i] /= (DOUBLE) npairs[i] ;
+}
+if(need_weightavg) {
+weightavg[i] /= (DOUBLE) npairs[i];
+}
+}
+}
+results->nbin   = nrpbin;
+results->npibin = npibin;
+results->pimax  = pimax;
+results->npairs = my_malloc(sizeof(*(results->npairs)), totnbins);
+results->rupp   = my_malloc(sizeof(*(results->rupp))  , nrpbin);
+results->rpavg  = my_malloc(sizeof(*(results->rpavg)) , totnbins);
+results->weightavg  = my_calloc(sizeof(double)  , totnbins);
+if(results->npairs == NULL || results->rupp == NULL || results->rpavg == NULL || results->weightavg == NULL) {
+free_results_mocks(results);
+free(rupp);
+return EXIT_FAILURE;
+}
+for(int i=0;i<nrpbin;i++) {
+results->rupp[i] = rupp[i];
+for(int j=0;j<npibin;j++) {
+const int index = i*(npibin+1) + j;
+if( index >= totnbins ) {
+fprintf(stderr, "ERROR: In %s> index = %d must be in range [0, %d)\n", __FUNCTION__, index, totnbins);
+free_results_mocks(results);
+free(rupp);
+return EXIT_FAILURE;
+}
+results->npairs[index] = npairs[index];
+results->rpavg[index] = ZERO;
+results->weightavg[index] = ZERO;
+if(options->need_avg_sep) {
+results->rpavg[index] = rpavg[index];
+}
+if(need_weightavg) {
+results->weightavg[index] = weightavg[index];
+}
+}
+}
+free(rupp);
+RESET_INTERRUPT_HANDLERS();
+reset_bin_refine_factors(options);
+if(options->c_api_timer) {
+struct timeval t1;
+gettimeofday(&t1, NULL);
+options->c_api_time = ADD_DIFF_TIME(t0, t1);
+}
+return EXIT_SUCCESS;
+}

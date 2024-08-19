@@ -1,0 +1,670 @@
+#include "tl-omp-core.hpp"
+#include "tl-omp-deps.hpp"
+#include "cxx-diagnostic.h"
+#include "cxx-exprtype.h"
+#include "cxx-entrylist.h"
+#include "fortran03-exprtype.h"
+#include <sys/types.h>
+#include <regex.h>
+#include "tl-modules.hpp"
+namespace TL {
+template <>
+struct ModuleWriterTrait<OpenMP::DependencyItem::ItemDirection>
+: EnumWriterTrait<OpenMP::DependencyItem::ItemDirection> { };
+template <>
+struct ModuleReaderTrait<OpenMP::DependencyItem::ItemDirection>
+: EnumReaderTrait<OpenMP::DependencyItem::ItemDirection> { };
+namespace OpenMP {
+DependencyItem::DependencyItem(DataReference dep_expr, ItemDirection kind)
+: DataReference(dep_expr), _kind(kind)
+{ }
+DependencyItem::ItemDirection DependencyItem::get_kind() const
+{
+return _kind;
+}
+void DependencyItem::module_write(ModuleWriter& mw)
+{
+this->TL::DataReference::module_write(mw);
+mw.write(_kind);
+}
+void DependencyItem::module_read(ModuleReader& mr)
+{
+this->TL::DataReference::module_read(mr);
+mr.read(_kind);
+}
+void add_extra_symbols(Nodecl::NodeclBase data_ref,
+DataEnvironment& ds,
+ObjectList<Symbol>& extra_symbols)
+{
+struct DataRefVisitorDep : public Nodecl::ExhaustiveVisitor<void>
+{
+struct ExtraDataSharing : public Nodecl::ExhaustiveVisitor<void>
+{
+DataEnvironment& _data_sharing;
+ObjectList<Symbol>& _symbols;
+const ObjectList<Symbol>& _iterators;
+ExtraDataSharing(DataEnvironment& ds_, ObjectList<Symbol>& symbols,
+const ObjectList<Symbol>& iterators)
+:_data_sharing(ds_), _symbols(symbols), _iterators(iterators) { }
+void visit(const Nodecl::Symbol& node)
+{
+TL::Symbol sym = node.get_symbol();
+if (!sym.is_valid()
+|| !sym.is_variable()
+|| sym.is_fortran_parameter()
+|| _iterators.contains(sym))
+return;
+DataSharingValue current_datasharing =
+_data_sharing.get_data_sharing(sym,
+false);
+if (current_datasharing.attr == DS_UNDEFINED)
+{
+_symbols.append(sym);
+}
+}
+void visit(const Nodecl::ClassMemberAccess& node)
+{
+walk(node.get_lhs());
+}
+};
+ExtraDataSharing _extra_data_sharing;
+ObjectList<TL::Symbol> _iterators;
+DataRefVisitorDep(DataEnvironment& ds_, ObjectList<Symbol>& symbols)
+: _extra_data_sharing(ds_, symbols, _iterators) { }
+void visit_pre(const Nodecl::Symbol &node)
+{
+if (node.get_type().no_ref().is_array())
+{
+if (IS_C_LANGUAGE || IS_CXX_LANGUAGE)
+{
+_extra_data_sharing.walk(node.get_type().no_ref().array_get_size());
+}
+else if (IS_FORTRAN_LANGUAGE)
+{
+Nodecl::NodeclBase lb, ub;
+node.get_type().no_ref().array_get_bounds(lb, ub);
+_extra_data_sharing.walk(lb);
+_extra_data_sharing.walk(ub);
+}
+}
+}
+void visit_pre(const Nodecl::Shaping &node)
+{
+_extra_data_sharing.walk(node.get_shape());
+}
+void visit_pre(const Nodecl::ArraySubscript &node)
+{
+_extra_data_sharing.walk(node.get_subscripts());
+}
+void visit_pre(const Nodecl::ClassMemberAccess &node)
+{
+_extra_data_sharing.walk(node.get_lhs());
+}
+void visit(const Nodecl::MultiExpression& node)
+{
+Nodecl::List iterators = node.get_iterators().as<Nodecl::List>();
+for (Nodecl::List::const_iterator it = iterators.begin();
+it != iterators.end();
+it++)
+{
+_iterators.push_back(it->as<Nodecl::MultiExpressionIterator>().get_symbol());
+}
+walk(node.get_expr());
+_iterators.clear();
+}
+};
+DataRefVisitorDep data_ref_visitor_dep(ds, extra_symbols);
+data_ref_visitor_dep.walk(data_ref);
+}
+template < DependencyDirection dep_dir>
+static void get_info_from_dependences(
+const ObjectList<Nodecl::NodeclBase>& expression_list,
+DataSharingAttribute default_data_attr,
+bool in_ompss_mode,
+const std::string &clause_name,
+DataEnvironment& data_sharing_environment,
+ObjectList<Symbol>& extra_symbols)
+{
+for (ObjectList<Nodecl::NodeclBase>::const_iterator it = expression_list.begin();
+it != expression_list.end();
+it++)
+{
+DataReference expr(*it);
+if (!expr.is_valid())
+{
+expr.commit_diagnostic();
+warn_printf_at(expr.get_locus(),
+"invalid '%s' expression  in '%s' clause, skipping\n",
+expr.prettyprint().c_str(), clause_name.c_str());
+continue;
+}
+DependencyItem dep_item(*it, dep_dir);
+Symbol sym = expr.get_base_symbol();
+if (!in_ompss_mode)
+{
+if (
+expr.is<Nodecl::ClassMemberAccess>()
+|| (sym.is_variable() && sym.is_member() && !sym.is_static()))
+{
+warn_printf_at(expr.get_locus(),
+"invalid '%s' expression  in '%s' clause, skipping\n",
+expr.prettyprint().c_str(), clause_name.c_str());
+info_printf_at(expr.get_locus(),
+"dependences over non-static data members are not allowed in OpenMP\n");
+continue;
+}
+else if (sym.get_name() == "this")
+{
+warn_printf_at(expr.get_locus(),
+"invalid '%s' expression  in '%s' clause, skipping\n",
+expr.prettyprint().c_str(), clause_name.c_str());
+continue;
+}
+}
+if ((default_data_attr & DS_AUTO) == DS_AUTO)
+{
+data_sharing_environment.set_data_sharing(sym, DS_AUTO, DSK_EXPLICIT, "'default(auto)'");
+}
+else if (in_ompss_mode)
+{
+if (IS_FORTRAN_LANGUAGE)
+{
+if (sym.get_type().is_pointer())
+{
+data_sharing_environment.set_data_sharing(sym, DS_FIRSTPRIVATE, DSK_IMPLICIT,
+"the variable is a pointer mentioned in a dependence "
+"and it did not have an explicit data-sharing");
+}
+else
+{
+data_sharing_environment.set_data_sharing(sym, DS_SHARED, DSK_IMPLICIT,
+"the variable is mentioned in a dependence and it did not have an explicit data-sharing");
+}
+}
+else if (expr.is<Nodecl::Symbol>())
+{
+data_sharing_environment.set_data_sharing(sym, DS_SHARED, DSK_IMPLICIT,
+"the variable is mentioned in a dependence and it did not have an explicit data-sharing");
+}
+else if (sym.get_type().no_ref().is_array())
+{
+data_sharing_environment.set_data_sharing(sym, DS_SHARED, DSK_IMPLICIT,
+"the variable is an array mentioned in a non-trivial dependence "
+"and it did not have an explicit data-sharing");
+}
+else if (sym.get_type().no_ref().is_class())
+{
+data_sharing_environment.set_data_sharing(sym, DS_SHARED, DSK_IMPLICIT,
+"the variable is an object mentioned in a non-trivial dependence "
+"and it did not have an explicit data-sharing");
+}
+else
+{
+data_sharing_environment.set_data_sharing(sym, DS_FIRSTPRIVATE, DSK_IMPLICIT,
+"the variable is a non-array mentioned in a non-trivial dependence "
+"and it did not have an explicit data-sharing");
+}
+}
+TL::ObjectList<DependencyItem> all_deps;
+data_sharing_environment.get_all_dependences(all_deps);
+for (TL::ObjectList<DependencyItem>::iterator existing_dep = all_deps.begin();
+existing_dep != all_deps.end();
+existing_dep++)
+{
+Nodecl::NodeclBase existing_dep_expr(*existing_dep);
+if (!expr.is<Nodecl::Symbol>()
+|| !existing_dep_expr.is<Nodecl::Symbol>())
+continue;
+if (existing_dep_expr.get_symbol() == expr.get_symbol())
+{
+DependencyDirection existing_dep_dir = existing_dep->get_kind();
+if (existing_dep_dir == DEP_OMPSS_CONCURRENT
+|| existing_dep_dir == DEP_OMPSS_COMMUTATIVE)
+{
+if (dep_dir != existing_dep_dir)
+{
+error_printf_at(it->get_locus(),
+"cannot override '%s' directionality of symbol '%s'\n",
+directionality_to_str(existing_dep_dir).c_str(),
+expr.get_base_symbol().get_name().c_str());
+}
+else
+{
+warn_printf_at(it->get_locus(),
+"redundant '%s' directionality clause for symbol '%s'\n",
+directionality_to_str(existing_dep_dir).c_str(),
+expr.get_base_symbol().get_name().c_str()
+);
+}
+}
+else if ((is_strict_dependency(existing_dep_dir)
+&& !is_strict_dependency(dep_dir))
+|| (is_weak_dependency(existing_dep_dir)
+&& !is_weak_dependency(dep_dir)))
+{
+error_printf_at(it->get_locus(),
+"cannot override '%s' directionality of symbol '%s' with directionality '%s'\n",
+directionality_to_str(existing_dep_dir).c_str(),
+expr.get_base_symbol().get_name().c_str(),
+directionality_to_str(dep_dir).c_str());
+}
+}
+}
+data_sharing_environment.add_dependence(dep_item);
+add_extra_symbols(expr, data_sharing_environment, extra_symbols);
+}
+}
+void Core::handle_task_dependences(
+TL::PragmaCustomLine pragma_line,
+Nodecl::NodeclBase parsing_context,
+DataSharingAttribute default_data_attr,
+DataEnvironment& data_sharing_environment,
+ObjectList<Symbol>& extra_symbols)
+{
+get_basic_dependences_info(
+pragma_line,
+parsing_context,
+data_sharing_environment,
+default_data_attr, extra_symbols);
+ObjectList<Nodecl::NodeclBase> expr_list;
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("weakin"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_WEAK_IN>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"weakin", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("weakout"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_WEAK_OUT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"weakout", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("weakinout"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_WEAK_INOUT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"weakinout", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("inprivate"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_DIR_IN_PRIVATE>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"inprivate", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("concurrent"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_CONCURRENT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"concurrent", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("commutative"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_COMMUTATIVE>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"commutative", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("weakcommutative"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_WEAK_COMMUTATIVE>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"weakcommutative", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("weakconcurrent"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_WEAK_CONCURRENT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"weakconcurrent", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("none"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_NONE>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"none", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("auto"),
+parsing_context);
+get_info_from_dependences<DEP_OMPSS_AUTO>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"auto", data_sharing_environment, extra_symbols);
+PragmaCustomClause depends = pragma_line.get_clause("depend");
+get_dependences_openmp(depends, parsing_context, data_sharing_environment,
+default_data_attr, extra_symbols);
+}
+void Core::get_basic_dependences_info(
+TL::PragmaCustomLine pragma_line,
+Nodecl::NodeclBase parsing_context,
+DataEnvironment& data_sharing_environment,
+DataSharingAttribute default_data_attr,
+ObjectList<Symbol>& extra_symbols)
+{
+ObjectList<Nodecl::NodeclBase> expr_list;
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("in", "input"),
+parsing_context);
+get_info_from_dependences<DEP_DIR_IN>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"in", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("out", "output"),
+parsing_context);
+get_info_from_dependences<DEP_DIR_OUT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"out", data_sharing_environment, extra_symbols);
+expr_list = parse_dependences_ompss_clause(
+pragma_line.get_clause("inout"),
+parsing_context);
+get_info_from_dependences<DEP_DIR_INOUT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"inout", data_sharing_environment, extra_symbols);
+}
+void Core::handle_taskwait_dependences(
+PragmaCustomLine pragma_line,
+Nodecl::NodeclBase parsing_context,
+DataSharingAttribute default_data_attr,
+DataEnvironment& data_environment,
+ObjectList<Symbol>& extra_symbols)
+{
+ObjectList<Nodecl::NodeclBase> expr_list =
+parse_dependences_ompss_clause(
+pragma_line.get_clause("on"),
+parsing_context);
+get_info_from_dependences<DEP_DIR_INOUT>(
+expr_list, default_data_attr, this->in_ompss_mode(),
+"on", data_environment, extra_symbols);
+get_basic_dependences_info(
+pragma_line,
+parsing_context,
+data_environment,
+default_data_attr,
+extra_symbols);
+get_dependences_openmp(
+pragma_line.get_clause("depend"),
+parsing_context,
+data_environment,
+default_data_attr,
+extra_symbols);
+}
+void Core::handle_implicit_dependences_of_task_reductions(
+TL::PragmaCustomLine pragma_line,
+DataSharingAttribute default_data_attr,
+DataEnvironment& data_sharing_environment,
+ObjectList<Symbol>& extra_symbols)
+{
+{
+TL::ObjectList<ReductionSymbol> reductions;
+data_sharing_environment.get_all_reduction_symbols(reductions);
+TL::ObjectList<Nodecl::NodeclBase> reduction_expressions =
+reductions.map<Nodecl::NodeclBase>(&ReductionSymbol::get_reduction_expression);
+get_info_from_dependences<DEP_OMPSS_REDUCTION>(
+reduction_expressions, default_data_attr, this->in_ompss_mode(),
+"reduction", data_sharing_environment, extra_symbols);
+}
+{
+TL::ObjectList<ReductionSymbol> weakreductions;
+data_sharing_environment.get_all_weakreduction_symbols(weakreductions);
+TL::ObjectList<Nodecl::NodeclBase> weakreduction_expressions =
+weakreductions.map<Nodecl::NodeclBase>(&ReductionSymbol::get_reduction_expression);
+get_info_from_dependences<DEP_OMPSS_WEAK_REDUCTION>(
+weakreduction_expressions, default_data_attr, this->in_ompss_mode(),
+"weakreduction", data_sharing_environment, extra_symbols);
+}
+}
+namespace {
+const decl_context_t* decl_context_map_id(const decl_context_t* d)
+{
+return d;
+}
+}
+void Core::parse_dependences_openmp_clause(
+TL::ReferenceScope parsing_scope,
+TL::PragmaCustomClause clause,
+TL::ObjectList<Nodecl::NodeclBase> &in,
+TL::ObjectList<Nodecl::NodeclBase> &out,
+TL::ObjectList<Nodecl::NodeclBase> &inout,
+const locus_t* locus
+)
+{
+if (!clause.is_defined())
+return;
+ObjectList<std::string> arguments = clause.get_tokenized_arguments();
+int cflags = REG_EXTENDED;
+if (IS_FORTRAN_LANGUAGE)
+{
+cflags |= REG_ICASE;
+}
+regex_t preg;
+if (regcomp(&preg, "^[[:blank:]]*((in)|(out)|(inout))[[:blank:]]*:(.*)$", cflags) != 0)
+{
+internal_error("Invalid regular expression", 0);
+}
+const int num_matches = 6;
+regmatch_t pmatch[num_matches] = { };
+TL::ObjectList<Nodecl::NodeclBase> *dep_set = NULL;
+for (ObjectList<std::string>::iterator it = arguments.begin();
+it != arguments.end();
+it++)
+{
+std::string clause_name;
+int match = regexec(&preg, it->c_str(), num_matches, pmatch, 0);
+std::string current_dep_expr = *it;
+if (match == 0)
+{
+ERROR_CONDITION(pmatch[1].rm_so == -1, "Invalid match", 0);
+std::string dependency_type;
+for (int i = pmatch[1].rm_so; i < pmatch[1].rm_eo; i++)
+{
+dependency_type += tolower((*it)[i]);
+}
+if (dependency_type == "in")
+{
+dep_set = &in;
+}
+else if (dependency_type == "out")
+{
+dep_set = &out;
+}
+else if (dependency_type == "inout")
+{
+dep_set = &inout;
+}
+else
+{
+internal_error("Code unreachable", 0);
+}
+current_dep_expr.clear();
+ERROR_CONDITION(pmatch[5].rm_so == -1, "Invalid match", 0);
+for (int i = pmatch[5].rm_so; i < pmatch[5].rm_eo; i++)
+{
+current_dep_expr += (*it)[i];
+}
+}
+else if (match == REG_NOMATCH)
+{
+if (dep_set == NULL)
+{
+error_printf_at(locus,
+"skipping item '%s' in 'depend' clause because it lacks dependence-type\n",
+current_dep_expr.c_str());
+continue;
+}
+}
+else
+{
+internal_error("Unexpected result %d from regexec\n", match);
+}
+Source src;
+src << "#line " << clause.get_pragma_line().get_line() << " \"" << clause.get_pragma_line().get_filename() << "\"\n";
+src << pad_to_column(clause.get_pragma_line().get_column()) << current_dep_expr;
+Nodecl::NodeclBase expr;
+if (IS_C_LANGUAGE || IS_CXX_LANGUAGE)
+{
+expr = src.parse_generic(parsing_scope,
+Source::DEFAULT,
+"@OMP-DEPEND-ITEM@",
+Source::c_cxx_check_expression_adapter,
+decl_context_map_id);
+}
+else if (IS_FORTRAN_LANGUAGE)
+{
+expr = src.parse_generic(parsing_scope,
+Source::DEFAULT,
+"@OMP-DEPEND-ITEM@",
+Source::fortran_check_expression_adapter,
+decl_context_map_id);
+}
+else
+{
+internal_error("Code unreachable", 0);
+}
+dep_set->append(expr);
+}
+regfree(&preg);
+}
+void Core::get_dependences_openmp(
+TL::PragmaCustomClause clause,
+Nodecl::NodeclBase parsing_context,
+DataEnvironment& data_sharing_environment,
+DataSharingAttribute default_data_attr,
+ObjectList<Symbol>& extra_symbols)
+{
+TL::ObjectList<Nodecl::NodeclBase> in, out, inout;
+parse_dependences_openmp_clause(
+parsing_context,
+clause,
+in,
+out,
+inout,
+clause.get_locus());
+get_info_from_dependences<DEP_DIR_IN>(in, default_data_attr,
+this->in_ompss_mode(), "depend(in: )", data_sharing_environment, extra_symbols);
+get_info_from_dependences<DEP_DIR_OUT>(out, default_data_attr,
+this->in_ompss_mode(), "depend(out: )", data_sharing_environment, extra_symbols);
+get_info_from_dependences<DEP_DIR_INOUT>(inout, default_data_attr,
+this->in_ompss_mode(), "depend(inout: )", data_sharing_environment, extra_symbols);
+}
+namespace {
+void c_cxx_ompss_dep_expression(AST a, const decl_context_t* decl_context, nodecl_t* nodecl_output)
+{
+Source::c_cxx_check_expression_adapter(a, decl_context, nodecl_output);
+}
+void fortran_ompss_dep_expression(AST a, const decl_context_t* decl_context, nodecl_t* nodecl_output)
+{
+Source::fortran_check_expression_adapter(a, decl_context, nodecl_output);
+if (!nodecl_is_null(*nodecl_output)
+&& !nodecl_is_err_expr(*nodecl_output))
+{
+*nodecl_output = ::fortran_expression_as_variable(*nodecl_output);
+}
+}
+}
+ObjectList<Nodecl::NodeclBase> Core::parse_dependences_ompss_clause(
+PragmaCustomClause clause,
+TL::ReferenceScope parsing_scope)
+{
+ObjectList<Nodecl::NodeclBase> result;
+if (!clause.is_defined())
+return result;
+ObjectList<std::string> arguments = clause.get_tokenized_arguments();
+for (ObjectList<std::string>::iterator it = arguments.begin();
+it != arguments.end();
+it++)
+{
+Source src;
+src << "#line " << clause.get_pragma_line().get_line() << " \"" << clause.get_pragma_line().get_filename() << "\"\n";
+src << pad_to_column(clause.get_pragma_line().get_column()) << *it;
+Nodecl::NodeclBase expr;
+if (IS_C_LANGUAGE || IS_CXX_LANGUAGE)
+{
+expr = src.parse_generic(parsing_scope,
+Source::DEFAULT,
+"@OMPSS-DEPENDENCY-EXPR@",
+c_cxx_ompss_dep_expression,
+decl_context_map_id);
+}
+else if (IS_FORTRAN_LANGUAGE)
+{
+expr = src.parse_generic(parsing_scope,
+Source::DEFAULT,
+"@OMPSS-DEPENDENCY-EXPR@",
+fortran_ompss_dep_expression,
+decl_context_map_id);
+}
+else
+{
+internal_error("Code unreachable", 0);
+}
+result.append(expr);
+}
+return result;
+}
+bool is_strict_dependency(DependencyDirection dir)
+{
+switch (dir)
+{
+case DEP_DIR_IN:
+case DEP_DIR_OUT:
+case DEP_DIR_INOUT:
+case DEP_OMPSS_DIR_IN_PRIVATE:
+case DEP_OMPSS_REDUCTION:
+case DEP_OMPSS_NONE:
+case DEP_OMPSS_AUTO:
+return true;
+default:
+return false;
+}
+}
+bool is_weak_dependency(DependencyDirection dir)
+{
+switch (dir)
+{
+case DEP_OMPSS_WEAK_IN:
+case DEP_OMPSS_WEAK_OUT:
+case DEP_OMPSS_WEAK_INOUT:
+case DEP_OMPSS_WEAK_COMMUTATIVE:
+case DEP_OMPSS_WEAK_CONCURRENT:
+case DEP_OMPSS_WEAK_REDUCTION:
+return true;
+default:
+return false;
+}
+}
+std::string directionality_to_str(DependencyDirection d)
+{
+switch (d)
+{
+case DEP_DIR_UNDEFINED:
+return "<<undefined-dependence>>";
+case DEP_DIR_IN:
+return "in";
+case DEP_DIR_OUT:
+return "out";
+case DEP_DIR_INOUT:
+return "inout";
+case DEP_OMPSS_CONCURRENT:
+return "concurrent";
+case DEP_OMPSS_COMMUTATIVE:
+return "commutative";
+case DEP_OMPSS_WEAK_IN:
+return "weakin";
+case DEP_OMPSS_WEAK_OUT:
+return "weakout";
+case DEP_OMPSS_WEAK_INOUT:
+return "weakinout";
+case DEP_OMPSS_WEAK_CONCURRENT:
+return "weakconcurrent";
+case DEP_OMPSS_WEAK_COMMUTATIVE:
+return "weakcommutative";
+case DEP_OMPSS_REDUCTION:
+return "reduction";
+case DEP_OMPSS_WEAK_REDUCTION:
+return "weakreduction";
+case DEP_OMPSS_NONE:
+return "none";
+case DEP_OMPSS_AUTO:
+return "auto";
+default:
+return "<<unknown-dependence-kind?>>";
+}
+}
+} }

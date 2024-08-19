@@ -1,0 +1,15 @@
+
+
+#ifndef BOOST_MULTI_INDEX_DETAIL_INVARIANT_ASSERT_HPP
+#define BOOST_MULTI_INDEX_DETAIL_INVARIANT_ASSERT_HPP
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+#if !defined(BOOST_MULTI_INDEX_INVARIANT_ASSERT)
+#include <boost/assert.hpp>
+#define BOOST_MULTI_INDEX_INVARIANT_ASSERT BOOST_ASSERT
+#endif
+
+#endif

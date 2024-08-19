@@ -1,0 +1,10 @@
+#define  Name_ !! TEMPLATE INSERTION POINT
+#define Get_Attribute_Id snames__get_attribute_id
+extern unsigned char Get_Attribute_Id (int);
+#define  Attr_ !! TEMPLATE INSERTION POINT
+#define  Convention_ !! TEMPLATE INSERTION POINT
+#define Is_Pragma_Name snames__is_pragma_name
+extern Boolean Is_Pragma_Name (Name_Id);
+#define Get_Pragma_Id snames__get_pragma_id
+extern unsigned char Get_Pragma_Id (int);
+#define  Pragma_ !! TEMPLATE_INSERTION_POINT

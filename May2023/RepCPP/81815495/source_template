@@ -1,0 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+#error Please change the author fullname and if your license is different please state it above
+#error Please remove these error pragmas
+
+
+
+
+
+
+
+
+#include "includes/define.h"
+
+
+namespace Kratos {
+
+
+
+
+} 
