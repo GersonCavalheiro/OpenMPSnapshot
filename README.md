@@ -1,11 +1,9 @@
 # OpenMP Repository Analysis
-
+The contents of this repository were made available to enable investigations into public GitHub repositories that use OpenMP in their code. This set of artifacts was used to produce results for two papers:
 # Presentation
-This repository accompanies the article:
-A Snapshot of OpenMP Projects on GitHub
+The content of this repository has been made available to assist in the reproduction of the research conducted and to support the development of new related works. When using this material, either as presented or modified, we request that the following article be cited as the source. Please cite these works when using the provided artifacts.
 
-This content has been made available to assist in the reproduction of the research conducted and to support the development of new related works. When using this material, either as presented or modified, we request that the following article be cited as the source:
-
+## SBLP 2024
 ```
 @inproceedings{OpenMPSnapshotSBLP2024,
 author = {Void, Null},
@@ -15,6 +13,19 @@ address = {Curitiba, Brazil},
 note = {Submitted}
 }
 ```
+## SSCAD 2024
+```
+@inproceedings{OpenMPEmpiricalStudySBLP2024,
+author = {Void, Null},
+title = {An Empirical Study of OpenMP Directive Usage in Open-Source Projects on GitHub},
+year = {2024},
+publisher = {Association for Computing Machinery},
+address = {Curitiba, Brazil},
+note = {Submitted}
+}
+```
+
+
 # Contents
 - **May2023**: Contains the repositories mined in May 2023 used in the base article, divided into repositories with the primary language C and those with the primary language C++.
 - **Python**: Script for mining GitHub repositories.
